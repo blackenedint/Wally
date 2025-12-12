@@ -10,4 +10,16 @@
     <LocalDebuggerCommandArguments>
     </LocalDebuggerCommandArguments>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LocalDebuggerAttach>false</LocalDebuggerAttach>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerCommand>Z:\github\Wally\ReleaseBuild\Wally.exe</LocalDebuggerCommand>
+    <LocalDebuggerCommandArguments />
+    <LocalDebuggerWorkingDirectory>Z:\github\Wally\ReleaseBuild\</LocalDebuggerWorkingDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LocalDebuggerCommand>Z:\github\Wally\ReleaseBuild\Wally.exe</LocalDebuggerCommand>
+    <LocalDebuggerWorkingDirectory>Z:\github\Wally\ReleaseBuild\</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
 </Project>

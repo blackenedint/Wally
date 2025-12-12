@@ -30,12 +30,12 @@ CDecalToolbar::CDecalToolbar(CWnd* pParent /*=NULL*/)
 	//{{AFX_DATA_INIT(CDecalToolbar)
 	//}}AFX_DATA_INIT
 
-	m_bFirstTimeTab     = TRUE;
+	m_bFirstTimeTab = TRUE;
 	m_bFirstTimePreview = TRUE;
-	m_bFirstTimeMouse	= TRUE;
-	m_bFirstTimeHiding	= TRUE;
+	m_bFirstTimeMouse = TRUE;
+	m_bFirstTimeHiding = TRUE;
 
-	m_wndPreview.SetType( PP_TYPE_DECAL);
+	m_wndPreview.SetType(PP_TYPE_DECAL);
 }
 
 
@@ -48,8 +48,8 @@ void CDecalToolbar::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_DT2_COLOR_TOLERANCE, m_edColorTolerance);
 	DDX_Control(pDX, IDC_DT1_STATUS, m_scStatus);
 	DDX_Control(pDX, IDC_DT1_LIST_IMAGES, m_lbImages);
-	DDX_Control(pDX, IDC_DT1_COMBO_WAD, m_cbWAD);	
-	DDX_Control(pDX, IDC_DT1_BUTTON_PREVIEW, m_btnPreview);	
+	DDX_Control(pDX, IDC_DT1_COMBO_WAD, m_cbWAD);
+	DDX_Control(pDX, IDC_DT1_BUTTON_PREVIEW, m_btnPreview);
 	DDX_Control(pDX, IDC_DT_TAB, m_TabCtrl);
 	//}}AFX_DATA_MAP
 }
@@ -77,11 +77,11 @@ void CDecalToolbar::FirstTimeInit()
 	if (m_bFirstTimeTab)
 	{
 		// neal - must call this manually (because this isn't a REAL dialog box)
-		UpdateData( FALSE);
+		UpdateData(FALSE);
 
-		CWnd *pWnd = GetDlgItem (IDC_DT_TAB);
-		
-		if (pWnd)	
+		CWnd* pWnd = GetDlgItem(IDC_DT_TAB);
+
+		if (pWnd)
 		{
 			m_bFirstTimeTab = FALSE;
 			std::vector<CString> TabItems;
@@ -90,15 +90,15 @@ void CDecalToolbar::FirstTimeInit()
 			TC_ITEM tcItem;
 
 			int i = 0;
-			for( CString Item : TabItems )
+			for (CString Item : TabItems)
 			{
 				tcItem.mask = TCIF_TEXT;
 				tcItem.pszText = Item.GetBuffer();
 				tcItem.cchTextMax = Item.GetLength();
-				m_TabCtrl.InsertItem(i++,&tcItem);
+				m_TabCtrl.InsertItem(i++, &tcItem);
 			}
 
-			m_TabCtrl.AttachControlToTab(&m_btnPreview, 0);			
+			m_TabCtrl.AttachControlToTab(&m_btnPreview, 0);
 			m_TabCtrl.AttachControlToTab(&m_cbWAD, 0);
 			m_TabCtrl.AttachControlToTab(&m_lbImages, 0);
 			m_TabCtrl.AttachControlToTab(&m_wndPreview, 0);
@@ -108,11 +108,11 @@ void CDecalToolbar::FirstTimeInit()
 			m_TabCtrl.AttachControlToTab(&m_scColorTolerance, 1);
 			m_TabCtrl.AttachControlToTab(&m_spnColorTolerance, 1);
 			m_TabCtrl.AttachControlToTab(&m_edColorTolerance, 1);
-			
+
 			// initialize tab to first page.
 			m_TabCtrl.SetCurSel(0);
 
-			SetDlgItemText (IDC_DT1_STATUS, "");
+			SetDlgItemText(IDC_DT1_STATUS, "");
 
 			OnSetfocusDt1ComboWad();
 		}
@@ -123,87 +123,87 @@ void CDecalToolbar::FirstTimeInit()
 	switch (iCurSel)
 	{
 	case -1:
-		{
-			// No tab selected?
-		}
-		break;
+	{
+		// No tab selected?
+	}
+	break;
 
 	case 0:
+	{
+		CRect Rect, rDlg;
+		GetClientRect(&rDlg);
+		ClientToScreen(rDlg);
+
+		CWnd* pWnd = GetDlgItem(IDC_DT1_BUTTON_PREVIEW);
+
+		if (pWnd)
 		{
-			CRect Rect, rDlg;
-			GetClientRect( &rDlg);
-			ClientToScreen( rDlg);
-			
-			CWnd* pWnd = GetDlgItem( IDC_DT1_BUTTON_PREVIEW);
+			pWnd->GetWindowRect(&Rect);
+			Rect.OffsetRect(-rDlg.left, -rDlg.top);
+			pWnd->ShowWindow(SW_HIDE);
 
-			if (pWnd)
-			{				
-				pWnd->GetWindowRect( &Rect);
-				Rect.OffsetRect( -rDlg.left, -rDlg.top);
-				pWnd->ShowWindow( SW_HIDE);
+			if (m_bFirstTimePreview)
+			{
+				m_wndPreview.Create(NULL, NULL,
+					WS_CHILD | WS_VISIBLE, Rect, this, 0, NULL);
 
-				if (m_bFirstTimePreview)
-				{
-					m_wndPreview.Create( NULL, NULL, 
-						WS_CHILD | WS_VISIBLE, Rect, this, 0, NULL);
+				m_wndPreview.SetNonImageText("");
+				m_wndPreview.SetNonImageLocation(12, 50);
+				m_wndPreview.SetPreviewWidth(128);
+				m_wndPreview.SetPreviewHeight(128);
+				m_wndPreview.EnableWindow(false);
 
-					m_wndPreview.SetNonImageText ("");
-					m_wndPreview.SetNonImageLocation (12, 50);
-					m_wndPreview.SetPreviewWidth (128);
-					m_wndPreview.SetPreviewHeight (128);
-					m_wndPreview.EnableWindow (false);
-					
-					m_bFirstTimePreview = FALSE;
-				}
+				m_bFirstTimePreview = FALSE;
 			}
-
-			pWnd = GetDlgItem( IDC_DT1_BUTTON_MOUSE_GUI);
-				
-			if (pWnd)
-			{				
-				pWnd->GetWindowRect( &Rect);
-				Rect.OffsetRect( -rDlg.left, -rDlg.top);
-				pWnd->ShowWindow( SW_HIDE);
-
-				if (m_bFirstTimeMouse)
-				{
-					m_wndMouseButton.Create( NULL, NULL, 
-						WS_CHILD | WS_VISIBLE, Rect, this, 0, NULL);
-			
-					m_bFirstTimeMouse = FALSE;					
-				}
-			}			
 		}
-		break;
+
+		pWnd = GetDlgItem(IDC_DT1_BUTTON_MOUSE_GUI);
+
+		if (pWnd)
+		{
+			pWnd->GetWindowRect(&Rect);
+			Rect.OffsetRect(-rDlg.left, -rDlg.top);
+			pWnd->ShowWindow(SW_HIDE);
+
+			if (m_bFirstTimeMouse)
+			{
+				m_wndMouseButton.Create(NULL, NULL,
+					WS_CHILD | WS_VISIBLE, Rect, this, 0, NULL);
+
+				m_bFirstTimeMouse = FALSE;
+			}
+		}
+	}
+	break;
 
 	case 1:
-		{
-			CString strText("");
-			
-			strText.Format ("%lu", g_iColorTolerance);
-			SetDlgItemText (IDC_DT2_COLOR_TOLERANCE, strText);
+	{
+		CString strText("");
 
-			UDACCEL Spinaccel[4];
-			
-			Spinaccel[0].nSec = 0;
-			Spinaccel[0].nInc = 1;
-			Spinaccel[1].nSec = 1;
-			Spinaccel[1].nInc = 5;
-			Spinaccel[2].nSec = 2;
-			Spinaccel[2].nInc = 20;
-			Spinaccel[3].nSec = 3;
-			Spinaccel[3].nInc = 50;
-			m_spnColorTolerance.SetAccel( 4, &Spinaccel[0]);	
-			m_spnColorTolerance.SetRange( 0, 255);
-		}
-		break;
+		strText.Format("%lu", g_iColorTolerance);
+		SetDlgItemText(IDC_DT2_COLOR_TOLERANCE, strText);
+
+		UDACCEL Spinaccel[4];
+
+		Spinaccel[0].nSec = 0;
+		Spinaccel[0].nInc = 1;
+		Spinaccel[1].nSec = 1;
+		Spinaccel[1].nInc = 5;
+		Spinaccel[2].nSec = 2;
+		Spinaccel[2].nInc = 20;
+		Spinaccel[3].nSec = 3;
+		Spinaccel[3].nInc = 50;
+		m_spnColorTolerance.SetAccel(4, &Spinaccel[0]);
+		m_spnColorTolerance.SetRange(0, 255);
+	}
+	break;
 
 	default:
-		ASSERT (FALSE);
+		ASSERT(FALSE);
 		break;
 	}
 
-	EnableControls (FALSE);
+	EnableControls(FALSE);
 	Update();
 }
 
@@ -212,48 +212,48 @@ void CDecalToolbar::Update()
 	CWnd* pWnd = NULL;
 
 	if (m_bFirstTimeHiding)
-	{		
-		pWnd = GetDlgItem( IDC_DT1_BUTTON_PREVIEW);	
-	
+	{
+		pWnd = GetDlgItem(IDC_DT1_BUTTON_PREVIEW);
+
 		if (pWnd)
-		{		
+		{
 			if (pWnd->m_hWnd)
-				pWnd->InvalidateRect( NULL, FALSE);
+				pWnd->InvalidateRect(NULL, FALSE);
 			m_bFirstTimeHiding = FALSE;
 		}
 		else
 		{
-			ASSERT( FALSE);
+			ASSERT(FALSE);
 		}
 	}
 
 	if (m_wndPreview.m_hWnd)
 	{
-		m_wndPreview.InvalidateRect( NULL, FALSE);
+		m_wndPreview.InvalidateRect(NULL, FALSE);
 	}
 
-	pWnd = GetDlgItem( IDC_DT1_BUTTON_MOUSE_GUI);
+	pWnd = GetDlgItem(IDC_DT1_BUTTON_MOUSE_GUI);
 	if (pWnd)
-	{		
+	{
 		if (pWnd->m_hWnd)
-			pWnd->InvalidateRect( NULL, FALSE);
+			pWnd->InvalidateRect(NULL, FALSE);
 	}
 	else
 	{
-		ASSERT( FALSE);
+		ASSERT(FALSE);
 	}
 
 	if (m_wndMouseButton.m_hWnd)
 	{
-		m_wndMouseButton.InvalidateRect( NULL, FALSE);
+		m_wndMouseButton.InvalidateRect(NULL, FALSE);
 	}
 
 }
 
-void CDecalToolbar::OnPaint() 
+void CDecalToolbar::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
-	
+
 	if (m_bFirstTimeTab)
 	{
 		FirstTimeInit();
@@ -262,59 +262,59 @@ void CDecalToolbar::OnPaint()
 	// Do not call CDialogBar::OnPaint() for painting messages
 }
 
-void CDecalToolbar::OnSelchangeDtTab(NMHDR* pNMHDR, LRESULT* pResult) 
-{	
+void CDecalToolbar::OnSelchangeDtTab(NMHDR* pNMHDR, LRESULT* pResult)
+{
 	*pResult = 0;
 	FirstTimeInit();
 }
 
-void CDecalToolbar::OnSelchangingDtTab(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDecalToolbar::OnSelchangingDtTab(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	*pResult = 0;
 }
 
 
-void CDecalToolbar::OnSetfocusDt1ComboWad() 
-{	
+void CDecalToolbar::OnSetfocusDt1ComboWad()
+{
 	if (m_bFirstTimeTab)
 		FirstTimeInit();
 
 	struct _finddata_t c_file;
-	long hfile;
+	intptr_t hfile;
 
-	CString strWildCard ("");
-	CString strFileName ("");
+	CString strWildCard("");
+	CString strFileName("");
 
 	// neal - WinNT bugfix?  g_szAppDirectory ended in a '\', so there were two
 	// Ty-  nah, just my own bug, as I couldn't ever test any of this stuff :)
-	
-	strWildCard.Format ("%s\\*.wad", g_strDecalDirectory);
 
-	int iListIndex  = 0;
+	strWildCard.Format("%s\\*.wad", g_strDecalDirectory);
+
+	INT_PTR iListIndex = 0;
 	int iComboIndex = 0;
-	int iCurSel		= m_cbWAD.GetCurSel ();
+	int iCurSel = m_cbWAD.GetCurSel();
 	bool bAtLeastOne = false;
 
 	// neal - bugfix - prevents multiple copies of items in list
 	m_cbWAD.ResetContent();
 	m_strWADList.RemoveAll();
 
-	if ((hfile = _findfirst(strWildCard, &c_file)) != -1L)	
-	{		
+	if ((hfile = _findfirst(strWildCard, &c_file)) != -1L)
+	{
 		bAtLeastOne = true;
 
-		strFileName.Format ("%s\\%s", g_strDecalDirectory, c_file.name);
-		iListIndex = m_strWADList.Add (strFileName);
-		iComboIndex = m_cbWAD.AddString (GetRawFileName (c_file.name));
-		m_cbWAD.SetItemData (iComboIndex, iListIndex);
+		strFileName.Format("%s\\%s", g_strDecalDirectory, c_file.name);
+		iListIndex = m_strWADList.Add(strFileName);
+		iComboIndex = m_cbWAD.AddString(GetRawFileName(c_file.name));
+		m_cbWAD.SetItemData(iComboIndex, iListIndex);
 
 		// Keep looking for more files that match
 		while (_findnext(hfile, &c_file) == 0)
 		{
-			strFileName.Format ("%s\\%s", g_strDecalDirectory, c_file.name);
-			iListIndex = m_strWADList.Add (strFileName);
-			iComboIndex = m_cbWAD.AddString (GetRawFileName (c_file.name));
-			m_cbWAD.SetItemData (iComboIndex, iListIndex);
+			strFileName.Format("%s\\%s", g_strDecalDirectory, c_file.name);
+			iListIndex = m_strWADList.Add(strFileName);
+			iComboIndex = m_cbWAD.AddString(GetRawFileName(c_file.name));
+			m_cbWAD.SetItemData(iComboIndex, iListIndex);
 		}
 	}
 
@@ -322,43 +322,43 @@ void CDecalToolbar::OnSetfocusDt1ComboWad()
 	{
 		if (iCurSel != CB_ERR)
 		{
-			iCurSel = min (iCurSel, m_cbWAD.GetCount() - 1);
-			iCurSel = max (iCurSel, 0);
+			iCurSel = min(iCurSel, m_cbWAD.GetCount() - 1);
+			iCurSel = max(iCurSel, 0);
 		}
 		else
 		{
 			iCurSel = 0;
 		}
-		m_cbWAD.SetCurSel (iCurSel);			
+		m_cbWAD.SetCurSel(iCurSel);
 	}
 
 
 
-	OnSelchangeDt1ComboWad();	
+	OnSelchangeDt1ComboWad();
 }
 
-void CDecalToolbar::OnSelchangeDt1ComboWad() 
+void CDecalToolbar::OnSelchangeDt1ComboWad()
 {
-	int iCurSel		= m_cbWAD.GetCurSel ();
-	int iListIndex	= m_cbWAD.GetItemData (iCurSel);
+	int iCurSel = m_cbWAD.GetCurSel();
+	INT_PTR iListIndex = m_cbWAD.GetItemData(iCurSel);
 	int iItemAdded = 0;
 	CString strFileName("");
-	CWADItem *pItem = NULL;
+	CWADItem* pItem = NULL;
 	m_lbImages.ResetContent();
 	m_ihHelper.ResetContent();
 	bool bAtLeastOne = false;
-	
+
 	if (iCurSel != CB_ERR)
 	{
-		strFileName = m_strWADList.GetAt (iListIndex);		
-		m_ihHelper.LoadImage (strFileName, IH_LOAD_ONLYPACKAGE);
+		strFileName = m_strWADList.GetAt(iListIndex);
+		m_ihHelper.LoadImage(strFileName, IH_LOAD_ONLYPACKAGE);
 
 		if (m_ihHelper.GetErrorCode() != IH_SUCCESS)
 		{
-			AfxMessageBox (m_ihHelper.GetErrorText(), MB_ICONSTOP);
+			AfxMessageBox(m_ihHelper.GetErrorText(), MB_ICONSTOP);
 
 			// Clear out the selection from the combo box
-			m_cbWAD.SetCurSel (-1);
+			m_cbWAD.SetCurSel(-1);
 			return;
 		}
 
@@ -367,8 +367,8 @@ void CDecalToolbar::OnSelchangeDt1ComboWad()
 
 		while (pItem)
 		{
-			iItemAdded = m_lbImages.AddString (pItem->GetName());
-			m_lbImages.SetItemData (iItemAdded, (DWORD)pItem);
+			iItemAdded = m_lbImages.AddString(pItem->GetName());
+			m_lbImages.SetItemData(iItemAdded, (DWORD_PTR)pItem);
 			pItem = m_ihHelper.GetNextImage();
 		}
 
@@ -377,13 +377,13 @@ void CDecalToolbar::OnSelchangeDt1ComboWad()
 			m_lbImages.SetCurSel(0);
 			OnSelchangeDt1ListImages();
 		}
-	}	
+	}
 }
 
 
-void CDecalToolbar::OnSize( UINT uType, int cx, int cy) 
+void CDecalToolbar::OnSize(UINT uType, int cx, int cy)
 {
-	CDialogBar::OnSize( uType, cx, cy);
+	CDialogBar::OnSize(uType, cx, cy);
 
 	// neal - TODO: add resizing - the problem is getting the
 	// handle of the popup and changing its style to be resizable
@@ -398,27 +398,27 @@ void CDecalToolbar::OnSize( UINT uType, int cx, int cy)
 }
 
 
-void CDecalToolbar::OnSelchangeDt1ListImages() 
+void CDecalToolbar::OnSelchangeDt1ListImages()
 {
 	int iCurSel = m_lbImages.GetCurSel();
-	CWADItem *pItem = NULL;
+	CWADItem* pItem = NULL;
 
 	if (iCurSel != LB_ERR)
 	{
-		pItem = (CWADItem *)(m_lbImages.GetItemData(iCurSel));
-		m_wndPreview.InitImage (pItem->GetWidth(), pItem->GetHeight(), pItem->GetBits(), pItem->GetPalette());
-		
-		CString strText ("");
-		strText.Format ("%d x %d", pItem->GetWidth(), pItem->GetHeight());
+		pItem = (CWADItem*)(m_lbImages.GetItemData(iCurSel));
+		m_wndPreview.InitImage(pItem->GetWidth(), pItem->GetHeight(), pItem->GetBits(), pItem->GetPalette());
 
-		SetStatus (strText, 1);
+		CString strText("");
+		strText.Format("%d x %d", pItem->GetWidth(), pItem->GetHeight());
+
+		SetStatus(strText, 1);
 		pItem = NULL;
 	}
 	else
 	{
-		m_wndPreview.InitImage (0, 0, NULL, NULL);
+		m_wndPreview.InitImage(0, 0, NULL, NULL);
 	}
-	Update();	
+	Update();
 }
 
 
@@ -431,30 +431,30 @@ LRESULT CDecalToolbar::OnDecalListBoxCustomMessage(WPARAM nType, LPARAM nFlags)
 		break;
 
 	case DECALLISTBOX_ENTER:
-		LoadImageToTool (LEFT_BUTTON);
+		LoadImageToTool(LEFT_BUTTON);
 		break;
 
 	default:
-		ASSERT (false);		// Unhandled type?
+		ASSERT(false);		// Unhandled type?
 		break;
-	}	
+	}
 	return 0;
 }
 
-LRESULT CDecalToolbar::OnMouseWndCustomMessage (WPARAM nType, LPARAM nFlags)
+LRESULT CDecalToolbar::OnMouseWndCustomMessage(WPARAM nType, LPARAM nFlags)
 {
 	switch (nType)
 	{
 	case MOUSE_WND_LBUTTON_SELECT:
-		LoadImageToTool (LEFT_BUTTON);
+		LoadImageToTool(LEFT_BUTTON);
 		break;
 
 	case MOUSE_WND_RBUTTON_SELECT:
-		LoadImageToTool (RIGHT_BUTTON);
+		LoadImageToTool(RIGHT_BUTTON);
 		break;
 
 	default:
-		ASSERT (false);
+		ASSERT(false);
 		break;
 	}
 	return 0;
@@ -463,11 +463,11 @@ LRESULT CDecalToolbar::OnMouseWndCustomMessage (WPARAM nType, LPARAM nFlags)
 bool CDecalToolbar::GetCurrentSelection()
 {
 	int iCurSel = m_lbImages.GetCurSel();
-	CWADItem *pItem = NULL;
+	CWADItem* pItem = NULL;
 
 	if (iCurSel != LB_ERR)
 	{
-		m_pWADItem = (CWADItem *)(m_lbImages.GetItemData(iCurSel));
+		m_pWADItem = (CWADItem*)(m_lbImages.GetItemData(iCurSel));
 		return true;
 	}
 	else
@@ -480,7 +480,7 @@ bool CDecalToolbar::GetCurrentSelection()
 }
 
 
-void CDecalToolbar::LoadImageToTool (int iMouseButton)
+void CDecalToolbar::LoadImageToTool(int iMouseButton)
 {
 	if (!GetCurrentSelection())
 	{
@@ -491,102 +491,102 @@ void CDecalToolbar::LoadImageToTool (int iMouseButton)
 	int h = m_pWADItem->GetHeight();
 
 	CDibSection dsImage;
-	dsImage.Init( w, h, 8, m_pWADItem->GetPalette());
-	dsImage.SetRawBits( m_pWADItem->GetBits());
-	dsImage.WriteToClipboard( this);
+	dsImage.Init(w, h, 8, m_pWADItem->GetPalette());
+	dsImage.SetRawBits(m_pWADItem->GetBits());
+	dsImage.WriteToClipboard(this);
 
 	switch (g_iCurrentTool)
 	{
 	case EDIT_MODE_CLONE:
-		g_CloneSourceLayerInfo.LoadFromClipboard( FALSE, this);
+		g_CloneSourceLayerInfo.LoadFromClipboard(FALSE, this);
 		break;
 
 	case EDIT_MODE_RIVETS:
-		g_RivetToolLayerInfo.LoadFromClipboard( FALSE, this);
+		g_RivetToolLayerInfo.LoadFromClipboard(FALSE, this);
 		break;
 
 	case EDIT_MODE_BULLET_HOLES:
-		
+
 		if (iMouseButton == LEFT_BUTTON)
 		{
-			g_LeftBulletLayerInfo.LoadFromClipboard( FALSE, this);
+			g_LeftBulletLayerInfo.LoadFromClipboard(FALSE, this);
 		}
 		else
 		{
-			g_RightBulletLayerInfo.LoadFromClipboard( FALSE, this);
+			g_RightBulletLayerInfo.LoadFromClipboard(FALSE, this);
 		}
 		break;
 
 	case EDIT_MODE_DECAL:
 		if (iMouseButton == LEFT_BUTTON)
 		{
-			g_LeftDecalToolLayerInfo.LoadFromClipboard( FALSE, this);
+			g_LeftDecalToolLayerInfo.LoadFromClipboard(FALSE, this);
 		}
 		else
 		{
-			g_RightDecalToolLayerInfo.LoadFromClipboard( FALSE, this);
+			g_RightDecalToolLayerInfo.LoadFromClipboard(FALSE, this);
 		}
 		break;
 
 	case EDIT_MODE_PATTERNED_PAINT:
 		if (iMouseButton == LEFT_BUTTON)
 		{
-			g_LeftPatternToolLayerInfo.LoadFromClipboard( FALSE, this);
+			g_LeftPatternToolLayerInfo.LoadFromClipboard(FALSE, this);
 		}
 		else
 		{
-			g_RightPatternToolLayerInfo.LoadFromClipboard( FALSE, this);
+			g_RightPatternToolLayerInfo.LoadFromClipboard(FALSE, this);
 		}
 		break;
 
 	default:
-		ASSERT (false);
+		ASSERT(false);
 		break;
-	
-	}	
+
+	}
 }
 
 
-void CDecalToolbar::EnableControls (bool bState /* = TRUE */)
+void CDecalToolbar::EnableControls(bool bState /* = TRUE */)
 {
 	m_bEnableControls = bState;
 
-	CWnd *pWnd = NULL;
+	CWnd* pWnd = NULL;
 
-	pWnd = GetDlgItem (IDC_DT1_LIST_IMAGES);
+	pWnd = GetDlgItem(IDC_DT1_LIST_IMAGES);
 	if (pWnd)
 	{
-		pWnd->EnableWindow (m_bEnableControls);
-	}
-	
-	pWnd = GetDlgItem (IDC_DT1_COMBO_WAD);
-	if (pWnd)
-	{
-		pWnd->EnableWindow (m_bEnableControls);
+		pWnd->EnableWindow(m_bEnableControls);
 	}
 
-	pWnd = GetDlgItem (IDC_DT1_BUTTON_PREVIEW);
+	pWnd = GetDlgItem(IDC_DT1_COMBO_WAD);
 	if (pWnd)
 	{
-		pWnd->EnableWindow (m_bEnableControls);
-	}	
-	m_wndMouseButton.EnableWindow (m_bEnableControls);	
+		pWnd->EnableWindow(m_bEnableControls);
+	}
+
+	pWnd = GetDlgItem(IDC_DT1_BUTTON_PREVIEW);
+	if (pWnd)
+	{
+		pWnd->EnableWindow(m_bEnableControls);
+	}
+	m_wndMouseButton.EnableWindow(m_bEnableControls);
 }
 
-void CDecalToolbar::EnableRightButton (bool bEnable /* = TRUE */)
+void CDecalToolbar::EnableRightButton(bool bEnable /* = TRUE */)
 {
 	if (bEnable)
 	{
-		m_wndMouseButton.RemoveButtonState (MOUSE_STATE_RBUTTON_DISABLED);
+		m_wndMouseButton.RemoveButtonState(MOUSE_STATE_RBUTTON_DISABLED);
 	}
 	else
 	{
-		m_wndMouseButton.SetButtonState (MOUSE_STATE_RBUTTON_DISABLED);
+		m_wndMouseButton.SetButtonState(MOUSE_STATE_RBUTTON_DISABLED);
 	}
 	m_wndMouseButton.Update();
 }
 
-void CDecalToolbar::SetStatus (LPCTSTR szText, int iPageNumber /* = 1 */)
+void CDecalToolbar::SetStatus(LPCTSTR szText, int iPageNumber /* = 1 */)
 {
 	if (m_bFirstTimeTab)
 	{
@@ -596,11 +596,11 @@ void CDecalToolbar::SetStatus (LPCTSTR szText, int iPageNumber /* = 1 */)
 	switch (iPageNumber)
 	{
 	case 1:
-		SetDlgItemText (IDC_DT1_STATUS, szText);
+		SetDlgItemText(IDC_DT1_STATUS, szText);
 		break;
 
 	default:
-		ASSERT (false);
+		ASSERT(false);
 		break;
 	}
 }

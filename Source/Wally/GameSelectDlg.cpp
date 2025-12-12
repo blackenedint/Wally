@@ -132,7 +132,7 @@ void CGameSelectDlg::OnOK()
 
 	if (iSelection != CB_ERR)
 	{
-		m_iFileType = g_iFileTypeLastUsed = m_cbFileType.GetItemData (iSelection);
+		m_iFileType = g_iFileTypeLastUsed = (int)m_cbFileType.GetItemData (iSelection);
 	}
 	
 	if (IsDlgButtonChecked( IDC_CHECK_ALWAYS))

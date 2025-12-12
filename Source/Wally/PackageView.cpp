@@ -263,7 +263,7 @@ void CPackageView::OnInitialUpdate()
 		{
 			strAddString = pItem->GetName();
 			iItemAdded = m_lbImages.AddString (strAddString);			
-			m_lbImages.SetItemData (iItemAdded, (DWORD)pItem);
+			m_lbImages.SetItemData (iItemAdded, (DWORD_PTR)pItem);
 			pItem->SetListBoxIndex (iItemAdded);
 
 			//m_tcImages.AddToAllImages( pItem );
@@ -753,7 +753,7 @@ void CPackageView::OnPaint()
 BOOL CPackageView::OnToolTipNotify( UINT id, NMHDR * pNMHDR, LRESULT * pResult )
 {
 	TOOLTIPTEXT *pTTT = (TOOLTIPTEXT *)pNMHDR;    
-	UINT nID =pNMHDR->idFrom;
+	UINT nID = (UINT)pNMHDR->idFrom;
     
 	if (pTTT->uFlags & TTF_IDISHWND)
 	{
@@ -914,7 +914,7 @@ void CPackageView::RenameImage (CWallyDoc *pWallyDoc)
 						m_lbImages.DeleteString (j);
 						iItemAdded = m_lbImages.AddString (strName);
 						
-						m_lbImages.SetItemData (iItemAdded, (DWORD)pItem);
+						m_lbImages.SetItemData (iItemAdded, (DWORD_PTR)pItem);
 						pItem->SetListBoxIndex (iItemAdded);
 
 						m_lbImages.SetSel (iItemAdded, true);
@@ -991,7 +991,7 @@ void CPackageView::RenameImage()
 				iItemAdded = m_lbImages.AddString (strName);
 				pItem->SetListBoxIndex (iItemAdded);
 				
-				m_lbImages.SetItemData (iItemAdded, (DWORD)pItem);
+				m_lbImages.SetItemData (iItemAdded, (DWORD_PTR)pItem);
 				m_lbImages.SetSel (iItemAdded, true);
 				m_lbImages.SetTopIndex (iItemAdded);
 				SetDlgItemText (IDC_STATIC_NAME, strName);
@@ -1073,7 +1073,6 @@ void CPackageView::OnPackageOpen()
 	OpenSelectedImages();
 }
 
-#if 1
 void CPackageView::OpenSelectedImages(BOOL bCaretOnly /* = FALSE */)
 {
 	int iSelCount = m_lbImages.GetSelCount();
@@ -1121,10 +1120,11 @@ void CPackageView::OpenSelectedImages(BOOL bCaretOnly /* = FALSE */)
 			g_iDocColorDepth = 8;
 
 			int iWadType = (pWADItem->GetWADType() == WAD3_TYPE ? FILE_TYPE_HALF_LIFE : FILE_TYPE_QUAKE1);
+			int iMaxMips = (pWADItem->IsQPic() ? 1 : 4);
 			int iWidths[4];
 			int iHeights[4];
 
-			for (k = 0; k < 4; k++)
+			for (k = 0; k < iMaxMips; k++)
 			{
 				iWidths[k] = max ( (int)(g_iDocWidth / pow (2, k)), 1);
 				iHeights[k] = max ( (int)(g_iDocHeight / pow (2, k)), 1);
@@ -1143,7 +1143,7 @@ void CPackageView::OpenSelectedImages(BOOL bCaretOnly /* = FALSE */)
 			pWallyDoc->SetPackageDoc (pPackage);
 			pWADItem->SetWallyDoc (pWallyDoc);
 
-			for (k = 0; k < 4; k++)
+			for (k = 0; k < iMaxMips; k++)
 			{			
 				pbyWADData = pWADItem->GetBits(k);
 				pbyMipData = pWallyDoc->GetBits(k);
@@ -1174,98 +1174,7 @@ void CPackageView::OpenSelectedImages(BOOL bCaretOnly /* = FALSE */)
 		piIndexes = NULL;
 	}
 }
-#else
-void CPackageView::OpenSelectedImages(BOOL bCaretOnly /* = FALSE */)
-{
-	int iSelCount = m_tcImages.GetSelectedCount();
-	if( (iSelCount == 0) || (iSelCount == LB_ERR) )
-	{
-		return;
-	}
 
-	int *piIndexes = NULL;	
-	int iSizes[4];
-	HTREEITEM hItem = NULL;
-
-	CWADItem *pWADItem	= NULL;
-	CWallyDoc *pWallyDoc	= NULL;
-	CWallyView *pFirstView  = NULL;
-	CPackageDoc *pPackage	= (CPackageDoc *)GetDocument();
-	BYTE* pbyMipData = NULL;
-	BYTE* pbyWADData = NULL;
-	POSITION pos;
-
-	int j = 0;
-	int k = 0;
-	
-	hItem = m_tcImages.GetFirstSelectedItem();
-	while( hItem )
-	{
-		pWADItem = m_tcImages.GetImageFromHTREEITEM( hItem );
-		if( !pWADItem )
-		{
-			hItem = m_tcImages.GetNextSelectedItem( hItem );
-			continue;
-		}
-
-		if ((pWADItem->IsValidMip()) && (!pWADItem->HasWallyDoc()))
-		{	
-			// Set the globals so that the Doc gets created properly.
-			g_iDocWidth  = pWADItem->GetWidth();
-			g_iDocHeight = pWADItem->GetHeight();
-			g_iDocColorDepth = 8;
-
-			int iWadType = (pWADItem->GetWADType() == WAD3_TYPE ? FILE_TYPE_HALF_LIFE : FILE_TYPE_QUAKE1);
-			int iWidths[4];
-			int iHeights[4];
-
-			for (k = 0; k < 4; k++)
-			{
-				iWidths[k] = max ( (int)(g_iDocWidth / pow (2, k)), 1);
-				iHeights[k] = max ( (int)(g_iDocHeight / pow (2, k)), 1);
-				iSizes[k] = iWidths[k] * iHeights[k];
-			}
-			
-			int iHoldType = g_iFileTypeDefault;
-			g_iFileTypeDefault = iWadType;
-			pWallyDoc = (CWallyDoc *)theApp.WallyDocTemplate->OpenDocumentFile(NULL, TRUE);
-			g_iFileTypeDefault = iHoldType;
-
-			pWallyDoc->SetGameType (iWadType);
-			pWallyDoc->SetName (pWADItem->GetName());
-			pWallyDoc->SetModifiedFlag (false);
-
-			pWallyDoc->SetPackageDoc (pPackage);
-			pWADItem->SetWallyDoc (pWallyDoc);
-
-			for (k = 0; k < 4; k++)
-			{			
-				pbyWADData = pWADItem->GetBits(k);
-				pbyMipData = pWallyDoc->GetBits(k);
-				memcpy (pbyMipData, pbyWADData, iSizes[k]);
-			}
-
-			// Ty-  bug fix:  not sure why, but when the bUpdate parameter below is set to TRUE,
-			// the first and largest mip ends up being a solid color.  Immediately after this
-			// SetPalette call, you'd see the first mip in CWallyDoc has been wiped clean.
-			pWallyDoc->SetPalette (pWADItem->GetPalette(), 256, FALSE);
-			pWallyDoc->CopyMipToLayer();
-
-			// Find that first view so we can tell it the data has changed
-			pos = pWallyDoc->GetFirstViewPosition();
-			pFirstView = (CWallyView *)pWallyDoc->GetNextView( pos );
-			pFirstView->UpdateDIBs();
-			pFirstView->Invalidate();	
-
-			pFirstView = NULL;
-			pWallyDoc = NULL;
-			pWADItem = NULL;
-		}
-
-		hItem = m_tcImages.GetNextSelectedItem( hItem );
-	}	
-}
-#endif
 
 
 void CPackageView::OnPackageAdd() 
@@ -1343,7 +1252,7 @@ void CPackageView::DoBrowsingPaste ()
 		}
 
 		// Determine the data size
-		int iDataSize = GlobalSize(hgData);
+		int iDataSize = (int)GlobalSize(hgData);
 					
 		// Alloc memory
 		BYTE *pbyData = (BYTE *)GlobalAlloc(GMEM_FIXED, iDataSize); 
@@ -1420,7 +1329,7 @@ void CPackageView::DoPaste (bool bReplaceCurrent)
 			}
 
 			// Determine the data size
-			int iDataSize = GlobalSize(hgData);
+			int iDataSize = (int)GlobalSize(hgData);
 						
 			// Alloc memory
 			BYTE *pbyData = (BYTE *)GlobalAlloc(GMEM_FIXED, iDataSize); 
@@ -1764,7 +1673,7 @@ void CPackageView::DoPaste (bool bReplaceCurrent)
 			}
 
 			// Determine the data size
-			int iDataSize = GlobalSize(hg); 
+			int iDataSize = (int)GlobalSize(hg);
 			
 			// Alloc memory
 			BYTE *byTextData = (BYTE *)GlobalAlloc(GMEM_FIXED, iDataSize); 
@@ -2228,7 +2137,7 @@ bool CPackageView::AddImage (unsigned char *pbyBits[], CWallyPalette *pPalette, 
 		iItemAdded = m_lbImages.AddString (strName);
 		pItem->SetListBoxIndex (iItemAdded);
 
-		m_lbImages.SetItemData (iItemAdded, (DWORD)pItem);
+		m_lbImages.SetItemData (iItemAdded, (DWORD_PTR)pItem);
 		m_lbImages.SetSel (iItemAdded, true);
 		m_lbImages.SetTopIndex (iItemAdded);
 	}
@@ -2265,7 +2174,7 @@ bool CPackageView::AddImage (unsigned char *pbyBits[], CWallyPalette *pPalette, 
 			strName = pItem->GetName();
 			pDoc->RemoveImage (pItem);
 			pItem = pDoc->AddImage (pbyBits, pPalette, strName, iWidth, iHeight, bUpdate);
-			m_lbImages.SetItemData (iIndex, (DWORD)pItem);				
+			m_lbImages.SetItemData (iIndex, (DWORD_PTR)pItem);				
 		}
 		else
 		{
@@ -2460,7 +2369,7 @@ void CPackageView::AddString (CWADItem *pItem, LPCTSTR szName, bool bSetSelectio
 {	
 	int iItemAdded = m_lbImages.AddString (szName);	
 	pItem->SetListBoxIndex (iItemAdded);
-	m_lbImages.SetItemData (iItemAdded, (DWORD)pItem);	
+	m_lbImages.SetItemData (iItemAdded, (DWORD_PTR)pItem);
 	
 	if (bSetSelection)
 	{
@@ -2922,9 +2831,9 @@ BOOL CPackageView::DoDragDrop(COleDataObject* pDataObject, DROPEFFECT dropEffect
 	if (pDataObject->IsDataAvailable(g_iBrowseCopyPasteFormat)) 
 	{
 		HGLOBAL hmem = pDataObject->GetGlobalData(g_iBrowseCopyPasteFormat);
-		CMemFile sf((BYTE*) ::GlobalLock(hmem), ::GlobalSize(hmem));
+		CMemFile sf((BYTE*) ::GlobalLock(hmem), (int)::GlobalSize(hmem));
 		
-		DWORD dwSize = ::GlobalSize(hmem);
+		DWORD dwSize = (DWORD)::GlobalSize(hmem);
 
 		BYTE *pbyDragData = new BYTE[dwSize];
 		
@@ -2970,9 +2879,9 @@ BOOL CPackageView::DoDragDrop(COleDataObject* pDataObject, DROPEFFECT dropEffect
 	if (pDataObject->IsDataAvailable(g_iPackageFormat)) 
 	{
 		HGLOBAL hmem = pDataObject->GetGlobalData(g_iPackageFormat);
-		CMemFile sf((BYTE*) ::GlobalLock(hmem), ::GlobalSize(hmem));
+		CMemFile sf((BYTE*) ::GlobalLock(hmem), (DWORD)::GlobalSize(hmem));
 
-		DWORD dwSize = ::GlobalSize(hmem);
+		DWORD dwSize = (DWORD)::GlobalSize(hmem);
 		
 		if (m_pbyClipboardBuffer)
 		{
@@ -3096,7 +3005,7 @@ void CPackageView::OnUpdateEditFilter()
 	
 }
 
-void CPackageView::OnTimer(UINT nIDEvent) 
+void CPackageView::OnTimer(UINT_PTR nIDEvent) 
 {		
 	CFormView::OnTimer(nIDEvent);
 
@@ -3252,7 +3161,7 @@ void CPackageView::FilterList()
 			{			
 				iItemAdded = m_lbImages.AddString (strAddString);
 				pItem->SetListBoxIndex (iItemAdded);
-				m_lbImages.SetItemData (iItemAdded, (DWORD)pItem);
+				m_lbImages.SetItemData (iItemAdded, (DWORD_PTR)pItem);
 				bAtLeastOne = true;
 			}
 		}
@@ -3260,7 +3169,7 @@ void CPackageView::FilterList()
 		{
 			iItemAdded = m_lbImages.AddString (strAddString);
 			pItem->SetListBoxIndex (iItemAdded);
-			m_lbImages.SetItemData (iItemAdded, (DWORD)pItem);
+			m_lbImages.SetItemData (iItemAdded, (DWORD_PTR)pItem);
 			bAtLeastOne = true;
 		}
 		pItem = pDoc->GetNextLump();		

@@ -238,7 +238,7 @@ int CWallyList::Serialize (LPCTSTR szFileName, CFile *pFile, BYTE *pbyData, bool
 				return IH_ERROR_READING_FILE;
 			}
 			
-			iFileLength = fp.GetLength();
+			iFileLength = (int)fp.GetLength();
 			pbyTempBuffer = new unsigned char[iFileLength];
 			fp.Read (pbyTempBuffer, iFileLength);
 			fp.Close();
@@ -251,7 +251,7 @@ int CWallyList::Serialize (LPCTSTR szFileName, CFile *pFile, BYTE *pbyData, bool
 			ASSERT (!pbyData);
 			ASSERT (!szFileName);
 
-			iFileLength = pFile->GetLength();
+			iFileLength = (int)pFile->GetLength();
 			pbyTempBuffer = new unsigned char[iFileLength];
 			pFile->Read (pbyTempBuffer, iFileLength);
 

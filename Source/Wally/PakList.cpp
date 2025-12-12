@@ -138,7 +138,7 @@ BOOL CPakItem::Create (LPCTSTR szDataFile, LPCTSTR szDirectory, LPCTSTR szTempDi
 	}
 	
 	strcpy_s (m_PackFileHeader.name, sizeof(m_PackFileHeader.name), strFileName);
-	m_PackFileHeader.filelen = f.GetLength();
+	m_PackFileHeader.filelen = (int)f.GetLength();
 	SetDisplaySize (m_PackFileHeader.filelen);
 	m_PackFileHeader.filepos = 0;
 
@@ -527,7 +527,7 @@ BOOL CPakItem::OpenItem()
 	
 	ShellExecuteEx (&shInfo);
 
-	if ((ULONG)shInfo.hInstApp == ERROR_NO_ASSOCIATION )
+	if ((HINSTANCE)shInfo.hInstApp == (HINSTANCE)ERROR_NO_ASSOCIATION )
 	{
 		SetErrorCode (PAK_ERROR_NO_ASSOC);
 		return FALSE;
@@ -994,7 +994,7 @@ void CPakDirectory::BuildTree (CTreeCtrl& List, HTREEITEM htParent, int iClosedI
 	tvInsert.item.iImage = iClosedIcon;
 	tvInsert.item.iSelectedImage = iOpenIcon;
 	tvInsert.item.cChildren = 0;
-	tvInsert.item.lParam = (ULONG)this;
+	tvInsert.item.lParam = (UINT_PTR)this;
 
 	htItem = List.InsertItem (&tvInsert);
 
@@ -1823,7 +1823,7 @@ BOOL CPakList::Serialize(CFile *pFile, LPCTSTR szActualFileName, int iFlags)
 	case SERIALIZE_READ:
 		{
 			packheader_t PackHeader;
-			int iLength = pFile->GetLength();
+			int iLength = (int)pFile->GetLength();
 					
 			if (iLength < sizeof (PackHeader))
 			{

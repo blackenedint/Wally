@@ -64,7 +64,7 @@ BOOL CGamePaletteDlg::OnInitDialog()
 void CGamePaletteDlg::OnOK() 
 {
 	int iSelection = m_cbGame.GetCurSel();
-	m_iGameSelection = m_cbGame.GetItemData (iSelection);
+	m_iGameSelection = (int)m_cbGame.GetItemData (iSelection);
 
 	CDialog::OnOK();
 }

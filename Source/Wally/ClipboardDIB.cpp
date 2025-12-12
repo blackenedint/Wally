@@ -58,7 +58,7 @@ bool CClipboardDIB::InitFromClipboard(CWnd* p_Wnd)
 		}
 
 		// Determine the data size
-		int iDataSize = GlobalSize(hg); 
+		int iDataSize = (int)GlobalSize(hg);
 		
 		// Alloc memory
 		m_pData.p_ClipboardData = (unsigned char *)GlobalAlloc(GMEM_FIXED, iDataSize); 

@@ -211,7 +211,7 @@ CPackageTreeEntryCategory::CPackageTreeEntryCategory( const char *szName, CPacka
 
 /* virtual */ UINT CPackageTreeEntryCategory::GetItemCount()
 {
-	return m_NameItemVector.size();
+	return (UINT)m_NameItemVector.size();
 }
 
 /* virtual */ CWADItem *CPackageTreeEntryCategory::GetItemAtPosition( UINT iDesiredPosition )
@@ -1271,7 +1271,7 @@ void CPackageTreeControl::OnLButtonDblClk(UINT nFlags, CPoint point)
 	}
 }
 
-void CPackageTreeControl::OnTimer(UINT nIDEvent)
+void CPackageTreeControl::OnTimer(UINT_PTR nIDEvent)
 {
 	if (nIDEvent == TCEX_EDITLABEL)
 	{

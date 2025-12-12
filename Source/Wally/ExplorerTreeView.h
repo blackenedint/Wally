@@ -31,7 +31,7 @@ private:
 	HTREEITEM m_htDesktopRoot;
 	TV_ITEM m_tvSelectedItem;
 
-	int m_iTimerID;
+	UINT_PTR m_iTimerID;
 	int m_iTimerTicks;
 
 // Operations
@@ -73,7 +73,7 @@ protected:
 	//{{AFX_MSG(CExplorerTreeView)
 	afx_msg void OnItemexpanded(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

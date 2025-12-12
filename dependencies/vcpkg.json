@@ -1,0 +1,16 @@
+{
+    "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+    "name": "my-application",
+    "version": "0.15.2",
+    "dependencies": [
+		"boost-property-tree",
+		"boost-interprocess",
+		"boost-json",
+		"boost-algorithm",
+		"boost-spirit",
+		"boost-phoenix",
+		"boost-fusion",
+		"boost-filesystem",
+		"stb"
+    ]
+}

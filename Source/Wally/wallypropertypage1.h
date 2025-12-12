@@ -63,7 +63,7 @@ protected:
 	//{{AFX_MSG(CWallyPropertyPage1)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnChangeEditGamma();
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnCheckGammaPaletteToolbar();
 	afx_msg void OnBtnFreeUndoMemory();

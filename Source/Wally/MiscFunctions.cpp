@@ -35,10 +35,10 @@ void DebugOut(const char* text, bool overwrite)
 		err = fopen_s(&wp, "D:\\temp\\wallyout.txt", "a");
 
 	if (err == 0)
-	{ 
+	{
 		fprintf(wp, "%s\n", text);
 		fclose(wp);
-	}	
+	}
 #endif 
 }
 
@@ -48,7 +48,7 @@ void DebugOut(const char* text, bool overwrite)
 //
 // Returns:		".pcx", ".mip", etc.
 ///////////////////////////////////////////////////////////////////////
-CString GetExtension( CString strFileName)
+CString GetExtension(CString strFileName)
 {
 	// neal - this is a more robust way of getting the extension
 
@@ -57,10 +57,10 @@ CString GetExtension( CString strFileName)
 	char szFileName[_MAX_FNAME];
 	char szExt[_MAX_EXT];
 
-	_splitpath_s( strFileName, szDrive, sizeof(szDrive), szDir, sizeof(szDir), szFileName, sizeof(szFileName), szExt, sizeof(szExt));
+	_splitpath_s(strFileName, szDrive, sizeof(szDrive), szDir, sizeof(szDir), szFileName, sizeof(szFileName), szExt, sizeof(szExt));
 
 	// make it lowercase for easy comparisons
-	CString strExtension( szExt);
+	CString strExtension(szExt);
 	strExtension.MakeLower();
 
 	return strExtension;
@@ -71,7 +71,7 @@ CString GetExtension( CString strFileName)
 // Action:		Strip the path from the specified FileName, leaving the 
 //				extension on.  Return the resultant string.
 ///////////////////////////////////////////////////////////////////////
-CString GetRawFileNameWExt (CString FileName)
+CString GetRawFileNameWExt(CString FileName)
 {
 	// Plop in the existing FileName, so there's always enough room
 	CString RawName;
@@ -85,13 +85,13 @@ CString GetRawFileNameWExt (CString FileName)
 	}
 	else
 		j = 0;
-	
+
 	// From the character after the '\', read up until the end of the string, adding to our string
 	while (j < FileName.GetLength())
 	{
-		RawName += FileName.GetAt(j++);	
+		RawName += FileName.GetAt(j++);
 	}
-	
+
 	return RawName;
 }
 ///////////////////////////////////////////////////////////////////////
@@ -99,7 +99,7 @@ CString GetRawFileNameWExt (CString FileName)
 // Action:		Strip the path and extension from the specified FileName,
 //				and return the resultant string.
 ///////////////////////////////////////////////////////////////////////
-CString GetRawFileName( CString FileName )
+CString GetRawFileName(CString FileName)
 {
 	// Plop in the existing FileName, so there's always enough room
 	CString RawName;
@@ -118,15 +118,15 @@ CString GetRawFileName( CString FileName )
 	}
 	else
 		j = 0;
-	
+
 	// From the character after the '\', read up until the '.', adding to our string
 	while ((FileName.GetAt(j) != '.') && (j < FileName.GetLength()))
-		RawName += FileName.GetAt(j++);	
-	
+		RawName += FileName.GetAt(j++);
+
 	return RawName;
 }
 
-CString GetPathToFile (CString strFile)
+CString GetPathToFile(CString strFile)
 {
 	// Plop in the existing FileName, so there's always enough room
 	CString strPath;
@@ -142,10 +142,10 @@ CString GetPathToFile (CString strFile)
 	{
 		return "";
 	}
-	
+
 	// Grab everything but the stuff after our last '\'
 
-	strPath = strFile.Left(j);	
+	strPath = strFile.Left(j);
 	return strPath;
 
 }
@@ -156,7 +156,7 @@ CString GetPathToFile (CString strFile)
 // Action:		Add an asterisk to the end of the string specified, so
 //				long as there isn't already one there
 ///////////////////////////////////////////////////////////////////////
-CString SetModifiedTitle (CString Title)
+CString SetModifiedTitle(CString Title)
 {
 	int j;
 	CString NewTitle(Title);
@@ -164,7 +164,7 @@ CString SetModifiedTitle (CString Title)
 	for (j = 0; j < NewTitle.GetLength() - 1; j++)
 	{
 		if (NewTitle.GetAt(j) == '*')
-			return NewTitle;		
+			return NewTitle;
 	}
 	NewTitle += '*';
 	return NewTitle;
@@ -177,14 +177,14 @@ CString SetModifiedTitle (CString Title)
 // Action:		Remove the NewLine character ('\n') from the specified
 //				string, and terminate the string at that location
 ///////////////////////////////////////////////////////////////////////
-void StripNewLine (char *Source)
-{        
-    for (int j = 0; Source[j] != '\0'; j++)
-    {
+void StripNewLine(char* Source)
+{
+	for (int j = 0; Source[j] != '\0'; j++)
+	{
 		if (Source[j] == '\n')
-        Source[j] = '\0';
-     }
-     return;
+			Source[j] = '\0';
+	}
+	return;
 }
 
 
@@ -194,21 +194,21 @@ void StripNewLine (char *Source)
 // Action:		Copy the specified string into the FileName member 
 //				variable, and set the linked list p_Next pointer to NULL
 ///////////////////////////////////////////////////////////////////////
-CParseCommandLine::CParseCommandLine ()
+CParseCommandLine::CParseCommandLine()
 {
 }
 
-void CParseCommandLine::Parse (char *p_CommandLine)
-{		
+void CParseCommandLine::Parse(char* p_CommandLine)
+{
 	int x = 0;
 	unsigned int j;
 	char TempItem[256];
 	for (j = 0; j < (strlen(p_CommandLine) + 1); j++)
 	{
 		if ((p_CommandLine[j] == ' ') || (p_CommandLine[j] == '\0'))
-		{	
+		{
 			TempItem[x] = '\0';
-			AddItem (TempItem);
+			AddItem(TempItem);
 			x = 0;
 		}
 		else
@@ -220,7 +220,7 @@ void CParseCommandLine::Parse (char *p_CommandLine)
 }
 
 
-void CParseCommandLine::AddItem (char *NewItem)
+void CParseCommandLine::AddItem(char* NewItem)
 {
 	m_FileNames.push_back(CString(NewItem));
 }
@@ -232,17 +232,17 @@ void CParseCommandLine::AddItem (char *NewItem)
 //	return (4 * xdiv.quot);
 //}
 
-CString GetWildCardExtension (CString WildCard, int Index)
+CString GetWildCardExtension(CString WildCard, int Index)
 {
 	int j = 0;
 	int x = 0;
 	int iPos = WildCard.Find('|');
 	if (iPos == -1)
 	{
-		ASSERT (false);		// Something's wrong with your wildcard
+		ASSERT(false);		// Something's wrong with your wildcard
 		return "";
 	}
-		
+
 	// Find the first '|'
 	while ((WildCard.GetAt(j++) != '|') && (j < WildCard.GetLength()));
 
@@ -252,25 +252,25 @@ CString GetWildCardExtension (CString WildCard, int Index)
 	}
 
 	// Find the second '|'	
-	while ((WildCard.GetAt(j++) != '|')  && (j < WildCard.GetLength()));
+	while ((WildCard.GetAt(j++) != '|') && (j < WildCard.GetLength()));
 
 	if (j == WildCard.GetLength())
 	{
 		return "";
 	}
 
-	for (x = 0; x < Index; x++)	
+	for (x = 0; x < Index; x++)
 	{
 		// Find the first '|'
-		while ((WildCard.GetAt(j++) != '|') && (j < WildCard.GetLength()));  
+		while ((WildCard.GetAt(j++) != '|') && (j < WildCard.GetLength()));
 		if (j == WildCard.GetLength())
 		{
 			return "";
 		}
 
 		// Find the second '|'	
-		while ((WildCard.GetAt(j++) != '|')  && (j < WildCard.GetLength()));
-	
+		while ((WildCard.GetAt(j++) != '|') && (j < WildCard.GetLength()));
+
 		if (j == WildCard.GetLength())
 		{
 			return "";
@@ -278,12 +278,12 @@ CString GetWildCardExtension (CString WildCard, int Index)
 	}
 	j -= 4;
 
-	CString rString (WildCard.Mid(j, 3));
+	CString rString(WildCard.Mid(j, 3));
 	return rString;
 
 }
 
-CString GetWildCardFromList (CString strImageList, int Index)
+CString GetWildCardFromList(CString strImageList, int Index)
 {
 	int j = 0;
 	int x = 0;
@@ -291,7 +291,7 @@ CString GetWildCardFromList (CString strImageList, int Index)
 
 	if (strImageList.Find('|') == -1)
 	{
-		ASSERT (false);		// Something's wrong with your wildcard
+		ASSERT(false);		// Something's wrong with your wildcard
 		return "";
 	}
 
@@ -305,15 +305,15 @@ CString GetWildCardFromList (CString strImageList, int Index)
 	}
 
 	// Find the second '|'	
-	while ((strImageList.GetAt(j++) != '|')  && (j < strImageList.GetLength()));
-	
+	while ((strImageList.GetAt(j++) != '|') && (j < strImageList.GetLength()));
+
 	if (j == strImageList.GetLength())
 	{
 		return "";
 	}
 
 
-	for (x = 0; x < Index; x++)	
+	for (x = 0; x < Index; x++)
 	{
 		iStart = j;
 		// Find the first '|'
@@ -325,8 +325,8 @@ CString GetWildCardFromList (CString strImageList, int Index)
 		}
 
 		// Find the second '|'	
-		while ((strImageList.GetAt(j++) != '|')  && (j < strImageList.GetLength()));
-		
+		while ((strImageList.GetAt(j++) != '|') && (j < strImageList.GetLength()));
+
 		if (j == strImageList.GetLength())
 		{
 			return "";
@@ -334,12 +334,12 @@ CString GetWildCardFromList (CString strImageList, int Index)
 
 	}
 
-	CString rString (strImageList.Mid(iStart, iStart + j));
+	CString rString(strImageList.Mid(iStart, iStart + j));
 	return rString;
 }
 
 
-CString GetParentDirectory (CString PathName)
+CString GetParentDirectory(CString PathName)
 {
 	// Input will look like this:  c:\quake2\baseq2\textures\level1\nice.wal
 	// We want to return the "level1\"
@@ -356,101 +356,101 @@ CString GetParentDirectory (CString PathName)
 	}
 
 	// Start at the end of the string, working backwards until the first \ is found
-	for (j = length - 1; (j >= 0) && (PathName.GetAt(j) != '\\'); j--);	
+	for (j = length - 1; (j >= 0) && (PathName.GetAt(j) != '\\'); j--);
 	MarkerRight = j;
 
 	if (MarkerRight == 0)
 		return "";
-	
+
 	// Go find the next '\' 
-	for (j = MarkerRight - 1; (j >= 0) && (PathName.GetAt(j) != '\\'); j--);	
+	for (j = MarkerRight - 1; (j >= 0) && (PathName.GetAt(j) != '\\'); j--);
 	MarkerLeft = j;
 
 	if (MarkerLeft <= 0)
 		return "";
-	
-	CString Directory (PathName.Mid (MarkerLeft + 1, (MarkerRight - MarkerLeft) - 1));
+
+	CString Directory(PathName.Mid(MarkerLeft + 1, (MarkerRight - MarkerLeft) - 1));
 	return Directory;
-	
+
 }
 
 int CALLBACK BrowseCallbackProc(
-	HWND hwnd,	
-	UINT uMsg,	
-	LPARAM lParam,	
-	LPARAM lpData	
-   )
+	HWND hwnd,
+	UINT uMsg,
+	LPARAM lParam,
+	LPARAM lpData
+)
 {
 	switch (uMsg) {
 	case BFFM_INITIALIZED:
-		::SendMessage( hwnd, BFFM_SETSELECTION, TRUE, lpData );
+		::SendMessage(hwnd, BFFM_SETSELECTION, TRUE, lpData);
 		break;
-		}
+	}
 	return 0;
 }
 
-CString BrowseForFolder (LPCTSTR szTitle, LPCTSTR szStartDirectory /* = NULL */)
+CString BrowseForFolder(LPCTSTR szTitle, LPCTSTR szStartDirectory /* = NULL */)
 {
 	char szName[_MAX_PATH * 5] = "";	// temp storage for partial pathname
-	
+
 	if (szStartDirectory)
 	{
-		CString strStartDirectory ("");
-		strStartDirectory = TrimSlashes (szStartDirectory);
-		
-		strcpy_s (szName, sizeof(szName), strStartDirectory.GetBuffer(strStartDirectory.GetLength()));
+		CString strStartDirectory("");
+		strStartDirectory = TrimSlashes(szStartDirectory);
+
+		strcpy_s(szName, sizeof(szName), strStartDirectory.GetBuffer(strStartDirectory.GetLength()));
 	}
 
 	BROWSEINFO BrowseInfo;
 
-	BrowseInfo.hwndOwner      = AfxGetMainWnd()->m_hWnd;
-	BrowseInfo.pidlRoot       = NULL;	
+	BrowseInfo.hwndOwner = AfxGetMainWnd()->m_hWnd;
+	BrowseInfo.pidlRoot = NULL;
 	BrowseInfo.pszDisplayName = szName;
-	BrowseInfo.lpszTitle      = szTitle;
-	BrowseInfo.ulFlags        = BIF_RETURNONLYFSDIRS;
-	BrowseInfo.lpfn           = BrowseCallbackProc;
-	BrowseInfo.lParam         = (LPARAM)szName;
-	BrowseInfo.iImage         = 0;
+	BrowseInfo.lpszTitle = szTitle;
+	BrowseInfo.ulFlags = BIF_RETURNONLYFSDIRS;
+	BrowseInfo.lpfn = BrowseCallbackProc;
+	BrowseInfo.lParam = (LPARAM)szName;
+	BrowseInfo.iImage = 0;
 
-	LPITEMIDLIST pItemList = SHBrowseForFolder( &BrowseInfo);
-	CString      strPathName ("");	
+	LPITEMIDLIST pItemList = SHBrowseForFolder(&BrowseInfo);
+	CString      strPathName("");
 
 	LPMALLOC pMalloc = NULL;
-	if (SHGetMalloc( &pMalloc) == NOERROR)
+	if (SHGetMalloc(&pMalloc) == NOERROR)
 	{
-		if (SHGetPathFromIDList( pItemList, szName))
+		if (SHGetPathFromIDList(pItemList, szName))
 		{
-			int iLen = strlen( szName);
+			int iLen = (int)strlen(szName);
 
 			// start at 1 so drive letter is capitalized
 			for (int i = 1; i < iLen; i++)
-				szName[i] = (char )tolower( szName[i]);
+				szName[i] = (char)tolower(szName[i]);
 
 			strPathName = szName;
-		}	
-		pMalloc->Free( pItemList);
+		}
+		pMalloc->Free(pItemList);
 	}
 	else
-		MessageBeep( 0);		// neal - need a msg box?
+		MessageBeep(0);		// neal - need a msg box?
 
-  
+
 	return strPathName;
 }
 
-int GetFileLength (FILE *f)
+int GetFileLength(FILE* f)
 {
 	int		pos;
 	int		end;
 
-	pos = ftell (f);
-	fseek (f, 0, SEEK_END);
-	end = ftell (f);
-	fseek (f, pos, SEEK_SET);
+	pos = ftell(f);
+	fseek(f, 0, SEEK_END);
+	end = ftell(f);
+	fseek(f, pos, SEEK_SET);
 
 	return end;
 }
 
-CString TrimFromLeft (LPCTSTR szSource, LPCTSTR szTrimString)
+CString TrimFromLeft(LPCTSTR szSource, LPCTSTR szTrimString)
 {
 	CString strSource(szSource);
 	CString strTrim(szTrimString);
@@ -468,18 +468,18 @@ CString TrimFromLeft (LPCTSTR szSource, LPCTSTR szTrimString)
 		if (strTrim.GetAt(j) != strSource.GetAt(j))
 		{
 			iTrimPosition = j + 1;
-			
+
 			// Stop looping
 			j = strTrim.GetLength();
 		}
 	}
 
-	strSource = strSource.Right (strSource.GetLength() - iTrimPosition);
+	strSource = strSource.Right(strSource.GetLength() - iTrimPosition);
 
 	return strSource;
 }
 
-CString TrimLeadingCharacters (LPCTSTR szSource, char cCharacter)
+CString TrimLeadingCharacters(LPCTSTR szSource, char cCharacter)
 {
 	CString strSource(szSource);
 
@@ -497,10 +497,10 @@ CString TrimLeadingCharacters (LPCTSTR szSource, char cCharacter)
 			bDone = TRUE;
 		}
 	}
-	
+
 	if (iPosition < strSource.GetLength())
 	{
-		strSource = strSource.Right (strSource.GetLength() - iPosition);
+		strSource = strSource.Right(strSource.GetLength() - iPosition);
 	}
 	else
 	{
@@ -510,7 +510,7 @@ CString TrimLeadingCharacters (LPCTSTR szSource, char cCharacter)
 	return strSource;
 }
 
-CString TrimLeadingSlashes (LPCTSTR szSource)
+CString TrimLeadingSlashes(LPCTSTR szSource)
 {
 	CString strSource(szSource);
 
@@ -528,10 +528,10 @@ CString TrimLeadingSlashes (LPCTSTR szSource)
 			bDone = TRUE;
 		}
 	}
-	
+
 	if (iPosition < strSource.GetLength())
 	{
-		strSource = strSource.Right (strSource.GetLength() - iPosition);
+		strSource = strSource.Right(strSource.GetLength() - iPosition);
 	}
 	else
 	{
@@ -541,7 +541,7 @@ CString TrimLeadingSlashes (LPCTSTR szSource)
 	return strSource;
 }
 
-CString TrimSlashes (LPCTSTR szSource)
+CString TrimSlashes(LPCTSTR szSource)
 {
 	CString strSource(szSource);
 
@@ -563,7 +563,7 @@ CString TrimSlashes (LPCTSTR szSource)
 
 	if (iPosition > 0)
 	{
-		strSource = strSource.Left (iPosition);
+		strSource = strSource.Left(iPosition);
 	}
 	else
 	{
@@ -573,28 +573,28 @@ CString TrimSlashes (LPCTSTR szSource)
 	return strSource;
 }
 
-CString ConvertAllCharacters (LPCTSTR szSource, char cMatch, char cChange)
+CString ConvertAllCharacters(LPCTSTR szSource, char cMatch, char cChange)
 {
 	if (cMatch == cChange)
 	{
 		return szSource;
 	}
 
-	CString strConvert (szSource);
+	CString strConvert(szSource);
 
-	while (strConvert.Find (cMatch) != -1)
+	while (strConvert.Find(cMatch) != -1)
 	{
-		strConvert.SetAt (strConvert.Find (cMatch), cChange);
+		strConvert.SetAt(strConvert.Find(cMatch), cChange);
 	}
 
 	return strConvert;
 }
 
-int GetNumCharacters (LPCTSTR szString, char cMatch)
+int GetNumCharacters(LPCTSTR szString, char cMatch)
 {
 	int iCount = 0;
 
-	for (UINT j = 0; j < strlen (szString) + 1; j++)
+	for (UINT j = 0; j < strlen(szString) + 1; j++)
 	{
 		if (szString[j] == cMatch)
 		{
@@ -605,7 +605,7 @@ int GetNumCharacters (LPCTSTR szString, char cMatch)
 	return iCount;
 }
 
-void GetAllWildCards( LPSTR szWildCard, CStringArray *psaWildCards )
+void GetAllWildCards(LPSTR szWildCard, CStringArray* psaWildCards)
 {
 	int iStrLength = 0;
 	int iStrPosition = 0;
@@ -613,52 +613,52 @@ void GetAllWildCards( LPSTR szWildCard, CStringArray *psaWildCards )
 	int k = 0;
 	BOOL bMoreWildCards = TRUE;
 
-	if( !psaWildCards )
+	if (!psaWildCards)
 	{
 		return;
 	}
 
-	iStrLength = strlen( szWildCard );
-	
+	iStrLength = (int)strlen(szWildCard);
+
 	// Strip out any spaces at the front		
-	while( (*szWildCard == ' ') && (iStrPosition < iStrLength) )
+	while ((*szWildCard == ' ') && (iStrPosition < iStrLength))
 	{
 		szWildCard++;
 		iStrPosition++;
 	}
 
-	if( iStrPosition == iStrLength )
+	if (iStrPosition == iStrLength)
 	{
 		// No wildcards
 		return;
 	}
 
 	// Change any other spaces to NULL
-	for( j = iStrPosition, k = 0; j < iStrLength; j++, k++ )
+	for (j = iStrPosition, k = 0; j < iStrLength; j++, k++)
 	{
-		if( szWildCard[k] == ' ' )
+		if (szWildCard[k] == ' ')
 		{
 			szWildCard[k] = '\0';
 		}
 	}
-	
-	while( bMoreWildCards )
-	{
-		psaWildCards->Add( szWildCard );
-		szWildCard += ( strlen(szWildCard) + 1 );
-		iStrPosition += ( strlen(szWildCard) + 1 );
 
-		if( iStrPosition >= iStrLength )
+	while (bMoreWildCards)
+	{
+		psaWildCards->Add(szWildCard);
+		szWildCard += ((int)strlen(szWildCard) + 1);
+		iStrPosition += ((int)strlen(szWildCard) + 1);
+
+		if (iStrPosition >= iStrLength)
 		{
 			bMoreWildCards = FALSE;
 		}
 	}
 }
 
-BOOL MatchesWildCard (char *szSource, CStringArray *psaWildCards)
+BOOL MatchesWildCard(char* szSource, CStringArray* psaWildCards)
 {
-	char *n;
-	char *szUpperSource;
+	char* n;
+	char* szUpperSource;
 
 	CString strWildCard("");
 	CString strSource("");
@@ -666,18 +666,18 @@ BOOL MatchesWildCard (char *szSource, CStringArray *psaWildCards)
 	strSource = szSource;
 	strSource.MakeUpper();
 
-	szUpperSource = strSource.GetBuffer( strSource.GetLength() );
-	
+	szUpperSource = strSource.GetBuffer(strSource.GetLength());
+
 	int j = 0;
 
 	for (j = 0; j < psaWildCards->GetSize(); j++)
 	{
 		strWildCard = psaWildCards->GetAt(j);
 		strWildCard.MakeUpper();
-		
-		n = strWildCard.GetBuffer( strWildCard.GetLength() );
 
-		if( fnmatch( n, szUpperSource, FNM_PATHNAME | FNM_PERIOD) != FNM_NOMATCH )
+		n = strWildCard.GetBuffer(strWildCard.GetLength());
+
+		if (fnmatch(n, szUpperSource, FNM_PATHNAME | FNM_PERIOD) != FNM_NOMATCH)
 		{
 			return TRUE;
 		}
@@ -686,243 +686,243 @@ BOOL MatchesWildCard (char *szSource, CStringArray *psaWildCards)
 	return FALSE;
 }
 
-int fnmatch (char *pattern, char *string, int flags)
+int fnmatch(char* pattern, char* string, int flags)
 {
-/*
-	http://src.openresources.com/debian/src/base/HTML/S/bash_2.01.1.orig%20bash-2.01.1%20lib%20glob%20fnmatch.c.html
-	http://math.unice.fr/laboratoire/help/info/glibc/libc_276.html
+	/*
+		http://src.openresources.com/debian/src/base/HTML/S/bash_2.01.1.orig%20bash-2.01.1%20lib%20glob%20fnmatch.c.html
+		http://math.unice.fr/laboratoire/help/info/glibc/libc_276.html
 
-	Copyright (C) 1991 Free Software Foundation, Inc.
-	This file is part of the GNU C Library.
+		Copyright (C) 1991 Free Software Foundation, Inc.
+		This file is part of the GNU C Library.
 
-	The GNU C Library is free software; you can redistribute it and/or
-	modify it under the terms of the GNU Library General Public License as
-	published by the Free Software Foundation; either version 2 of the
-	License, or (at your option) any later version.
+		The GNU C Library is free software; you can redistribute it and/or
+		modify it under the terms of the GNU Library General Public License as
+		published by the Free Software Foundation; either version 2 of the
+		License, or (at your option) any later version.
 
-	The GNU C Library is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-	Library General Public License for more details.
+		The GNU C Library is distributed in the hope that it will be useful,
+		but WITHOUT ANY WARRANTY; without even the implied warranty of
+		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+		Library General Public License for more details.
 
-	You should have received a copy of the GNU Library General Public
-	License along with the GNU C Library; see the file COPYING.LIB.  If
-	not, write to the Free Software Foundation, Inc., 675 Mass Ave,
-	Cambridge, MA 02139, USA.
-	
-*/
+		You should have received a copy of the GNU Library General Public
+		License along with the GNU C Library; see the file COPYING.LIB.  If
+		not, write to the Free Software Foundation, Inc., 675 Mass Ave,
+		Cambridge, MA 02139, USA.
 
-	char *p = pattern, *n = string;
+	*/
+
+	char* p = pattern, * n = string;
 	char c;
 
 	if ((flags & ~__FNM_FLAGS) != 0)
-	{		
+	{
 		return (-1);
-    }
+	}
 
 	while ((c = *p++) != '\0')
-    {
-      switch (c)
-        {
-        case '?':
-          if (*n == '\0')
-            return (FNM_NOMATCH);
-          else if ((flags & FNM_PATHNAME) && *n == '\\')
-            /* If we are matching a pathname, `?' can never match a `/'. */
-            return (FNM_NOMATCH);
-          else if ((flags & FNM_PERIOD) && *n == '.' &&
-                   (n == string || ((flags & FNM_PATHNAME) && n[-1] == '\\')))
-            /* `?' cannot match a `.' if it is the first character of the
-               string or if it is the first character following a slash and
-               we are matching a pathname. */
-            return (FNM_NOMATCH);
-          break;
+	{
+		switch (c)
+		{
+		case '?':
+			if (*n == '\0')
+				return (FNM_NOMATCH);
+			else if ((flags & FNM_PATHNAME) && *n == '\\')
+				/* If we are matching a pathname, `?' can never match a `/'. */
+				return (FNM_NOMATCH);
+			else if ((flags & FNM_PERIOD) && *n == '.' &&
+				(n == string || ((flags & FNM_PATHNAME) && n[-1] == '\\')))
+				/* `?' cannot match a `.' if it is the first character of the
+				   string or if it is the first character following a slash and
+				   we are matching a pathname. */
+				return (FNM_NOMATCH);
+			break;
 
-        case '\\':
-          if (!(flags & FNM_NOESCAPE))
-            {
-              c = *p++;
-              if (c == '\0')
-                return (FNM_NOMATCH);
-            }
-          if (*n != c)
-            return (FNM_NOMATCH);
-          break;
+		case '\\':
+			if (!(flags & FNM_NOESCAPE))
+			{
+				c = *p++;
+				if (c == '\0')
+					return (FNM_NOMATCH);
+			}
+			if (*n != c)
+				return (FNM_NOMATCH);
+			break;
 
-        case '*':
-          if ((flags & FNM_PERIOD) && *n == '.' &&
-              (n == string || ((flags & FNM_PATHNAME) && n[-1] == '\\')))
-            /* `*' cannot match a `.' if it is the first character of the
-               string or if it is the first character following a slash and
-               we are matching a pathname. */
-            return (FNM_NOMATCH);
+		case '*':
+			if ((flags & FNM_PERIOD) && *n == '.' &&
+				(n == string || ((flags & FNM_PATHNAME) && n[-1] == '\\')))
+				/* `*' cannot match a `.' if it is the first character of the
+				   string or if it is the first character following a slash and
+				   we are matching a pathname. */
+				return (FNM_NOMATCH);
 
-          /* Collapse multiple consecutive, `*' and `?', but make sure that
-             one character of the string is consumed for each `?'. */
-          for (c = *p++; c == '?' || c == '*'; c = *p++)
-            {
-              if ((flags & FNM_PATHNAME) && *n == '\\')
-                /* A slash does not match a wildcard under FNM_PATHNAME. */
-                return (FNM_NOMATCH);
-              else if (c == '?')
-                {
-                  if (*n == '\0')
-                    return (FNM_NOMATCH);
-                  /* One character of the string is consumed in matching
-                     this ? wildcard, so *??? won't match if there are
-                     fewer than three characters. */
-                  n++;
-                }
-            }
+			/* Collapse multiple consecutive, `*' and `?', but make sure that
+			   one character of the string is consumed for each `?'. */
+			for (c = *p++; c == '?' || c == '*'; c = *p++)
+			{
+				if ((flags & FNM_PATHNAME) && *n == '\\')
+					/* A slash does not match a wildcard under FNM_PATHNAME. */
+					return (FNM_NOMATCH);
+				else if (c == '?')
+				{
+					if (*n == '\0')
+						return (FNM_NOMATCH);
+					/* One character of the string is consumed in matching
+					   this ? wildcard, so *??? won't match if there are
+					   fewer than three characters. */
+					n++;
+				}
+			}
 
-          if (c == '\0')
-            return (0);
+			if (c == '\0')
+				return (0);
 
-          /* General case, use recursion. */
-          {
-            char c1 = (!(flags & FNM_NOESCAPE) && c == '\\') ? *p : c;
-            for (--p; *n != '\0'; ++n)
-              /* Only call fnmatch if the first character indicates a
-                 possible match. */
-              if ((c == '[' || *n == c1) &&
-                  fnmatch (p, n, flags & ~FNM_PERIOD) == 0)
-                return (0);
-            return (FNM_NOMATCH);
-          }
+			/* General case, use recursion. */
+			{
+				char c1 = (!(flags & FNM_NOESCAPE) && c == '\\') ? *p : c;
+				for (--p; *n != '\0'; ++n)
+					/* Only call fnmatch if the first character indicates a
+					   possible match. */
+					if ((c == '[' || *n == c1) &&
+						fnmatch(p, n, flags & ~FNM_PERIOD) == 0)
+						return (0);
+				return (FNM_NOMATCH);
+			}
 
-        case '[':
-          {
-            /* Nonzero if the sense of the character class is inverted.  */
-            int iNot;
+		case '[':
+		{
+			/* Nonzero if the sense of the character class is inverted.  */
+			int iNot;
 
-            if (*n == '\0')
-              return (FNM_NOMATCH);
+			if (*n == '\0')
+				return (FNM_NOMATCH);
 
-            /* A character class cannot match a `.' if it is the first
-               character of the string or if it is the first character
-               following a slash and we are matching a pathname. */
-            if ((flags & FNM_PERIOD) && *n == '.' &&
-                (n == string || ((flags & FNM_PATHNAME) && n[-1] == '\\')))
-              return (FNM_NOMATCH);
+			/* A character class cannot match a `.' if it is the first
+			   character of the string or if it is the first character
+			   following a slash and we are matching a pathname. */
+			if ((flags & FNM_PERIOD) && *n == '.' &&
+				(n == string || ((flags & FNM_PATHNAME) && n[-1] == '\\')))
+				return (FNM_NOMATCH);
 
-            /* POSIX.2 2.8.3.1.2 says: `An expression containing a `[' that
-               is not preceded by a backslash and is not part of a bracket
-               expression produces undefined results.'  This implementation
-               treats the `[' as just a character to be matched if there is
-               not a closing `]'.  This code will have to be changed when
-               POSIX.2 character classes are implemented. */
-            {
-              char *np;
+			/* POSIX.2 2.8.3.1.2 says: `An expression containing a `[' that
+			   is not preceded by a backslash and is not part of a bracket
+			   expression produces undefined results.'  This implementation
+			   treats the `[' as just a character to be matched if there is
+			   not a closing `]'.  This code will have to be changed when
+			   POSIX.2 character classes are implemented. */
+			{
+				char* np;
 
-              for (np = p; np && *np && *np != ']'; np++)
-                ;
+				for (np = p; np && *np && *np != ']'; np++)
+					;
 
-              if (np && !*np)
-                {
-                  if (*n != '[')
-                    return (FNM_NOMATCH);
-                  break;
-                }
-            }
-              
+				if (np && !*np)
+				{
+					if (*n != '[')
+						return (FNM_NOMATCH);
+					break;
+				}
+			}
+
 			iNot = (*p == '!' || *p == '^');
-            if (iNot)
-              ++p;
+			if (iNot)
+				++p;
 
-            c = *p++;
-            for (;;)
-              {
-                char cstart, cend;
+			c = *p++;
+			for (;;)
+			{
+				char cstart, cend;
 
-                /* Initialize cstart and cend in case `-' is the last
-                   character of the pattern. */
-                cstart = cend = c;
+				/* Initialize cstart and cend in case `-' is the last
+				   character of the pattern. */
+				cstart = cend = c;
 
-                if (!(flags & FNM_NOESCAPE) && c == '\\')
-                  {
-                    if (*p == '\0')
-                      return FNM_NOMATCH;
-                    cstart = cend = *p++;
-                  }
+				if (!(flags & FNM_NOESCAPE) && c == '\\')
+				{
+					if (*p == '\0')
+						return FNM_NOMATCH;
+					cstart = cend = *p++;
+				}
 
-                if (c == '\0')
-                  /* [ (unterminated) loses.  */
-                  return (FNM_NOMATCH);
+				if (c == '\0')
+					/* [ (unterminated) loses.  */
+					return (FNM_NOMATCH);
 
-                c = *p++;
+				c = *p++;
 
-                if ((flags & FNM_PATHNAME) && c == '\\')
-                  /* [/] can never match.  */
-                  return (FNM_NOMATCH);
+				if ((flags & FNM_PATHNAME) && c == '\\')
+					/* [/] can never match.  */
+					return (FNM_NOMATCH);
 
-                /* This introduces a range, unless the `-' is the last
-                   character of the class.  Find the end of the range
-                   and move past it. */
-                if (c == '-' && *p != ']')
-                  {
-                    cend = *p++;
-                    if (!(flags & FNM_NOESCAPE) && cend == '\\')
-                      cend = *p++;
-                    if (cend == '\0')
-                      return (FNM_NOMATCH);
+				/* This introduces a range, unless the `-' is the last
+				   character of the class.  Find the end of the range
+				   and move past it. */
+				if (c == '-' && *p != ']')
+				{
+					cend = *p++;
+					if (!(flags & FNM_NOESCAPE) && cend == '\\')
+						cend = *p++;
+					if (cend == '\0')
+						return (FNM_NOMATCH);
 
-                    c = *p++;
-                  }
+					c = *p++;
+				}
 
-                if (*n >= cstart && *n <= cend)
-                  goto matched;
+				if (*n >= cstart && *n <= cend)
+					goto matched;
 
-                if (c == ']')
-                  break;
-              }
-            if (!iNot)
-              return (FNM_NOMATCH);
-            break;
+				if (c == ']')
+					break;
+			}
+			if (!iNot)
+				return (FNM_NOMATCH);
+			break;
 
-          matched:
-            /* Skip the rest of the [...] that already matched.  */
-            while (c != ']')
-              {
-                if (c == '\0')
-                  /* [... (unterminated) loses.  */
-                  return (FNM_NOMATCH);
+		matched:
+			/* Skip the rest of the [...] that already matched.  */
+			while (c != ']')
+			{
+				if (c == '\0')
+					/* [... (unterminated) loses.  */
+					return (FNM_NOMATCH);
 
-                c = *p++;
-                if (!(flags & FNM_NOESCAPE) && c == '\\')
-                  {
-                    if (*p == '\0')
-                      return FNM_NOMATCH;
-                    /* XXX 1003.2d11 is unclear if this is right. */
-                    ++p;
-                  }
-              }
-            if (iNot)
-              return (FNM_NOMATCH);
-          }
-          break;
+				c = *p++;
+				if (!(flags & FNM_NOESCAPE) && c == '\\')
+				{
+					if (*p == '\0')
+						return FNM_NOMATCH;
+					/* XXX 1003.2d11 is unclear if this is right. */
+					++p;
+				}
+			}
+			if (iNot)
+				return (FNM_NOMATCH);
+		}
+		break;
 
-        default:
-          if (c != *n)
-            return (FNM_NOMATCH);
-        }
+		default:
+			if (c != *n)
+				return (FNM_NOMATCH);
+		}
 
-      ++n;
-    }
+		++n;
+	}
 
-  if (*n == '\0')
-    return (0);
+	if (*n == '\0')
+		return (0);
 
-  return (FNM_NOMATCH);
+	return (FNM_NOMATCH);
 }
 
-void FindAllFiles (LPCTSTR szPath, CStringArray *pStrArray, int iFlags)
+void FindAllFiles(LPCTSTR szPath, CStringArray* pStrArray, int iFlags)
 {
 	struct _finddata_t c_file;
-	long hFile;
+	intptr_t hFile;
 	CString strCompare("");
-	
+
 	// Trim off the trailing \ marks
-	CString strFullPath (szPath);
+	CString strFullPath(szPath);
 	CString strPathWildCard("");
 
 	if (strFullPath != "")
@@ -940,7 +940,7 @@ void FindAllFiles (LPCTSTR szPath, CStringArray *pStrArray, int iFlags)
 	}
 	strPathWildCard = strFullPath + "*.*";
 
-	if( (hFile = _findfirst( strPathWildCard, &c_file )) != -1L )	
+	if ((hFile = _findfirst(strPathWildCard, &c_file)) != -1L)
 	{
 		strCompare = c_file.name;
 
@@ -949,48 +949,48 @@ void FindAllFiles (LPCTSTR szPath, CStringArray *pStrArray, int iFlags)
 			if ((c_file.attrib & _A_SUBDIR) == 0)
 			{
 				if (iFlags & WANT_FULLPATH)
-				{					
-					pStrArray->Add (strFullPath + strCompare);
+				{
+					pStrArray->Add(strFullPath + strCompare);
 				}
 
 				if (iFlags & WANT_FILENAME)
-				{					
-					pStrArray->Add (strCompare);
+				{
+					pStrArray->Add(strCompare);
 				}
 			}
 		}
-	
-		while( _findnext( hFile, &c_file ) == 0 )
+
+		while (_findnext(hFile, &c_file) == 0)
 		{
 			strCompare = c_file.name;
-			
+
 			if ((strCompare != ".") && (strCompare != ".."))
 			{
 				if ((c_file.attrib & _A_SUBDIR) == 0)
-				{						
+				{
 					if (iFlags & WANT_FULLPATH)
-					{				
-						pStrArray->Add (strFullPath + strCompare);
+					{
+						pStrArray->Add(strFullPath + strCompare);
 					}
 
 					if (iFlags & WANT_FILENAME)
-					{					
-						pStrArray->Add (strCompare);
+					{
+						pStrArray->Add(strCompare);
 					}
 				}
 			}
 		}
 	}
-	
+
 }
 
 
-BOOL CalcImageColor24 (int iWidth, int iHeight, COLOR_IRGB *pirgbImageData, float *pfR, float *pfG, float *pfB, BOOL bNormalize /* = FALSE */, BOOL bIgnoreBlue /* = FALSE */)
+BOOL CalcImageColor24(int iWidth, int iHeight, COLOR_IRGB* pirgbImageData, float* pfR, float* pfG, float* pfB, BOOL bNormalize /* = FALSE */, BOOL bIgnoreBlue /* = FALSE */)
 {
-	ASSERT (pirgbImageData);	
-	ASSERT (pfR);
-	ASSERT (pfG);
-	ASSERT (pfB);
+	ASSERT(pirgbImageData);
+	ASSERT(pfR);
+	ASSERT(pfG);
+	ASSERT(pfB);
 
 	int j = 0;
 	int iSize = iWidth * iHeight;
@@ -999,21 +999,21 @@ BOOL CalcImageColor24 (int iWidth, int iHeight, COLOR_IRGB *pirgbImageData, floa
 	double dfGreen = 0.0;
 	double dfBlue = 0.0;
 
-	COLOR_IRGB *p = NULL;
+	COLOR_IRGB* p = NULL;
 	int r = 0;
 	int g = 0;
 	int b = 0;
 
 	for (j = 0; j < iSize; j++)
 	{
-		p = (COLOR_IRGB *)( ((BYTE *)pirgbImageData) + (j * sizeof(COLOR_IRGB)));
-		
-		r = GetRValue (*p);
-		g = GetGValue (*p);
-		b = GetBValue (*p);
+		p = (COLOR_IRGB*)(((BYTE*)pirgbImageData) + (j * sizeof(COLOR_IRGB)));
 
-		if( (r != 0) || (g != 0) || (b != 255) || !bIgnoreBlue )
-		{		
+		r = GetRValue(*p);
+		g = GetGValue(*p);
+		b = GetBValue(*p);
+
+		if ((r != 0) || (g != 0) || (b != 255) || !bIgnoreBlue)
+		{
 			dfRed = ((dfRed * (j * 1.0)) + ((r * 1.0) / 255.0)) / (1.0 * (j + 1));
 			dfGreen = ((dfGreen * (j * 1.0)) + ((g * 1.0) / 255.0)) / (1.0 * (j + 1));
 			dfBlue = ((dfBlue * (j * 1.0)) + ((b * 1.0) / 255.0)) / (1.0 * (j + 1));
@@ -1023,8 +1023,8 @@ BOOL CalcImageColor24 (int iWidth, int iHeight, COLOR_IRGB *pirgbImageData, floa
 	if (bNormalize)
 	{
 		double dfMax = 0.0;
-		dfMax = max (dfRed, dfGreen);
-		dfMax = max (dfMax, dfBlue);
+		dfMax = max(dfRed, dfGreen);
+		dfMax = max(dfMax, dfBlue);
 
 		dfRed = dfRed / dfMax;
 		dfGreen = dfGreen / dfMax;
@@ -1038,12 +1038,12 @@ BOOL CalcImageColor24 (int iWidth, int iHeight, COLOR_IRGB *pirgbImageData, floa
 	return TRUE;
 }
 
-BOOL CalcImageColor24( int iWidth, int iHeight, LPBYTE pbyImageData, float *pfR, float *pfG, float *pfB, BOOL bNormalize /* = FALSE */, BOOL bIgnoreBlue /* = FALSE */ )
+BOOL CalcImageColor24(int iWidth, int iHeight, LPBYTE pbyImageData, float* pfR, float* pfG, float* pfB, BOOL bNormalize /* = FALSE */, BOOL bIgnoreBlue /* = FALSE */)
 {
-	ASSERT (pbyImageData);	
-	ASSERT (pfR);
-	ASSERT (pfG);
-	ASSERT (pfB);
+	ASSERT(pbyImageData);
+	ASSERT(pfR);
+	ASSERT(pfG);
+	ASSERT(pfB);
 
 	int j = 0;
 	int iSize = iWidth * iHeight;
@@ -1051,30 +1051,30 @@ BOOL CalcImageColor24( int iWidth, int iHeight, LPBYTE pbyImageData, float *pfR,
 	double dfRed = 0.0;
 	double dfGreen = 0.0;
 	double dfBlue = 0.0;
-	
+
 	int r = 0;
 	int g = 0;
 	int b = 0;
 
-	for( j = 0; j < iSize; j++ )
-	{		
+	for (j = 0; j < iSize; j++)
+	{
 		r = pbyImageData[(j * 3) + 0];
 		g = pbyImageData[(j * 3) + 1];
 		b = pbyImageData[(j * 3) + 2];
 
-		if( (r != 0) || (g != 0) || (b != 255) || !bIgnoreBlue )
-		{		
+		if ((r != 0) || (g != 0) || (b != 255) || !bIgnoreBlue)
+		{
 			dfRed = ((dfRed * (j * 1.0)) + ((r * 1.0) / 255.0)) / (1.0 * (j + 1));
 			dfGreen = ((dfGreen * (j * 1.0)) + ((g * 1.0) / 255.0)) / (1.0 * (j + 1));
 			dfBlue = ((dfBlue * (j * 1.0)) + ((b * 1.0) / 255.0)) / (1.0 * (j + 1));
-		}		
+		}
 	}
 
 	if (bNormalize)
 	{
 		double dfMax = 0.0;
-		dfMax = max (dfRed, dfGreen);
-		dfMax = max (dfMax, dfBlue);
+		dfMax = max(dfRed, dfGreen);
+		dfMax = max(dfMax, dfBlue);
 
 		dfRed = dfRed / dfMax;
 		dfGreen = dfGreen / dfMax;
@@ -1089,13 +1089,13 @@ BOOL CalcImageColor24( int iWidth, int iHeight, LPBYTE pbyImageData, float *pfR,
 }
 
 
-BOOL CalcImageColor256 (int iWidth, int iHeight, BYTE *pbyImageData, BYTE *pbyPalette, float *pfR, float *pfG, float *pfB, BOOL bNormalize, BOOL bIgnoreBlue /* = FALSE */)
+BOOL CalcImageColor256(int iWidth, int iHeight, BYTE* pbyImageData, BYTE* pbyPalette, float* pfR, float* pfG, float* pfB, BOOL bNormalize, BOOL bIgnoreBlue /* = FALSE */)
 {
-	ASSERT (pbyImageData);
-	ASSERT (pbyPalette);
-	ASSERT (pfR);
-	ASSERT (pfG);
-	ASSERT (pfB);
+	ASSERT(pbyImageData);
+	ASSERT(pbyPalette);
+	ASSERT(pfR);
+	ASSERT(pfG);
+	ASSERT(pfB);
 
 	int j = 0;
 	int iSize = iWidth * iHeight;
@@ -1104,10 +1104,10 @@ BOOL CalcImageColor256 (int iWidth, int iHeight, BYTE *pbyImageData, BYTE *pbyPa
 	double dfGreen = 0.0;
 	double dfBlue = 0.0;
 
-	BYTE *p = NULL;
+	BYTE* p = NULL;
 	int r = 0;
 	int g = 0;
-	int b = 0;	
+	int b = 0;
 
 	for (j = 0; j < iSize; j++)
 	{
@@ -1116,7 +1116,7 @@ BOOL CalcImageColor256 (int iWidth, int iHeight, BYTE *pbyImageData, BYTE *pbyPa
 		g = pbyPalette[(*p) * 3 + 1];
 		b = pbyPalette[(*p) * 3 + 2];
 
-		if( (r != 0) || (g != 0) || (b != 255) || !bIgnoreBlue )
+		if ((r != 0) || (g != 0) || (b != 255) || !bIgnoreBlue)
 		{
 			dfRed = ((dfRed * (j * 1.0)) + ((r * 1.0) / 255.0)) / (1.0 * (j + 1));
 			dfGreen = ((dfGreen * (j * 1.0)) + ((g * 1.0) / 255.0)) / (1.0 * (j + 1));
@@ -1127,8 +1127,8 @@ BOOL CalcImageColor256 (int iWidth, int iHeight, BYTE *pbyImageData, BYTE *pbyPa
 	if (bNormalize)
 	{
 		double dfMax = 0.0;
-		dfMax = max (dfRed, dfGreen);
-		dfMax = max (dfMax, dfBlue);
+		dfMax = max(dfRed, dfGreen);
+		dfMax = max(dfMax, dfBlue);
 
 		dfRed = dfRed / dfMax;
 		dfGreen = dfGreen / dfMax;
@@ -1142,7 +1142,7 @@ BOOL CalcImageColor256 (int iWidth, int iHeight, BYTE *pbyImageData, BYTE *pbyPa
 	return TRUE;
 }
 
-BOOL BlendPalette (BYTE *pbyPalette, int iIndexLeft, int iIndexRight)
+BOOL BlendPalette(BYTE* pbyPalette, int iIndexLeft, int iIndexRight)
 {
 	float rl = 0;
 	float gl = 0;
@@ -1160,24 +1160,24 @@ BOOL BlendPalette (BYTE *pbyPalette, int iIndexLeft, int iIndexRight)
 
 	float r = 0.0;
 	float g = 0.0;
-	float b = 0.0;	
-		
-	int iIndexLow	= 0;
-	int iIndexHigh	= 0;	
+	float b = 0.0;
+
+	int iIndexLow = 0;
+	int iIndexHigh = 0;
 
 	int j = 0;
 	int k = 0;
-	
+
 	iSeparation = (abs(iIndexRight - iIndexLeft));
 	fSeparation = (float)(iSeparation);
 
-	iIndexLow	= min (iIndexRight, iIndexLeft);
-	iIndexHigh	= max (iIndexRight, iIndexLeft);
-	
+	iIndexLow = min(iIndexRight, iIndexLeft);
+	iIndexHigh = max(iIndexRight, iIndexLeft);
+
 	rl = (float)(pbyPalette[iIndexLow * 3]);
 	gl = (float)(pbyPalette[iIndexLow * 3 + 1]);
 	bl = (float)(pbyPalette[iIndexLow * 3 + 2]);
-	
+
 	rh = (float)(pbyPalette[iIndexHigh * 3]);
 	gh = (float)(pbyPalette[iIndexHigh * 3 + 1]);
 	bh = (float)(pbyPalette[iIndexHigh * 3 + 2]);
@@ -1185,9 +1185,9 @@ BOOL BlendPalette (BYTE *pbyPalette, int iIndexLeft, int iIndexRight)
 	// Determine the adjustment amounts
 	rAdj = (float)((rh - rl) / fSeparation);
 
-	gAdj = (float)((gh - gl) / fSeparation);	
+	gAdj = (float)((gh - gl) / fSeparation);
 
-	bAdj = (float)((bh - bl) / fSeparation);	
+	bAdj = (float)((bh - bl) / fSeparation);
 
 	r = rl;
 	g = gl;
@@ -1198,23 +1198,23 @@ BOOL BlendPalette (BYTE *pbyPalette, int iIndexLeft, int iIndexRight)
 		r += rAdj;
 		g += gAdj;
 		b += bAdj;
-		pbyPalette[j * 3]		= (int)r;
-		pbyPalette[j * 3 + 1]	= (int)g;
-		pbyPalette[j * 3 + 2]	= (int)b;
-	}	
-	
+		pbyPalette[j * 3] = (int)r;
+		pbyPalette[j * 3 + 1] = (int)g;
+		pbyPalette[j * 3 + 2] = (int)b;
+	}
+
 	return TRUE;
 }
 
 
-LPVOID MakeFile( LPCTSTR szFileName, DWORD dwFileSize)
+LPVOID MakeFile(LPCTSTR szFileName, DWORD dwFileSize)
 {
 	HANDLE hFile = NULL;
 	HANDLE hFileMapping = NULL;
 	LPVOID lpView = NULL;
 	DWORD dwError = 0;
 
-	hFile = CreateFile( 
+	hFile = CreateFile(
 		szFileName,							// Name of file
 		GENERIC_READ | GENERIC_WRITE,		// Desired access
 		0,									// Share mode
@@ -1228,31 +1228,31 @@ LPVOID MakeFile( LPCTSTR szFileName, DWORD dwFileSize)
 		// CreateFile() does not return NULL on error
 		dwError = ::GetLastError();
 		CWallyException WLYException;
-		WLYException.SetLastErrorCode( dwError );
-		
+		WLYException.SetLastErrorCode(dwError);
+
 		throw WLYException;
 	}
 
-	hFileMapping = CreateFileMapping( 
+	hFileMapping = CreateFileMapping(
 		hFile,						// Handle to file
 		NULL,						// Security attributes
 		PAGE_READWRITE,				// Protection
 		0,							// Max size high
 		dwFileSize,					// Max size low
 		NULL);						// Name of mapping object	
-	
+
 	if (hFileMapping == NULL)
 	{
 		dwError = ::GetLastError();
-		CloseHandle( hFile);		
+		CloseHandle(hFile);
 		CWallyException WLYException;
-		WLYException.SetLastErrorCode( dwError );
-		
+		WLYException.SetLastErrorCode(dwError);
+
 		throw WLYException;
 	}
 
 	// We don't need this anymore
-	CloseHandle( hFile);
+	CloseHandle(hFile);
 
 	// Map to the entire file
 	lpView = MapViewOfFile(
@@ -1265,23 +1265,23 @@ LPVOID MakeFile( LPCTSTR szFileName, DWORD dwFileSize)
 	if (lpView == NULL)
 	{
 		dwError = ::GetLastError();
-		CloseHandle( hFileMapping);
+		CloseHandle(hFileMapping);
 		CWallyException WLYException;
-		WLYException.SetLastErrorCode( dwError );
+		WLYException.SetLastErrorCode(dwError);
 
 		throw WLYException;
 	}
 
 	// We don't need this anymore
-	CloseHandle( hFileMapping);
+	CloseHandle(hFileMapping);
 
 	return lpView;
 }
 
-void CloseFile( LPVOID lpFile )
+void CloseFile(LPVOID lpFile)
 {
-	if( lpFile )
+	if (lpFile)
 	{
-		UnmapViewOfFile( lpFile );
+		UnmapViewOfFile(lpFile);
 	}
 }

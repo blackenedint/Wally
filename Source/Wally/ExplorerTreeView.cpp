@@ -213,7 +213,7 @@ void CExplorerTreeView::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CExplorerTreeView::OnTimer(UINT nIDEvent) 
+void CExplorerTreeView::OnTimer(UINT_PTR nIDEvent) 
 {
 	CTreeView::OnTimer(nIDEvent);
 
@@ -683,7 +683,7 @@ CString CExplorerTreeView::GetPathFromHere (CString strPath, HTREEITEM htItem)
 void CExplorerTreeView::FindAllDirectories (LPCTSTR szPath, CStringArray *pStrArray, int iFlags)
 {
 	struct _finddata_t c_file;
-	long hFile;
+	intptr_t hFile;
 	CString strCompare("");
 	
 	// Trim off the trailing \ marks

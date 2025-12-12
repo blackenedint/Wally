@@ -76,7 +76,7 @@ BOOL CWadMergeStatusDlg::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CWadMergeStatusDlg::OnTimer(UINT nIDEvent) 
+void CWadMergeStatusDlg::OnTimer(UINT_PTR nIDEvent) 
 {	
 	CDialog::OnTimer(nIDEvent);
 

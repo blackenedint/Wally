@@ -95,7 +95,7 @@ BOOL Q2Engine::LoadFile(std::stringstream& ssFileName, _NameBitmaskPair& vPairs)
 		m_sErrorMessage = ssMsg.str();
 		return FALSE;
 	}
-	boost::json::error_code ec;
+	boost::system::error_code ec;
 
 	// Validate the JSON and build a vector of std::pair<std::string,int>
 	auto const jv = mbJSON.ParseJson(ec);

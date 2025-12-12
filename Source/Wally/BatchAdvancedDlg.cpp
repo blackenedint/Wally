@@ -63,7 +63,7 @@ BOOL CBatchAdvancedDlg::OnInitDialog()
 	while (pItem)
 	{
 		iItemAdded = m_cbImages.AddString (pItem->GetDescription());
-		m_cbImages.SetItemData (iItemAdded, (DWORD)pItem);
+		m_cbImages.SetItemData (iItemAdded, (DWORD_PTR)pItem);
 		pItem = m_ihHelper.GetNextSupportedImage();
 		bAtLeastOne = true;
 	}

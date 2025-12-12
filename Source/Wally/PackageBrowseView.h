@@ -61,7 +61,7 @@ private:
 	PBDibStruct m_pdsTiledDIBs[PACKAGE_BROWSE_NUM_ANIMATION_DIBS];
 		
 	int m_iNumDIBTiles;
-	int m_iAnimateTimer;
+	UINT_PTR m_iAnimateTimer;
 	int m_iAnimateTimerValue;
 	int m_iCurrentAnimation;
 	int m_iBrowseImageSize;
@@ -224,7 +224,7 @@ protected:
 	afx_msg void OnUpdateTpSelection(CCmdUI* pCmdUI);
 	afx_msg void OnRButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);

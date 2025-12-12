@@ -10,49 +10,10 @@
 #include "WADList.h"
 #include "BuildList.h"
 
+#include "stb_image.h"
+#include "stb_image_write.h"
+
 class CImageHelper;
-
-//////////////////////////////////////////////////////////////////////////////////////////
-//	Here's where I got the various libraries used:
-//
-//		PNG/ZLIB	- http://www.libpng.org/pub/png/libpng.html
-//					- http://libpng.sourceforge.net/
-//		JPEG		- http://www.ijg.org/
-//
-//////////////////////////////////////////////////////////////////////////////////////////
-
-
-//////////////////////////////////////////////////////////////////////////////////////////
-// PNG Library
-//////////////////////////////////////////////////////////////////////////////////////////
-
-#if 0 // Moving these to project settings
-	#ifdef _DEBUG
-		// Makes pnglib verbose so we can find problems (needs to be before png.h)
-		#define PNG_DEBUG 0
-		#pragma comment (lib, "./lpng1012/libpngd.lib")
-	#else
-		#pragma comment (lib, "./lpng1012/libpng.lib")
-	#endif
-
-	#pragma comment (lib, "./ZLib/zlib.lib")
-#endif
-
-#include <png.h>
-
-//////////////////////////////////////////////////////////////////////////////////////////
-// JPEG Library 
-//////////////////////////////////////////////////////////////////////////////////////////
-#if 0 // Moving these to project settings
-	#ifdef _DEBUG
-		#pragma comment (lib, "./TempFiles/libjpegd.lib")
-	#else
-		#pragma comment (lib, "./TempFiles/libjpeg.lib")
-	#endif
-#endif
-#include <jpeglib.h>
-#include <jerror.h>
-
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Image file format structures
@@ -309,44 +270,6 @@ typedef struct
 #define GIF_ID_SIZE				sizeof (GIF_ID)
 
 #endif __GIF_DEFINITION_
-
-
-#ifndef __JPG_DEFINITION_
-#define __JPG_DEFINITION_
-
-// JPG Error handling
-struct JPGErrorMgr
-{
-	struct jpeg_error_mgr pub;		/* "public" fields */
-	jmp_buf setjmp_buffer;			/* for return to caller */
-	CImageHelper *p_ImageHelper;
-};
-
-typedef struct JPGErrorMgr JPGErrorMgr_s;
-typedef struct JPGErrorMgr * lpJPGErrorMgr;
-
-// This came from jdatasrc in the JPEG lib
-typedef struct 
-{
-	struct jpeg_source_mgr pub;		// Public fields
-	BYTE *pbySourceData;			// Buffer
-	UINT iDataPosition;				// Location in the buffer
-	UINT iDataSize;					// Size of the buffer
-} JPGSourceManager, *lpJPGSourceManager;
-
-// This came from jdatadst.c in the JPEG lib
-typedef struct
-{
-	struct jpeg_destination_mgr pub;	// Public fields
-  	BYTE *pbyDestinationData;			// Buffer
-	UINT iDataPosition;					// Location in the buffer
-	UINT iDataSize;						// Size of the buffer
-	LPVOID lpMemFile;					// Grows as file is built
-} JPGDestinationManager, *lpJPGDestinationManager;
-
-#define JPG_OUTPUT_BUFFER_SIZE	4096
-
-#endif		// #ifndef __JPG_DEFINITION_
 
 
 #ifndef __TEX_DEFINITION_
@@ -809,30 +732,9 @@ public:
 	int GetFirstBuildTile ();
 	int GetLastBuildTile ();
 
-	// PNG stuff
-	static void png_default_warning(png_structp png_ptr, png_const_charp message);
-	static void png_default_error(png_structp png_ptr, png_const_charp message);
-	static void png_default_read_data(png_structp png_ptr, png_bytep data, png_size_t length);
-	static void png_default_write_data(png_structp png_ptr, png_bytep data, png_size_t length);
-	UINT GetPNGReadPosition() { return m_iPNGReadPosition; };
-	void SetPNGReadPosition(UINT iPosition) { m_iPNGReadPosition = iPosition; };
-	UINT GetPNGWritePosition() { return m_iPNGWritePosition; };
-	void SetPNGWritePosition(UINT iPosition) { m_iPNGWritePosition = iPosition; };
 	LPBYTE GetEncodedData() { return m_pbyEncodedData; };
 	LPBYTE GetDecodedData() { return m_pbyDecodedData; };
 	FILE *GetPNGWriteFile() { return m_fpPNGOutput;	};
-
-	// JPG stuff
-	static void		JPGErrorHandler (j_common_ptr cinfo);
-	static void		JPGInitSource (j_decompress_ptr jDecompressInfo);
-	static boolean	JPGFillInputBuffer (j_decompress_ptr jDecompressInfo);
-	static void		JPGSkipInputData (j_decompress_ptr jDecompressInfo, long lNumBytes);
-	static void		JPGTermSource (j_decompress_ptr jDecompressInfo);
-	static void		JPGSetSource (j_decompress_ptr jDecompressInfo, BYTE *pbySourceData, UINT iDataSize);
-	static void		JPGInitDestination (j_compress_ptr pjCompressInfo);
-	static boolean	JPGEmptyOutputBuffer (j_compress_ptr pjCompressInfo);
-	static void		JPGTermDestination (j_compress_ptr pjCompressInfo);
-	static void		JPGSetDestination (j_compress_ptr pjCompressInfo);
 	
 	BOOL SetFileName (LPCTSTR szFileName);
 	BOOL UseArchive() { return m_bUseArchive; };

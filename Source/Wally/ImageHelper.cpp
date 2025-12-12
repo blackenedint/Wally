@@ -20,6 +20,16 @@
 #include "WADList.h"
 #include "RegistryHelper.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#define STBI_NO_STDIO
+#include "stb_image.h"
+
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#define STBIW_NO_STDIO
+#define __STDC_LIB_EXT1__
+#include "stb_image_write.h"
+
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -2052,7 +2062,7 @@ void CImageHelper::ConvertImage (int iColorDepth, LPCTSTR szDestinationDirectory
 			switch (iSourceDepth)			
 			{
 			case IH_8BIT:				
-				for (j = 0; j < iSize; j++)
+				for (j = 0; j < (UINT)iSize; j++)
 				{
 					r = pbySourcePalette[pbySourceData[j] * 3 + 0];
 					g = pbySourcePalette[pbySourceData[j] * 3 + 1];
@@ -2063,7 +2073,7 @@ void CImageHelper::ConvertImage (int iColorDepth, LPCTSTR szDestinationDirectory
 				break;
 
 			case IH_24BIT:
-				for (j = 0; j < iSize; j++)
+				for (j = 0; j < (UINT)iSize; j++)
 				{
 					r = pbySourceData[j * 3 + 0];
 					g = pbySourceData[j * 3 + 1];
@@ -4047,7 +4057,7 @@ void CImageHelper::MapGameFlags (int iSourceType, unsigned char *pbyData, LPCTST
 			LPQ1_MIP_S pQ1ExportHeader = (LPQ1_MIP_S)pbyData;
 			memcpy (m_pQ1ExportHeader, pQ1ExportHeader, iQ1HeaderSize);
 			
-			iLength = strlen(pQ1ExportHeader->name);			
+			iLength =  (int)strlen(pQ1ExportHeader->name);			
 			memcpy (m_pQ2ExportHeader->name, pQ1ExportHeader->name, min (iLength, 15));
 			memcpy (m_lpSinExportHeader->name, pQ1ExportHeader->name, min (iLength, 15));
 			memcpy (m_lpM8ExportHeader->name, pQ1ExportHeader->name, min (iLength, 15));
@@ -4059,7 +4069,7 @@ void CImageHelper::MapGameFlags (int iSourceType, unsigned char *pbyData, LPCTST
 			LPQ2_MIP_S pQ2ExportHeader = (LPQ2_MIP_S)pbyData;
 			memcpy (m_pQ2ExportHeader, pQ2ExportHeader, iQ2HeaderSize);
 
-			iLength = strlen(pQ2ExportHeader->name);			
+			iLength = (int)strlen(pQ2ExportHeader->name);
 			memcpy (m_pQ1ExportHeader->name, pQ2ExportHeader->name, min (iLength, 15));
 			memcpy (m_lpSinExportHeader->name, pQ2ExportHeader->name, min (iLength, 31));
 			memcpy (m_lpM8ExportHeader->name, pQ2ExportHeader->name, min (iLength, 31));
@@ -4102,7 +4112,7 @@ void CImageHelper::MapGameFlags (int iSourceType, unsigned char *pbyData, LPCTST
 			LPSIN_MIP_S lpSinHeader = (LPSIN_MIP_S)pbyData;
 			memcpy (m_lpSinExportHeader, lpSinHeader, SIN_HEADER_SIZE);
 
-			iLength = strlen(m_lpSinExportHeader->name);			
+			iLength = (int)strlen(m_lpSinExportHeader->name);
 			memcpy (m_pQ1ExportHeader->name, m_lpSinExportHeader->name, min (iLength, 15));
 			memcpy (m_pQ2ExportHeader->name, m_lpSinExportHeader->name, min (iLength, 31));
 
@@ -4156,7 +4166,7 @@ void CImageHelper::MapGameFlags (int iSourceType, unsigned char *pbyData, LPCTST
 			char *szName = (char *)pbyData;
 			char skyFlag[4];
 			char cFlag = szName[0];
-			iLength = strlen(szName);
+			iLength = (int)strlen(szName);
 			
 			memcpy (m_pQ2ExportHeader->name, szName, min (iLength, 31));
 			memcpy (m_pQ1ExportHeader->name, szName, min (iLength, 15));

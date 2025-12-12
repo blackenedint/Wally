@@ -1290,7 +1290,7 @@ void CWallyDoc::SerializeQuake1 (CArchive& ar)
 	}
 	else	// loading
 	{		
-		int iFileSize = p_File->GetLength();		
+		UINT iFileSize = (UINT)p_File->GetLength();		
 		BYTE *pbySourceData = NULL;
 		
 		if (iFileSize < iHeaderSize)
@@ -1481,7 +1481,7 @@ void CWallyDoc::SerializeQuake2 (CArchive& ar)
 	}
 	else
 	{
-		int iFileSize = p_File->GetLength();
+		UINT iFileSize = (UINT)p_File->GetLength();
 		BYTE *pbySourceData = NULL;
 		
 		if (iFileSize < iHeaderSize)
@@ -1682,7 +1682,7 @@ void CWallyDoc::SerializeSin(CArchive& ar)
 	}
 	else
 	{		
-		int iFileSize = p_File->GetLength();		
+		UINT iFileSize = (UINT)p_File->GetLength();		
 		BYTE *pbySourceData = NULL;
 		
 		if (iFileSize < iHeaderSize)
@@ -1841,7 +1841,7 @@ void CWallyDoc::SerializeHeretic2(CArchive& ar)
 	int iWidth	= Width();
 	int iHeight = Height();
 	
-	int iFileSize = pFile->GetLength();
+	auto iFileSize = pFile->GetLength();
 
 //	for (j = 0; j < 4; j++)
 //	{

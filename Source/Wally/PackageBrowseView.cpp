@@ -202,7 +202,7 @@ void CPackageBrowseView::OnDraw(CDC* pDC)
 	}
 }
 
-void CPackageBrowseView::OnTimer(UINT nIDEvent) 
+void CPackageBrowseView::OnTimer(UINT_PTR nIDEvent)
 {	
 	CView::OnTimer(nIDEvent);
 

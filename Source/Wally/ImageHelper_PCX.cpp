@@ -263,8 +263,8 @@ BOOL CImageHelper::EncodePCX()
 		
 	int iWidth	= GetImageWidth();
 	int	iHeight = GetImageHeight();
-	int	iDataSize					= 0;	
-	int iPackedLength				= 0;
+	SIZE_T	iDataSize				= 0;
+	SIZE_T iPackedLength			= 0;
 	int iRunLength					= 0;
 	int iOffset						= 0;
 	int iDepth = GetColorDepth();
@@ -275,7 +275,7 @@ BOOL CImageHelper::EncodePCX()
 
 	iDataSize *= (iDepth == IH_24BIT) ? 3 : 1;
 	
-	pbyPackedData = mbData.GetBuffer( iDataSize );
+	pbyPackedData = mbData.GetBuffer( (DWORD)iDataSize );
 	if (! pbyPackedData)
 	{
 		SetErrorCode (IH_OUT_OF_MEMORY);
@@ -477,11 +477,11 @@ BOOL CImageHelper::EncodePCX()
 			
 	// write output file 
 	iPackedLength = pack - pbyPackedData;
-	mbData.SetDataSize( iPackedLength );
+	mbData.SetDataSize((DWORD)iPackedLength );
 
 	if (m_bUseArchive)
 	{
-		m_parFile->Write (pbyPackedData, iPackedLength);
+		m_parFile->Write (pbyPackedData,(UINT) iPackedLength);
 	}
 	else
 	{	

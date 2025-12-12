@@ -73,7 +73,7 @@ END_MESSAGE_MAP()
 BOOL CSinFlagsDlg::OnToolTipNotify( UINT id, NMHDR * pNMHDR, LRESULT * pResult )
 {	
 	TOOLTIPTEXT *pTTT = (TOOLTIPTEXT *)pNMHDR;    
-	UINT nID =pNMHDR->idFrom;
+	UINT nID = (UINT)pNMHDR->idFrom;
     
 	if (pTTT->uFlags & TTF_IDISHWND)
 	{

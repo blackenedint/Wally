@@ -126,7 +126,7 @@ BOOL CBatchDlg::OnInitDialog()
 	{
 		strAddString = pItem->GetDescription();	
 		iItemAdded = m_cbOutputFormat.AddString (strAddString);
-		m_cbOutputFormat.SetItemData (iItemAdded, (DWORD)pItem);
+		m_cbOutputFormat.SetItemData (iItemAdded, (DWORD_PTR)pItem);
 		pItem = ihHelper.GetNextSupportedImage();
 	}
 
@@ -156,7 +156,7 @@ BOOL CBatchDlg::OnInitDialog()
 	{
 		pDoc = (CPackageDoc *)theApp.PackageDocTemplate->GetNextDoc(pos);
 		int iItemAdded = m_cbPackages.AddString (pDoc->GetTitle());
-		m_cbPackages.SetItemData (iItemAdded, (DWORD)pDoc);	
+		m_cbPackages.SetItemData (iItemAdded, (DWORD_PTR)pDoc);
 	}
 
 	if (bAtLeastOne)
@@ -281,7 +281,7 @@ void CBatchDlg::OnButtonGo()
 	std::string sWildCards;
 	std::vector<std::string> vWildCards;
 	char *szWildCard = NULL;	
-	int iStrLength = 0;
+	size_t iStrLength = 0;
 	int iStrPosition = 0;
 	int iImageType = 0;
 
@@ -378,7 +378,7 @@ void CBatchDlg::OnButtonGo()
 				return;
 			}
 
-			g_iMergeNewWADType = m_cbWADType.GetItemData(iCurSel);
+			g_iMergeNewWADType = (int)m_cbWADType.GetItemData(iCurSel);
 			m_pDestinationPackage = theApp.CreatePackageDoc();
 
 			if (m_pDestinationPackage)
@@ -464,7 +464,7 @@ void CBatchDlg::OnButtonGo()
 	CString strText("");
 	CString strWildCards("");
 	char *szWildCard = NULL;	
-	int iStrLength = 0;
+	size_t iStrLength = 0;
 	int iStrPosition = 0;
 
 	bool bFilesToConvert = false;
@@ -848,9 +848,9 @@ void CBatchDlg::UpdateThreadStatus(int iProcessingCount, int iQueuedCount)
 	m_pbStatus.SetPos (m_iFinishedCount);
 }
 
-int CBatchDlg::DoModal() 
+INT_PTR CBatchDlg::DoModal()
 {
-	int iReturn = CDialog::DoModal();
+	INT_PTR iReturn = CDialog::DoModal();
 
 	/*
 	if (m_pThreadList)

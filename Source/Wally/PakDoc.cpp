@@ -213,7 +213,7 @@ void CPakDoc::PasteFiles()
 			}
 
 			// Determine the data size
-			int iDataSize = GlobalSize(hgData);
+			int iDataSize = (int)GlobalSize(hgData);
 						
 			// Alloc memory
 			BYTE *pbyData = (BYTE *)GlobalAlloc(GMEM_FIXED, iDataSize); 
@@ -633,8 +633,8 @@ void CPakDoc::ImportFiles()
 		while (bMoreWildCards)
 		{
 			dirList.AddWildcard (szWildCard);
-			szWildCard += (strlen(szWildCard) + 1);
-			iStrPosition += (strlen(szWildCard) + 1);
+			szWildCard += ((int)strlen(szWildCard) + 1);
+			iStrPosition += ((int)strlen(szWildCard) + 1);
 
 			if (iStrPosition >= iStrLength)
 			{
@@ -778,8 +778,8 @@ BOOL CPakDoc::ExportFiles(BOOL bHasSelections, CView *pCaller)
 			while (bMoreWildCards)
 			{
 				saWildCards.Add (szWildCard);			
-				szWildCard += (strlen(szWildCard) + 1);
-				iStrPosition += (strlen(szWildCard) + 1);
+				szWildCard += ((int)strlen(szWildCard) + 1);
+				iStrPosition += ((int)strlen(szWildCard) + 1);
 
 				if (iStrPosition >= iStrLength)
 				{

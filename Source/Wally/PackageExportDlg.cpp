@@ -65,7 +65,7 @@ BOOL CPackageExportDlg::OnInitDialog()
 	{
 		strAddString = pItem->GetDescription();	
 		iItemAdded = m_cbOutputFormat.AddString (strAddString);
-		m_cbOutputFormat.SetItemData (iItemAdded, (DWORD)pItem);
+		m_cbOutputFormat.SetItemData (iItemAdded, (DWORD_PTR)pItem);
 		pItem = m_ihHelper.GetNextSupportedImage();
 	}
 

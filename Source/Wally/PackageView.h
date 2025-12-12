@@ -116,13 +116,13 @@ private:
 	int m_iLastWADType;
 	CImageList  m_imgList;
 
-	int m_iSelectionTimerID;
+	UINT_PTR m_iSelectionTimerID;
 	int m_iSelectionTimerTicks;
-	int m_iFilterTimerID;
+	UINT_PTR m_iFilterTimerID;
 	int m_iFilterTimerTicks;
-	int m_iListBoxTimerID;
+	UINT_PTR m_iListBoxTimerID;
 	int m_iListBoxTimerTicks;
-	int m_iTreeCtrlTimerID;
+	UINT_PTR m_iTreeCtrlTimerID;
 	int m_iTreeCtrlTimerTicks;
 	CString m_strFilter;
 	bool m_bFilter;
@@ -250,7 +250,7 @@ protected:
 	afx_msg void OnCheckFilter();
 	afx_msg void OnDoubleclickedCheckFilter();
 	afx_msg void OnUpdateEditFilter();
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnButtonSelect();
 	afx_msg void OnPackageDragCancel();
 	afx_msg void OnPackageDragCopy();

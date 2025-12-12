@@ -172,14 +172,14 @@ int CFilter::PickFilter()
 	return FILTER_BRIGHTNESS_CONTRAST;
 };
 
-int CFilter::ShowSettingsDlg( CLayer* pLayer)
+INT_PTR CFilter::ShowSettingsDlg( CLayer* pLayer)
 {
 	ASSERT( pLayer != NULL);
 
 	CWallyDoc*  pDoc  = pLayer->GetDoc();
 //	CWallyView* pView = pLayer->GetView();	// neal - just for TESTING
 
-	int  iRet             = IDCANCEL;
+	INT_PTR  iRet             = IDCANCEL;
 	BOOL bPreviewApplied  = FALSE;
 	BOOL bSettingsChanged = TRUE;		// TODO: add to dlgs - (speed-up)
 

@@ -297,7 +297,7 @@ void CMarbleTileDlg::OnMarbleProperties()
 	Dlg.m_pTileParams = &Params;
 
 	ShowWindow( SW_HIDE);
-	int iRet = Dlg.DoModal();
+	INT_PTR iRet = Dlg.DoModal();
 	ShowWindow( SW_SHOW);
 
 	if (iRet == IDOK)

@@ -168,7 +168,7 @@ void CNewImageDlg::OnOK()
 	
 	if (iCurSel != CB_ERR)
 	{
-		m_iFileType = m_cbFileType.GetItemData(iCurSel);
+		m_iFileType = (int)m_cbFileType.GetItemData(iCurSel);
 
 		// Set some globals
 		g_iFileTypeLastUsed = m_iFileType;
@@ -290,7 +290,7 @@ void CNewImageDlg::OnSelchangeComboGameType()
 
 	if (iCurSel != CB_ERR)
 	{
-		int iFileType = m_cbFileType.GetItemData (iCurSel);
+		int iFileType = (int)m_cbFileType.GetItemData (iCurSel);
 		
 		BOOL bIsPackage = ((iFileType == FILE_TYPE_HALF_LIFE_WAD) || (iFileType == FILE_TYPE_QUAKE1_WAD) || (iFileType == FILE_TYPE_PAK)) ? true : false;
 

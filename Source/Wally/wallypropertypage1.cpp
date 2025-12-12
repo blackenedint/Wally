@@ -430,7 +430,7 @@ void CWallyPropertyPage1::OnChangeEditGamma()
 	SetTimer( TIMER_WPP_CHANGE_GAMMA, 500, NULL);
 }
 
-void CWallyPropertyPage1::OnTimer( UINT uIDEvent) 
+void CWallyPropertyPage1::OnTimer(UINT_PTR uIDEvent)
 {
 	switch (uIDEvent)
 	{
@@ -665,7 +665,7 @@ void CWallyPropertyPage3::OnOK()
 {
 	if (m_cbFileType.GetCurSel() != CB_ERR)
 	{
-		g_iFileTypeDefault = m_cbFileType.GetItemData (m_cbFileType.GetCurSel());
+		g_iFileTypeDefault = (int)m_cbFileType.GetItemData(m_cbFileType.GetCurSel());
 	}
 	
 	if (IsDlgButtonChecked( IDC_RADIO_BLANKDIR))
@@ -1377,7 +1377,7 @@ BOOL CWallyPropertyPage6::OnInitDialog()
 	while (pItem)
 	{
 		iItemAdded = m_cbImages.AddString (pItem->GetDescription());
-		m_cbImages.SetItemData (iItemAdded, (DWORD)pItem);
+		m_cbImages.SetItemData (iItemAdded, (DWORD_PTR)pItem);
 		pItem = ihHelper.GetNextSupportedImage();
 		bAtLeastOne = TRUE;
 	}
@@ -1714,7 +1714,7 @@ BOOL CWallyPropertyPage7::OnInitDialog()
 			if (!bSkip)
 			{
 				iItemAdded = m_lbWildCards.AddString (pItem->GetDescription());
-				m_lbWildCards.SetItemData (iItemAdded, (ULONG)pItem);
+				m_lbWildCards.SetItemData (iItemAdded, (DWORD_PTR)pItem);
 
 				if (pItem->GetAssociatedProgram() == "Wally Document")
 				{

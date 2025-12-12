@@ -36,7 +36,7 @@ extern CWallyApp theApp;
 extern int g_iLastLeftColor, g_iLastRightColor;
 extern BOOL g_bCompressUndo;
 
-CString strDataFileSignature( "WallyData");
+CString strDataFileSignature("WallyData");
 WORD    wDataFileVersion = 1;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	ON_WM_CREATE()
 	ON_WM_CLOSE()
 	ON_WM_SETCURSOR()
-	ON_WM_MOUSEMOVE()	
+	ON_WM_MOUSEMOVE()
 	ON_COMMAND(ID_APPLY_LEAST, OnApplyLeast)
 	ON_COMMAND(ID_APPLY_A_LITTLE_BIT, OnApplyALittleBit)
 	ON_COMMAND(ID_APPLY_MEDIUM, OnApplyMedium)
@@ -66,32 +66,32 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	ON_COMMAND(ID_SHAPE_CIRCULAR, OnShapeCircular)
 	ON_UPDATE_COMMAND_UI(ID_SHAPE_SQUARE, OnUpdateShapeSquare)
 	ON_UPDATE_COMMAND_UI(ID_SHAPE_DIAMOND, OnUpdateShapeDiamond)
-	ON_UPDATE_COMMAND_UI(ID_SHAPE_CIRCULAR, OnUpdateShapeCircular)	
+	ON_UPDATE_COMMAND_UI(ID_SHAPE_CIRCULAR, OnUpdateShapeCircular)
 	ON_WM_SHOWWINDOW()
 	ON_WM_DROPFILES()
 	ON_COMMAND(ID_VIEW_SHOWSUBMIPS, OnShowSubMips)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_SHOWSUBMIPS, OnUpdateShowSubMips)
 	//}}AFX_MSG_MAP
 	// Global help commands
-	ON_COMMAND( ID_HELP_FINDER,        CMDIFrameWnd::OnHelpFinder)
-	ON_COMMAND( ID_HELP,               CMDIFrameWnd::OnHelp)
-	ON_COMMAND( ID_CONTEXT_HELP,       CMDIFrameWnd::OnContextHelp)
-	ON_COMMAND( ID_DEFAULT_HELP,       CMDIFrameWnd::OnHelpFinder)
-	ON_COMMAND( ID_IMAGE_EDIT_TOOLBAR, OnViewImageEditBar)
-	ON_COMMAND( ID_MODES_TOOLBAR,	   OnViewModesBar)
-	ON_COMMAND( ID_VIEW_TOOLBAR,       OnViewFileBar)
-	ON_COMMAND( ID_PALETTE_TOOLBAR,    OnViewPaletteBar)
-	ON_COMMAND( ID_TOOLSETTINGS_TOOLBAR,	   OnViewToolSettingsToolbar)
-	ON_COMMAND( ID_SHOW_FINE_GRID,     OnShowFineGrid)
-	ON_COMMAND( ID_SHOW_COURSE_GRID,   OnShowCourseGrid)
+	ON_COMMAND(ID_HELP_FINDER, CMDIFrameWnd::OnHelpFinder)
+	ON_COMMAND(ID_HELP, CMDIFrameWnd::OnHelp)
+	ON_COMMAND(ID_CONTEXT_HELP, CMDIFrameWnd::OnContextHelp)
+	ON_COMMAND(ID_DEFAULT_HELP, CMDIFrameWnd::OnHelpFinder)
+	ON_COMMAND(ID_IMAGE_EDIT_TOOLBAR, OnViewImageEditBar)
+	ON_COMMAND(ID_MODES_TOOLBAR, OnViewModesBar)
+	ON_COMMAND(ID_VIEW_TOOLBAR, OnViewFileBar)
+	ON_COMMAND(ID_PALETTE_TOOLBAR, OnViewPaletteBar)
+	ON_COMMAND(ID_TOOLSETTINGS_TOOLBAR, OnViewToolSettingsToolbar)
+	ON_COMMAND(ID_SHOW_FINE_GRID, OnShowFineGrid)
+	ON_COMMAND(ID_SHOW_COURSE_GRID, OnShowCourseGrid)
 
-	ON_UPDATE_COMMAND_UI( ID_VIEW_TOOLBAR,       OnUpdateFileBar)
-	ON_UPDATE_COMMAND_UI( ID_PALETTE_TOOLBAR,    OnUpdatePaletteBar)
-	ON_UPDATE_COMMAND_UI( ID_TOOLSETTINGS_TOOLBAR,		 OnUpdateToolSettingsToolbar)
-	ON_UPDATE_COMMAND_UI( ID_IMAGE_EDIT_TOOLBAR, OnUpdateImageEditBar)
-	ON_UPDATE_COMMAND_UI( ID_MODES_TOOLBAR,		 OnUpdateModesBar)	
-	ON_UPDATE_COMMAND_UI( ID_SHOW_FINE_GRID,     OnUpdateShowFineGrid)
-	ON_UPDATE_COMMAND_UI( ID_SHOW_COURSE_GRID,   OnUpdateShowCourseGrid)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_TOOLBAR, OnUpdateFileBar)
+	ON_UPDATE_COMMAND_UI(ID_PALETTE_TOOLBAR, OnUpdatePaletteBar)
+	ON_UPDATE_COMMAND_UI(ID_TOOLSETTINGS_TOOLBAR, OnUpdateToolSettingsToolbar)
+	ON_UPDATE_COMMAND_UI(ID_IMAGE_EDIT_TOOLBAR, OnUpdateImageEditBar)
+	ON_UPDATE_COMMAND_UI(ID_MODES_TOOLBAR, OnUpdateModesBar)
+	ON_UPDATE_COMMAND_UI(ID_SHOW_FINE_GRID, OnUpdateShowFineGrid)
+	ON_UPDATE_COMMAND_UI(ID_SHOW_COURSE_GRID, OnUpdateShowCourseGrid)
 	ON_REGISTERED_MESSAGE(WM_SINGLE_INSTANCE_CUSTOM, OnSingleInstanceCustomMessage)
 END_MESSAGE_MAP()
 
@@ -99,10 +99,10 @@ static UINT indicators[] =
 {
 	ID_SEPARATOR,           // status line indicator		
 	ID_XYPOS,
-	ID_WIDTH_HEIGHT,	
-//	ID_BLANK_PANE,
-	ID_ZOOMVALUE_STATUSBAR,
-	ID_CONSTRAIN_STATUSBAR,	
+	ID_WIDTH_HEIGHT,
+	//	ID_BLANK_PANE,
+		ID_ZOOMVALUE_STATUSBAR,
+		ID_CONSTRAIN_STATUSBAR,
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -116,7 +116,7 @@ void CMainFrame::PostSingleInstance(LPCTSTR szCommandLine)
 	if (m_pMutex)
 	{
 		CSingleLock lLock(m_pMutex, FALSE);
-		if( lLock.Lock(10000) )		
+		if (lLock.Lock(10000))
 		{
 			DebugOut("We're in, locked", FALSE);
 			theApp.m_sSingleInstanceCommandLine = szCommandLine;
@@ -128,14 +128,14 @@ void CMainFrame::PostSingleInstance(LPCTSTR szCommandLine)
 			sFormat.Format("Failed to lock.  Duration wait: %d", ::GetTickCount() - dwStart);
 			DebugOut(sFormat.GetBuffer(), FALSE);
 		}
-	}	
+	}
 #endif
 	theApp.m_sSingleInstanceCommandLine = szCommandLine;
-	::SendMessage(m_hWnd, WM_SINGLE_INSTANCE_CUSTOM, 0, 0);	
+	::SendMessage(m_hWnd, WM_SINGLE_INSTANCE_CUSTOM, 0, 0);
 }
 
 LRESULT CMainFrame::OnSingleInstanceCustomMessage(WPARAM w, LPARAM l)
-{	
+{
 	theApp.ProcessCommandLine(theApp.m_sSingleInstanceCommandLine.c_str());
 	return 0;
 }
@@ -143,14 +143,14 @@ LRESULT CMainFrame::OnSingleInstanceCustomMessage(WPARAM w, LPARAM l)
 
 CMainFrame::CMainFrame()
 {
-	m_bProgressCreated = false;	
-	
+	m_bProgressCreated = false;
+
 }
 
 CMainFrame::~CMainFrame()
 {
 	if (m_WndMdiClient.m_hWnd)
-		m_WndMdiClient.UnsubclassWindow();	
+		m_WndMdiClient.UnsubclassWindow();
 }
 
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -158,7 +158,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CMDIFrameWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	m_WndMdiClient.SubclassWindow( m_hWndMDIClient);
+	m_WndMdiClient.SubclassWindow(m_hWndMDIClient);
 #if 1
 	if (!m_wndToolBar.Create(this, WS_CHILD | CBRS_TOP | WS_VISIBLE | CBRS_TOOLTIPS | CBRS_SIZE_DYNAMIC | CBRS_FLYBY, ID_VIEW_TOOLBAR) ||
 		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
@@ -182,9 +182,9 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		m_wndToolBar.SetWindowText("File");
 	}
 #endif
-	
 
-	if (!m_wndImageEditToolBar.Create(this, WS_CHILD | CBRS_TOP | WS_VISIBLE | CBRS_TOOLTIPS | CBRS_SIZE_DYNAMIC | CBRS_FLYBY,ID_IMAGE_EDIT_TOOLBAR) ||
+
+	if (!m_wndImageEditToolBar.Create(this, WS_CHILD | CBRS_TOP | WS_VISIBLE | CBRS_TOOLTIPS | CBRS_SIZE_DYNAMIC | CBRS_FLYBY, ID_IMAGE_EDIT_TOOLBAR) ||
 		!m_wndImageEditToolBar.LoadToolBar(IDR_IMAGE_EDIT_TOOLBAR))
 	{
 		TRACE0("Failed to create IMAGE_EDIT_TOOLBAR toolbar\n");
@@ -204,9 +204,9 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	else
 	{
 		m_wndDrawModesToolBar.SetWindowText("Drawing Modes Toolbar");
-	}	
+	}
 
-	
+
 	if (!m_wndPaletteToolBar.Create(this, IDD_PALETTE_TOOLBAR, CBRS_RIGHT, ID_PALETTE_TOOLBAR))
 	{
 		TRACE0("Failed to create PALETTE toolbar\n");
@@ -214,7 +214,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 	else
 	{
-		m_wndPaletteToolBar.SetWindowText( "Color Palette");
+		m_wndPaletteToolBar.SetWindowText("Color Palette");
 	}
 
 	if (!m_wndToolSettingsToolbar.Create(this, IDD_TOOL_SETTINGS_TOOLBAR, CBRS_RIGHT, ID_TOOLSETTINGS_TOOLBAR))
@@ -224,93 +224,93 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 	else
 	{
-		m_wndToolSettingsToolbar.SetWindowText( "Tool Settings");
+		m_wndToolSettingsToolbar.SetWindowText("Tool Settings");
 	}
-		
+
 	if (!m_wndStatusBar.Create(this))
 	{
 		//TRACE0("Failed to create status bar\n");
 		TRACE0("Failed to create status bar window\n");
 		return -1;      // fail to create
 	}
-	if(!m_wndStatusBar.SetIndicators(indicators,
-		  sizeof(indicators)/sizeof(UINT)))
+	if (!m_wndStatusBar.SetIndicators(indicators,
+		sizeof(indicators) / sizeof(UINT)))
 	{
 		TRACE0("Failed to set status indicators\n");
 		return -1;      // fail to create
 	}
 
-	m_wndStatusBar.SetPaneInfo 
-		(m_wndStatusBar.CommandToIndex(ID_SEPARATOR), ID_SEPARATOR,	SBPS_NOBORDERS | SBPS_STRETCH, 200);
+	m_wndStatusBar.SetPaneInfo
+	(m_wndStatusBar.CommandToIndex(ID_SEPARATOR), ID_SEPARATOR, SBPS_NOBORDERS | SBPS_STRETCH, 200);
 
-	m_wndStatusBar.SetPaneInfo 
-//		(m_wndStatusBar.CommandToIndex(ID_XYPOS), ID_XYPOS,	SBPS_NOBORDERS, 120);
-		(m_wndStatusBar.CommandToIndex(ID_XYPOS), ID_XYPOS,	
-				m_wndStatusBar.GetPaneStyle(m_wndStatusBar.CommandToIndex(ID_XYPOS)), 120);
-	
-	m_wndStatusBar.SetPaneInfo 
-//		(m_wndStatusBar.CommandToIndex(ID_WIDTH_HEIGHT), ID_WIDTH_HEIGHT, SBPS_NOBORDERS, 60);
-		(m_wndStatusBar.CommandToIndex(ID_WIDTH_HEIGHT), ID_WIDTH_HEIGHT, 
-				m_wndStatusBar.GetPaneStyle(m_wndStatusBar.CommandToIndex(ID_WIDTH_HEIGHT)), 100);
-	
-/*	m_wndStatusBar.SetPaneInfo 
-		(m_wndStatusBar.CommandToIndex(ID_STATUSBAR_PROGRESS), ID_STATUSBAR_PROGRESS, SBPS_NOBORDERS, 250); */
-	
-//	m_wndStatusBar.SetPaneInfo 
-//		(m_wndStatusBar.CommandToIndex(ID_BLANK_PANE), ID_BLANK_PANE, SBPS_NOBORDERS, 10);
-	
-	m_wndStatusBar.SetPaneInfo 
-		(m_wndStatusBar.CommandToIndex(ID_ZOOMVALUE_STATUSBAR), ID_ZOOMVALUE_STATUSBAR, 
-				m_wndStatusBar.GetPaneStyle(m_wndStatusBar.CommandToIndex(ID_ZOOMVALUE_STATUSBAR)), 75);
+	m_wndStatusBar.SetPaneInfo
+		//		(m_wndStatusBar.CommandToIndex(ID_XYPOS), ID_XYPOS,	SBPS_NOBORDERS, 120);
+		(m_wndStatusBar.CommandToIndex(ID_XYPOS), ID_XYPOS,
+			m_wndStatusBar.GetPaneStyle(m_wndStatusBar.CommandToIndex(ID_XYPOS)), 120);
 
-	m_wndStatusBar.SetPaneInfo 
-		(m_wndStatusBar.CommandToIndex(ID_CONSTRAIN_STATUSBAR), ID_CONSTRAIN_STATUSBAR, 
-				m_wndStatusBar.GetPaneStyle(m_wndStatusBar.CommandToIndex(ID_CONSTRAIN_STATUSBAR)), 95);
+	m_wndStatusBar.SetPaneInfo
+		//		(m_wndStatusBar.CommandToIndex(ID_WIDTH_HEIGHT), ID_WIDTH_HEIGHT, SBPS_NOBORDERS, 60);
+		(m_wndStatusBar.CommandToIndex(ID_WIDTH_HEIGHT), ID_WIDTH_HEIGHT,
+			m_wndStatusBar.GetPaneStyle(m_wndStatusBar.CommandToIndex(ID_WIDTH_HEIGHT)), 100);
+
+	/*	m_wndStatusBar.SetPaneInfo
+			(m_wndStatusBar.CommandToIndex(ID_STATUSBAR_PROGRESS), ID_STATUSBAR_PROGRESS, SBPS_NOBORDERS, 250); */
+
+			//	m_wndStatusBar.SetPaneInfo 
+			//		(m_wndStatusBar.CommandToIndex(ID_BLANK_PANE), ID_BLANK_PANE, SBPS_NOBORDERS, 10);
+
+	m_wndStatusBar.SetPaneInfo
+	(m_wndStatusBar.CommandToIndex(ID_ZOOMVALUE_STATUSBAR), ID_ZOOMVALUE_STATUSBAR,
+		m_wndStatusBar.GetPaneStyle(m_wndStatusBar.CommandToIndex(ID_ZOOMVALUE_STATUSBAR)), 75);
+
+	m_wndStatusBar.SetPaneInfo
+	(m_wndStatusBar.CommandToIndex(ID_CONSTRAIN_STATUSBAR), ID_CONSTRAIN_STATUSBAR,
+		m_wndStatusBar.GetPaneStyle(m_wndStatusBar.CommandToIndex(ID_CONSTRAIN_STATUSBAR)), 95);
 
 
-	EnableDocking( CBRS_ALIGN_ANY);
+	EnableDocking(CBRS_ALIGN_ANY);
 
-	m_wndToolBar.EnableDocking( CBRS_ALIGN_ANY);		
-	m_wndToolBar.SetBarStyle( m_wndToolBar.GetBarStyle() |
-			CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC);
-	DockControlBar( &m_wndToolBar, AFX_IDW_DOCKBAR_TOP);	
+	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
+	m_wndToolBar.SetBarStyle(m_wndToolBar.GetBarStyle() |
+		CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC);
+	DockControlBar(&m_wndToolBar, AFX_IDW_DOCKBAR_TOP);
 
-	
-	m_wndImageEditToolBar.EnableDocking( CBRS_ALIGN_ANY);
-	
-	m_wndImageEditToolBar.SetBarStyle( m_wndImageEditToolBar.GetBarStyle() | 
-			CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC);
-// Neal - TODO: make tools toolbar 2 btns wide - codeguru.com?
-//virtual CSize CalcFixedLayout( BOOL bStretch, BOOL bHorz );
-	DockControlBar( &m_wndImageEditToolBar, AFX_IDW_DOCKBAR_LEFT);
 
-	m_wndDrawModesToolBar.EnableDocking( CBRS_ALIGN_ANY);
-	m_wndDrawModesToolBar.SetBarStyle( m_wndDrawModesToolBar.GetBarStyle() | 
-			CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC);
-	DockControlBar( &m_wndDrawModesToolBar, AFX_IDW_DOCKBAR_TOP);
+	m_wndImageEditToolBar.EnableDocking(CBRS_ALIGN_ANY);
 
-	
-	m_wndPaletteToolBar.EnableDocking( CBRS_ALIGN_LEFT | CBRS_ALIGN_RIGHT);	
-	m_wndPaletteToolBar.SetBarStyle( m_wndPaletteToolBar.GetBarStyle() | 
+	m_wndImageEditToolBar.SetBarStyle(m_wndImageEditToolBar.GetBarStyle() |
+		CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC);
+	// Neal - TODO: make tools toolbar 2 btns wide - codeguru.com?
+	//virtual CSize CalcFixedLayout( BOOL bStretch, BOOL bHorz );
+	DockControlBar(&m_wndImageEditToolBar, AFX_IDW_DOCKBAR_LEFT);
+
+	m_wndDrawModesToolBar.EnableDocking(CBRS_ALIGN_ANY);
+	m_wndDrawModesToolBar.SetBarStyle(m_wndDrawModesToolBar.GetBarStyle() |
+		CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC);
+	DockControlBar(&m_wndDrawModesToolBar, AFX_IDW_DOCKBAR_TOP);
+
+
+	m_wndPaletteToolBar.EnableDocking(CBRS_ALIGN_LEFT | CBRS_ALIGN_RIGHT);
+	m_wndPaletteToolBar.SetBarStyle(m_wndPaletteToolBar.GetBarStyle() |
 		CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_FIXED);
-	
-	m_wndToolSettingsToolbar.EnableDocking( 0);
-	m_wndToolSettingsToolbar.SetBarStyle( m_wndToolSettingsToolbar.GetBarStyle() | 
+
+	m_wndToolSettingsToolbar.EnableDocking(0);
+	m_wndToolSettingsToolbar.SetBarStyle(m_wndToolSettingsToolbar.GetBarStyle() |
 		CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_FIXED);
 
 
 	CRect rClient;
-	GetClientRect( &rClient);
-	ClientToScreen( &rClient);
-	CPoint mypoint( rClient.right-80, rClient.top);
-	FloatControlBar( &m_wndPaletteToolBar, mypoint);
-	DockControlBar( &m_wndPaletteToolBar, AFX_IDW_DOCKBAR_RIGHT);
+	GetClientRect(&rClient);
+	ClientToScreen(&rClient);
+	CPoint mypoint(rClient.right - 80, rClient.top);
+	FloatControlBar(&m_wndPaletteToolBar, mypoint);
+	DockControlBar(&m_wndPaletteToolBar, AFX_IDW_DOCKBAR_RIGHT);
 
-	CPoint DecalPoint( rClient.right - 150, rClient.top + 50);
-	FloatControlBar( &m_wndToolSettingsToolbar, DecalPoint);
-	
-	
-	LoadBarState ("ToolBars");		
+	CPoint DecalPoint(rClient.right - 150, rClient.top + 50);
+	FloatControlBar(&m_wndToolSettingsToolbar, DecalPoint);
+
+
+	LoadBarState("ToolBars");
 
 	// CG: The following line was added by the Splash Screen component.
 	CSplashWnd::ShowSplashScreen(this);
@@ -333,55 +333,55 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 
 void CMainFrame::OnUpdateImageEditBar(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck ((m_wndImageEditToolBar.GetStyle () & WS_VISIBLE) ? 1 : 0);
+	pCmdUI->SetCheck((m_wndImageEditToolBar.GetStyle() & WS_VISIBLE) ? 1 : 0);
 }
 
 void CMainFrame::OnViewImageEditBar()
 {
-	ShowControlBar (&m_wndImageEditToolBar, (m_wndImageEditToolBar.GetStyle() & WS_VISIBLE) == 0, FALSE);
+	ShowControlBar(&m_wndImageEditToolBar, (m_wndImageEditToolBar.GetStyle() & WS_VISIBLE) == 0, FALSE);
 }
 
 void CMainFrame::OnUpdateModesBar(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck ((m_wndDrawModesToolBar.GetStyle () & WS_VISIBLE) ? 1 : 0);
+	pCmdUI->SetCheck((m_wndDrawModesToolBar.GetStyle() & WS_VISIBLE) ? 1 : 0);
 }
 
 void CMainFrame::OnViewModesBar()
 {
-	ShowControlBar (&m_wndDrawModesToolBar, (m_wndDrawModesToolBar.GetStyle() & WS_VISIBLE) == 0, FALSE);
+	ShowControlBar(&m_wndDrawModesToolBar, (m_wndDrawModesToolBar.GetStyle() & WS_VISIBLE) == 0, FALSE);
 }
 
 void CMainFrame::OnViewFileBar()
 {
-	ShowControlBar (&m_wndToolBar, (m_wndToolBar.GetStyle() & WS_VISIBLE) == 0, FALSE);	
+	ShowControlBar(&m_wndToolBar, (m_wndToolBar.GetStyle() & WS_VISIBLE) == 0, FALSE);
 }
 
 void CMainFrame::OnUpdateFileBar(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck ((m_wndToolBar.GetStyle () & WS_VISIBLE) ? 1 : 0);
+	pCmdUI->SetCheck((m_wndToolBar.GetStyle() & WS_VISIBLE) ? 1 : 0);
 }
 
 void CMainFrame::OnViewPaletteBar()
 {
-	ShowControlBar (&m_wndPaletteToolBar, (m_wndPaletteToolBar.GetStyle() & WS_VISIBLE) == 0, FALSE);
+	ShowControlBar(&m_wndPaletteToolBar, (m_wndPaletteToolBar.GetStyle() & WS_VISIBLE) == 0, FALSE);
 }
 
 void CMainFrame::OnUpdatePaletteBar(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck ((m_wndPaletteToolBar.GetStyle () & WS_VISIBLE) ? 1 : 0);
+	pCmdUI->SetCheck((m_wndPaletteToolBar.GetStyle() & WS_VISIBLE) ? 1 : 0);
 }
 
 void CMainFrame::OnViewToolSettingsToolbar()
 {
-	ShowControlBar (&m_wndToolSettingsToolbar, (m_wndToolSettingsToolbar.GetStyle() & WS_VISIBLE) == 0, FALSE);
+	ShowControlBar(&m_wndToolSettingsToolbar, (m_wndToolSettingsToolbar.GetStyle() & WS_VISIBLE) == 0, FALSE);
 }
 
 void CMainFrame::OnUpdateToolSettingsToolbar(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck ((m_wndToolSettingsToolbar.GetStyle () & WS_VISIBLE) ? 1 : 0);
+	pCmdUI->SetCheck((m_wndToolSettingsToolbar.GetStyle() & WS_VISIBLE) ? 1 : 0);
 }
 
-	
+
 
 /////////////////////////////////////////////////////////////////////////////
 // CMainFrame diagnostics
@@ -396,7 +396,7 @@ void CMainFrame::AssertValid() const
 void CMainFrame::Dump(CDumpContext& dc) const
 {
 	CMDIFrameWnd::Dump(dc);
-}  
+}
 
 #endif //_DEBUG
 
@@ -407,31 +407,31 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 
 
-void CMainFrame::OnClose() 
+void CMainFrame::OnClose()
 {
-	SaveBarState("ToolBars");	
+	SaveBarState("ToolBars");
 	SaveWindowState();
 	CMDIFrameWnd::OnClose();
 }
 
-BOOL CMainFrame::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
+BOOL CMainFrame::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
-//	if (nHitTest == HTCLIENT)
-	//{
-		//::SetCursor (m_hCursor);
-		//return TRUE;
-	//}
+	//	if (nHitTest == HTCLIENT)
+		//{
+			//::SetCursor (m_hCursor);
+			//return TRUE;
+		//}
 
 	return CMDIFrameWnd::OnSetCursor(pWnd, nHitTest, message);
 }
 
-void CMainFrame::OnMouseMove(UINT nFlags, CPoint point) 
+void CMainFrame::OnMouseMove(UINT nFlags, CPoint point)
 {
-	m_wndStatusBar.SetPaneText (0,"",true);
-	m_wndStatusBar.SetPaneText (1,"",true);
-	m_wndStatusBar.SetPaneText (2,"",true);
-	m_wndStatusBar.SetPaneText (3,"",true);
-	m_wndStatusBar.SetPaneText (4,"",true);
+	m_wndStatusBar.SetPaneText(0, "", true);
+	m_wndStatusBar.SetPaneText(1, "", true);
+	m_wndStatusBar.SetPaneText(2, "", true);
+	m_wndStatusBar.SetPaneText(3, "", true);
+	m_wndStatusBar.SetPaneText(4, "", true);
 
 	CMDIFrameWnd::OnMouseMove(nFlags, point);
 }
@@ -443,10 +443,10 @@ bool CMainFrame::RestoreWindowState()
 	//RegisterGlobalVariables (GLOBAL_FLAG_RESTORE);
 	TRY
 	{
-		CString strFileName ("");
-		strFileName.Format ("%s%s", g_szAppDirectory, "Wally.dat");
-		CFile File( strFileName, CFile::modeRead);
-		CArchive ar( &File, CArchive::load);
+		CString strFileName("");
+		strFileName.Format("%s%s", g_szAppDirectory, "Wally.dat");
+		CFile File(strFileName, CFile::modeRead);
+		CArchive ar(&File, CArchive::load);
 
 		CString strSignature;
 		WORD    wVersion;
@@ -456,28 +456,28 @@ bool CMainFrame::RestoreWindowState()
 
 		if (strSignature != strDataFileSignature)
 		{
-			AfxMessageBox( "Warning: File \"Wally.dat\" is corrupt and will be ignored.");
+			AfxMessageBox("Warning: File \"Wally.dat\" is corrupt and will be ignored.");
 		}
 
-		g_LeftPatternToolLayerInfo.Serialize( ar, TRUE);
-		g_LeftDecalToolLayerInfo.Serialize( ar, TRUE);
-		g_RightDecalToolLayerInfo.Serialize( ar, TRUE);
-		g_LeftBulletLayerInfo.Serialize( ar, TRUE);
-		g_RightBulletLayerInfo.Serialize( ar, TRUE);
-		g_RivetToolLayerInfo.Serialize( ar, TRUE);
-		g_RightPatternToolLayerInfo.Serialize( ar, TRUE);
+		g_LeftPatternToolLayerInfo.Serialize(ar, TRUE);
+		g_LeftDecalToolLayerInfo.Serialize(ar, TRUE);
+		g_RightDecalToolLayerInfo.Serialize(ar, TRUE);
+		g_LeftBulletLayerInfo.Serialize(ar, TRUE);
+		g_RightBulletLayerInfo.Serialize(ar, TRUE);
+		g_RivetToolLayerInfo.Serialize(ar, TRUE);
+		g_RightPatternToolLayerInfo.Serialize(ar, TRUE);
 
 		if (wVersion >= 2)
-			g_CloneSourceLayerInfo.Serialize( ar, TRUE);
+			g_CloneSourceLayerInfo.Serialize(ar, TRUE);
 	}
-	CATCH_ALL( e)
+		CATCH_ALL(e)
 	{
 	}
 	END_CATCH_ALL
 
 
-	CString WallyKey ("Settings");	
-	CString BatchRegistryKey ("BatchSettings");
+		CString WallyKey("Settings");
+	CString BatchRegistryKey("BatchSettings");
 
 	///////////////////////////////////////////
 	// Load Wally Options from the Registry //
@@ -486,101 +486,101 @@ bool CMainFrame::RestoreWindowState()
 	g_WildCardList.ReadRegistry();
 
 	WINDOWPLACEMENT wp;
-	wp.length = sizeof (WINDOWPLACEMENT);
-	GetWindowPlacement (&wp);
-	CString strMainFrameKey ("MainFrame");
+	wp.length = sizeof(WINDOWPLACEMENT);
+	GetWindowPlacement(&wp);
+	CString strMainFrameKey("MainFrame");
 
 	if (((wp.flags =
-		    theApp.GetProfileInt (strMainFrameKey, "Flags", -1)) != -1)  &&
+		theApp.GetProfileInt(strMainFrameKey, "Flags", -1)) != -1) &&
 		((wp.showCmd =
-		    theApp.GetProfileInt (strMainFrameKey, "ShowCmd", -1)) != -1) &&
-		((wp.rcNormalPosition.left = 
-			theApp.GetProfileInt (strMainFrameKey, "Left", -1)) != -1) &&
+			theApp.GetProfileInt(strMainFrameKey, "ShowCmd", -1)) != -1) &&
+		((wp.rcNormalPosition.left =
+			theApp.GetProfileInt(strMainFrameKey, "Left", -1)) != -1) &&
 		((wp.rcNormalPosition.top =
-			theApp.GetProfileInt (strMainFrameKey, "Top", -1)) != -1) &&
+			theApp.GetProfileInt(strMainFrameKey, "Top", -1)) != -1) &&
 		((wp.rcNormalPosition.right =
-			theApp.GetProfileInt (strMainFrameKey, "Right", -1)) != -1) &&
+			theApp.GetProfileInt(strMainFrameKey, "Right", -1)) != -1) &&
 		((wp.rcNormalPosition.bottom =
-			theApp.GetProfileInt (strMainFrameKey, "Bottom", -1)) != -1))
+			theApp.GetProfileInt(strMainFrameKey, "Bottom", -1)) != -1))
 	{
-		wp.rcNormalPosition.left = min (wp.rcNormalPosition.left, 
-			::GetSystemMetrics (SM_CXSCREEN) - 
-			::GetSystemMetrics (SM_CXICON));
-	
-		wp.rcNormalPosition.top = min (wp.rcNormalPosition.top, 
-			::GetSystemMetrics (SM_CYSCREEN) - 
-			::GetSystemMetrics (SM_CYICON));
-		SetWindowPlacement (&wp);
+		wp.rcNormalPosition.left = min(wp.rcNormalPosition.left,
+			::GetSystemMetrics(SM_CXSCREEN) -
+			::GetSystemMetrics(SM_CXICON));
+
+		wp.rcNormalPosition.top = min(wp.rcNormalPosition.top,
+			::GetSystemMetrics(SM_CYSCREEN) -
+			::GetSystemMetrics(SM_CYICON));
+		SetWindowPlacement(&wp);
 		return true;
-	}	
-	
-	return false;		
+	}
+
+	return false;
 }
 
 
 void CMainFrame::SaveWindowState()
-{	
+{
 	WriteGlobalVariables();		// Neal - BUGFIX - save now, in case Wally dies
 
 	TRY
 	{
-		CString strFileName ("");
-		strFileName.Format ("%s%s", g_szAppDirectory, "Wally.dat");
-		
-		CFile File( strFileName, CFile::modeWrite | CFile::modeCreate | CFile::modeNoTruncate);
-		CArchive ar( &File, CArchive::store);
+		CString strFileName("");
+		strFileName.Format("%s%s", g_szAppDirectory, "Wally.dat");
+
+		CFile File(strFileName, CFile::modeWrite | CFile::modeCreate | CFile::modeNoTruncate);
+		CArchive ar(&File, CArchive::store);
 
 		wDataFileVersion = 2;
 
 		ar << strDataFileSignature;
 		ar << wDataFileVersion;
 
-		g_LeftPatternToolLayerInfo.Serialize( ar, TRUE);
-		g_LeftDecalToolLayerInfo.Serialize( ar, TRUE);
-		g_RightDecalToolLayerInfo.Serialize( ar, TRUE);
-		g_LeftBulletLayerInfo.Serialize( ar, TRUE);
-		g_RightBulletLayerInfo.Serialize( ar, TRUE);
-		g_RivetToolLayerInfo.Serialize( ar, TRUE);
-		g_RightPatternToolLayerInfo.Serialize( ar, TRUE);
-		g_CloneSourceLayerInfo.Serialize( ar, TRUE);
+		g_LeftPatternToolLayerInfo.Serialize(ar, TRUE);
+		g_LeftDecalToolLayerInfo.Serialize(ar, TRUE);
+		g_RightDecalToolLayerInfo.Serialize(ar, TRUE);
+		g_LeftBulletLayerInfo.Serialize(ar, TRUE);
+		g_RightBulletLayerInfo.Serialize(ar, TRUE);
+		g_RivetToolLayerInfo.Serialize(ar, TRUE);
+		g_RightPatternToolLayerInfo.Serialize(ar, TRUE);
+		g_CloneSourceLayerInfo.Serialize(ar, TRUE);
 	}
-	CATCH_ALL( e)
+		CATCH_ALL(e)
 	{
 	}
 	END_CATCH_ALL
 
-	WINDOWPLACEMENT wp;
-	wp.length = sizeof (WINDOWPLACEMENT);
+		WINDOWPLACEMENT wp;
+	wp.length = sizeof(WINDOWPLACEMENT);
 
-	GetWindowPlacement (&wp);
-	CString strMainFrameKey ("MainFrame");
+	GetWindowPlacement(&wp);
+	CString strMainFrameKey("MainFrame");
 
 	// MainFrame window positions
-	theApp.WriteProfileInt (strMainFrameKey, "Flags",   wp.flags);
-	theApp.WriteProfileInt (strMainFrameKey, "ShowCmd", wp.showCmd);
-	theApp.WriteProfileInt (strMainFrameKey, "Left",    wp.rcNormalPosition.left);
-	theApp.WriteProfileInt (strMainFrameKey, "Top",     wp.rcNormalPosition.top);
-	theApp.WriteProfileInt (strMainFrameKey, "Right",   wp.rcNormalPosition.right);
-	theApp.WriteProfileInt (strMainFrameKey, "Bottom",  wp.rcNormalPosition.bottom);
+	theApp.WriteProfileInt(strMainFrameKey, "Flags", wp.flags);
+	theApp.WriteProfileInt(strMainFrameKey, "ShowCmd", wp.showCmd);
+	theApp.WriteProfileInt(strMainFrameKey, "Left", wp.rcNormalPosition.left);
+	theApp.WriteProfileInt(strMainFrameKey, "Top", wp.rcNormalPosition.top);
+	theApp.WriteProfileInt(strMainFrameKey, "Right", wp.rcNormalPosition.right);
+	theApp.WriteProfileInt(strMainFrameKey, "Bottom", wp.rcNormalPosition.bottom);
 
-	
-	CString WallyKey ("Settings");		
-	CString BatchRegistryKey ("BatchSettings");
-		
-	
+
+	CString WallyKey("Settings");
+	CString BatchRegistryKey("BatchSettings");
+
+
 	// Batch Conversion settings
-	theApp.WriteProfileString	(BatchRegistryKey,    "SourceDirectory",		g_szSourceConvertDirectory);
-	theApp.WriteProfileString	(BatchRegistryKey,    "DestinationDirectory",	g_szDestinationConvertDirectory);
-	theApp.WriteProfileString	(BatchRegistryKey,    "WildCard",				g_szConvertWildCard);
-	theApp.WriteProfileInt		(BatchRegistryKey,    "MaxThreads",				g_iMaxConversionThreads);
-	theApp.WriteProfileInt		(BatchRegistryKey,    "OverWriteFiles",			g_bOverWriteFiles);	
-	theApp.WriteProfileInt		(BatchRegistryKey,    "Recurse Subdirectories",	g_bRecurseSubdirectories);
-	theApp.WriteProfileInt		(BatchRegistryKey,    "Retain Structure",		g_bRetainDirectoryStructure);
+	theApp.WriteProfileString(BatchRegistryKey, "SourceDirectory", g_szSourceConvertDirectory);
+	theApp.WriteProfileString(BatchRegistryKey, "DestinationDirectory", g_szDestinationConvertDirectory);
+	theApp.WriteProfileString(BatchRegistryKey, "WildCard", g_szConvertWildCard);
+	theApp.WriteProfileInt(BatchRegistryKey, "MaxThreads", g_iMaxConversionThreads);
+	theApp.WriteProfileInt(BatchRegistryKey, "OverWriteFiles", g_bOverWriteFiles);
+	theApp.WriteProfileInt(BatchRegistryKey, "Recurse Subdirectories", g_bRecurseSubdirectories);
+	theApp.WriteProfileInt(BatchRegistryKey, "Retain Structure", g_bRetainDirectoryStructure);
 
 	CWallyUndo Undo;	// undo automatically saves its own settings in constructor
 }
 
-void CMainFrame::ApplyAmount( int iAmount)
+void CMainFrame::ApplyAmount(int iAmount)
 {
 	// neal - force tools to rebuild look-up tables
 	BOOL bRebuild = FALSE;
@@ -592,7 +592,7 @@ void CMainFrame::ApplyAmount( int iAmount)
 		{
 			bRebuild = TRUE;
 			g_iPasteAmount = iAmount;
-			PostMessage( WM_COMMAND, ID_TP_SELECTION, 0);
+			PostMessage(WM_COMMAND, ID_TP_SELECTION, 0);
 		}
 		break;
 	case EDIT_MODE_DARKEN:
@@ -600,7 +600,7 @@ void CMainFrame::ApplyAmount( int iAmount)
 		{
 			bRebuild = TRUE;
 			g_iDarkenAmount = iAmount;
-			PostMessage( WM_COMMAND, ID_TP_DARKEN, 0);
+			PostMessage(WM_COMMAND, ID_TP_DARKEN, 0);
 		}
 		break;
 	case EDIT_MODE_LIGHTEN:
@@ -608,7 +608,7 @@ void CMainFrame::ApplyAmount( int iAmount)
 		{
 			bRebuild = TRUE;
 			g_iLightenAmount = iAmount;
-			PostMessage( WM_COMMAND, ID_TP_LIGHTEN, 0);
+			PostMessage(WM_COMMAND, ID_TP_LIGHTEN, 0);
 		}
 		break;
 	case EDIT_MODE_SCRATCH:
@@ -616,7 +616,7 @@ void CMainFrame::ApplyAmount( int iAmount)
 		{
 			bRebuild = TRUE;
 			g_iScratchAmount = iAmount;
-			PostMessage( WM_COMMAND, ID_TP_SCRATCH, 0);
+			PostMessage(WM_COMMAND, ID_TP_SCRATCH, 0);
 		}
 		break;
 	case EDIT_MODE_TINT:
@@ -624,7 +624,7 @@ void CMainFrame::ApplyAmount( int iAmount)
 		{
 			bRebuild = TRUE;
 			g_iTintAmount = iAmount;
-			PostMessage( WM_COMMAND, ID_TP_TINT, 0);
+			PostMessage(WM_COMMAND, ID_TP_TINT, 0);
 		}
 		break;
 	case EDIT_MODE_BLEND:
@@ -632,7 +632,7 @@ void CMainFrame::ApplyAmount( int iAmount)
 		{
 			bRebuild = TRUE;
 			g_iBlendAmount = iAmount;
-			PostMessage( WM_COMMAND, ID_TP_BLEND, 0);
+			PostMessage(WM_COMMAND, ID_TP_BLEND, 0);
 		}
 		break;
 	case EDIT_MODE_SHARPEN:
@@ -640,8 +640,8 @@ void CMainFrame::ApplyAmount( int iAmount)
 		{
 			bRebuild = TRUE;
 			g_iSharpenAmount = iAmount;
-			ASSERT( FALSE);		// implement
-//			PostMessage( WM_COMMAND, ID_TP_SHARPEN, 0);
+			ASSERT(FALSE);		// implement
+			//			PostMessage( WM_COMMAND, ID_TP_SHARPEN, 0);
 		}
 		break;
 	case EDIT_MODE_RECOLOR:
@@ -649,7 +649,7 @@ void CMainFrame::ApplyAmount( int iAmount)
 		{
 			bRebuild = TRUE;
 			g_iRecolorAmount = iAmount;
-			PostMessage( WM_COMMAND, ID_TP_RECOLOR, 0);
+			PostMessage(WM_COMMAND, ID_TP_RECOLOR, 0);
 		}
 		break;
 	case EDIT_MODE_SPRAY:
@@ -657,7 +657,7 @@ void CMainFrame::ApplyAmount( int iAmount)
 		{
 			bRebuild = TRUE;
 			g_iSprayAmount = iAmount;
-			PostMessage( WM_COMMAND, ID_TP_SPRAY, 0);
+			PostMessage(WM_COMMAND, ID_TP_SPRAY, 0);
 		}
 		break;
 	case EDIT_MODE_SPRAY_RECOLOR:
@@ -665,7 +665,7 @@ void CMainFrame::ApplyAmount( int iAmount)
 		{
 			bRebuild = TRUE;
 			g_iSprayRecolorAmount = iAmount;
-			PostMessage( WM_COMMAND, ID_TP_SPRAY_RECOLOR, 0);
+			PostMessage(WM_COMMAND, ID_TP_SPRAY_RECOLOR, 0);
 		}
 		break;
 	case EDIT_MODE_BULLET_HOLES:
@@ -673,7 +673,7 @@ void CMainFrame::ApplyAmount( int iAmount)
 		{
 			bRebuild = TRUE;
 			g_iBulletHoleAmount = iAmount;
-			PostMessage( WM_COMMAND, ID_TP_BULLET_HOLES, 0);
+			PostMessage(WM_COMMAND, ID_TP_BULLET_HOLES, 0);
 		}
 		break;
 	case EDIT_MODE_RIVETS:
@@ -681,7 +681,7 @@ void CMainFrame::ApplyAmount( int iAmount)
 		{
 			bRebuild = TRUE;
 			g_iRivetAmount = iAmount;
-			PostMessage( WM_COMMAND, ID_TP_RIVETS, 0);
+			PostMessage(WM_COMMAND, ID_TP_RIVETS, 0);
 		}
 		break;
 	case EDIT_MODE_PATTERNED_PAINT:
@@ -689,7 +689,7 @@ void CMainFrame::ApplyAmount( int iAmount)
 		{
 			bRebuild = TRUE;
 			g_iPatternPaintAmount = iAmount;
-			PostMessage( WM_COMMAND, ID_TP_PATTERNED_PAINT, 0);
+			PostMessage(WM_COMMAND, ID_TP_PATTERNED_PAINT, 0);
 		}
 		break;
 	case EDIT_MODE_DECAL:
@@ -697,7 +697,7 @@ void CMainFrame::ApplyAmount( int iAmount)
 		{
 			bRebuild = TRUE;
 			g_iDecalAmount = iAmount;
-			PostMessage( WM_COMMAND, ID_TP_DECAL, 0);
+			PostMessage(WM_COMMAND, ID_TP_DECAL, 0);
 		}
 		break;
 	case EDIT_MODE_CLONE:
@@ -705,7 +705,7 @@ void CMainFrame::ApplyAmount( int iAmount)
 		{
 			bRebuild = TRUE;
 			g_iCloneAmount = iAmount;
-			PostMessage( WM_COMMAND, ID_TP_CLONE, 0);
+			PostMessage(WM_COMMAND, ID_TP_CLONE, 0);
 		}
 		break;
 	case EDIT_MODE_RUBBER_STAMP:
@@ -713,11 +713,11 @@ void CMainFrame::ApplyAmount( int iAmount)
 		{
 			bRebuild = TRUE;
 			g_iCloneAmount = iAmount;
-			PostMessage( WM_COMMAND, ID_TP_RUBBER_STAMP, 0);
+			PostMessage(WM_COMMAND, ID_TP_RUBBER_STAMP, 0);
 		}
 		break;
 	default:
-		ASSERT( FALSE);		// implement?
+		ASSERT(FALSE);		// implement?
 	}
 
 	if (bRebuild)
@@ -726,30 +726,30 @@ void CMainFrame::ApplyAmount( int iAmount)
 
 void CMainFrame::OnApplyLeast()
 {
-	ApplyAmount( 0);
+	ApplyAmount(0);
 }
 
 void CMainFrame::OnApplyALittleBit()
 {
-	ApplyAmount( 1);
+	ApplyAmount(1);
 }
 
 void CMainFrame::OnApplyMedium()
 {
-	ApplyAmount( 2);
+	ApplyAmount(2);
 }
 
 void CMainFrame::OnApplyMore()
 {
-	ApplyAmount( 3);
+	ApplyAmount(3);
 }
 
 void CMainFrame::OnApplyMost()
 {
-	ApplyAmount( 4);
+	ApplyAmount(4);
 }
 
-void CMainFrame::OnUpdateApply( CCmdUI* pCmdUI, int iTestAmount)
+void CMainFrame::OnUpdateApply(CCmdUI* pCmdUI, int iTestAmount)
 {
 	int iAmount = -1;
 
@@ -802,101 +802,101 @@ void CMainFrame::OnUpdateApply( CCmdUI* pCmdUI, int iTestAmount)
 		iAmount = g_iCloneAmount;
 		break;
 	default:
-		ASSERT( FALSE);		// implement?
+		ASSERT(FALSE);		// implement?
 	}
-	pCmdUI->SetCheck( iAmount == iTestAmount);
+	pCmdUI->SetCheck(iAmount == iTestAmount);
 }
 
-void CMainFrame::OnUpdateApplyLeast( CCmdUI* pCmdUI)
+void CMainFrame::OnUpdateApplyLeast(CCmdUI* pCmdUI)
 {
-	OnUpdateApply( pCmdUI, 0);
+	OnUpdateApply(pCmdUI, 0);
 }
 
-void CMainFrame::OnUpdateApplyALittleBit( CCmdUI* pCmdUI)
+void CMainFrame::OnUpdateApplyALittleBit(CCmdUI* pCmdUI)
 {
-	OnUpdateApply( pCmdUI, 1);
+	OnUpdateApply(pCmdUI, 1);
 }
 
-void CMainFrame::OnUpdateApplyMedium( CCmdUI* pCmdUI)
+void CMainFrame::OnUpdateApplyMedium(CCmdUI* pCmdUI)
 {
-	OnUpdateApply( pCmdUI, 2);
+	OnUpdateApply(pCmdUI, 2);
 }
 
-void CMainFrame::OnUpdateApplyMore( CCmdUI* pCmdUI)
+void CMainFrame::OnUpdateApplyMore(CCmdUI* pCmdUI)
 {
-	OnUpdateApply( pCmdUI, 3);
+	OnUpdateApply(pCmdUI, 3);
 }
 
-void CMainFrame::OnUpdateApplyMost( CCmdUI* pCmdUI)
+void CMainFrame::OnUpdateApplyMost(CCmdUI* pCmdUI)
 {
-	OnUpdateApply( pCmdUI, 4);
+	OnUpdateApply(pCmdUI, 4);
 }
 
-void CMainFrame::OnShapeSquare() 
+void CMainFrame::OnShapeSquare()
 {
 	g_iBrushShape = SHAPE_SQUARE;
 }
 
-void CMainFrame::OnShapeCircular() 
+void CMainFrame::OnShapeCircular()
 {
 	g_iBrushShape = SHAPE_CIRCULAR;
 }
 
-void CMainFrame::OnShapeDiamond() 
+void CMainFrame::OnShapeDiamond()
 {
 	g_iBrushShape = SHAPE_DIAMOND;
 }
 
-void CMainFrame::OnUpdateShapeSquare( CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdateShapeSquare(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck( g_iBrushShape == SHAPE_SQUARE);
+	pCmdUI->SetCheck(g_iBrushShape == SHAPE_SQUARE);
 }
 
-void CMainFrame::OnUpdateShapeCircular( CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdateShapeCircular(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck( g_iBrushShape == SHAPE_CIRCULAR);
+	pCmdUI->SetCheck(g_iBrushShape == SHAPE_CIRCULAR);
 }
 
-void CMainFrame::OnUpdateShapeDiamond( CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdateShapeDiamond(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck( g_iBrushShape == SHAPE_DIAMOND);
+	pCmdUI->SetCheck(g_iBrushShape == SHAPE_DIAMOND);
 }
 
 
-BOOL CMainFrame::OnNotify( WPARAM wParam, LPARAM lParam, LRESULT* pResult)
+BOOL CMainFrame::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 {
-/*
-	NMHDR* pNotifyMsgHdr = (NMHDR* )lParam;
+	/*
+		NMHDR* pNotifyMsgHdr = (NMHDR* )lParam;
 
-	// neal - this is where we can handle custom
-	// toolbar stuff like: 
-	//
-	// dbl-click eraser to erase image
-	// dbl-click zoom to set zoom to 1:1 (or just fits?)
-	// dbl-click color-replacer to replace all
-	// dbl-click pattern-paint to paint all
-	// dbl-click bullet hole to draw a random hole
+		// neal - this is where we can handle custom
+		// toolbar stuff like:
+		//
+		// dbl-click eraser to erase image
+		// dbl-click zoom to set zoom to 1:1 (or just fits?)
+		// dbl-click color-replacer to replace all
+		// dbl-click pattern-paint to paint all
+		// dbl-click bullet hole to draw a random hole
 
-	if (pNotifyMsgHdr->code == NM_DBLCLK)
-	{
-		if (pNotifyMsgHdr->idFrom == ID_IMAGE_EDIT_TOOLBAR)
+		if (pNotifyMsgHdr->code == NM_DBLCLK)
 		{
-			//int iBreakPoint = 0;
+			if (pNotifyMsgHdr->idFrom == ID_IMAGE_EDIT_TOOLBAR)
+			{
+				//int iBreakPoint = 0;
+			}
 		}
-	}
-	else if (pNotifyMsgHdr->code == NM_RCLICK)
-	{
-		if (pNotifyMsgHdr->idFrom == ID_IMAGE_EDIT_TOOLBAR)
+		else if (pNotifyMsgHdr->code == NM_RCLICK)
 		{
-			//int iBreakPoint = 0;
+			if (pNotifyMsgHdr->idFrom == ID_IMAGE_EDIT_TOOLBAR)
+			{
+				//int iBreakPoint = 0;
+			}
 		}
-	}
-*/
-	return CMDIFrameWnd::OnNotify( wParam, lParam, pResult);
+	*/
+	return CMDIFrameWnd::OnNotify(wParam, lParam, pResult);
 }
 /*
 
-	RECT MyRect;	
+	RECT MyRect;
 	int iIndex = m_wndStatusBar.CommandToIndex(ID_STATUSBAR_PROGRESS);
 	m_wndStatusBar.GetItemRect(iIndex, &MyRect);
 
@@ -910,7 +910,7 @@ BOOL CMainFrame::OnNotify( WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 
 */
 
-void CMainFrame::OnShowWindow(BOOL bShow, UINT nStatus) 
+void CMainFrame::OnShowWindow(BOOL bShow, UINT nStatus)
 {
 	CMDIFrameWnd::OnShowWindow(bShow, nStatus);
 }
@@ -931,15 +931,15 @@ void CMainFrame::OnDropFiles(HDROP hDropInfo)
 
 	for (UINT iFile = 0; iFile < nFiles; iFile++)
 	{
-		TCHAR szFileName[_MAX_PATH];		
+		TCHAR szFileName[_MAX_PATH];
 		::DragQueryFile(hDropInfo, iFile, szFileName, _MAX_PATH);
 		if (ihHelper.IsNonGameType (szFileName))
 		{
 			bNonGameType = true;
 			iFile = nFiles;
-		}		
+		}
 	}
-	
+
 	int iFileType = 0;
 
 
@@ -954,96 +954,96 @@ void CMainFrame::OnDropFiles(HDROP hDropInfo)
 		}
 		iFileType = dlgGameSelect.GetFileType();
 		g_iFileTypeDragDrop = g_iFileTypeNew;
-	}	
+	}
 	else
 	{
-		iFileType = g_iFileTypeDefault;	
+		iFileType = g_iFileTypeDefault;
 	}
-		
+
 	if (g_iFileTypeDragDrop == FILE_TYPE_HALF_LIFE_WAD)
-	{			
-		CPackageDoc *pPackageDoc = theApp.CreatePackageDoc();		
-		CPackageView *pPackageView = pPackageDoc->GetView();		
-		
+	{
+		CPackageDoc *pPackageDoc = theApp.CreatePackageDoc();
+		CPackageView *pPackageView = pPackageDoc->GetView();
+
 		for (iFile = 0; iFile < nFiles; iFile++)
 		{
 			TCHAR szFileName[_MAX_PATH];
-			::DragQueryFile(hDropInfo, iFile, szFileName, _MAX_PATH);			
-			
-			pPackageView->ImportImage (szFileName);			
-		}		
+			::DragQueryFile(hDropInfo, iFile, szFileName, _MAX_PATH);
+
+			pPackageView->ImportImage (szFileName);
+		}
 	}
 	else
-	{	
-	*/		
-		for (UINT iFile = 0; iFile < nFiles; iFile++)
-		{
-			TCHAR szFileName[_MAX_PATH];
-			::DragQueryFile(hDropInfo, iFile, szFileName, _MAX_PATH);
-			theApp.OpenDocumentFile(szFileName);
-		}
+	{
+	*/
+	for (UINT iFile = 0; iFile < nFiles; iFile++)
+	{
+		TCHAR szFileName[_MAX_PATH];
+		::DragQueryFile(hDropInfo, iFile, szFileName, _MAX_PATH);
+		theApp.OpenDocumentFile(szFileName);
+	}
 	//}
 	::DragFinish(hDropInfo);
 }
 
 void CMainFrame::OnShowFineGrid()
-{	
+{
 	g_bShowFineGrid = !g_bShowFineGrid;
 	theApp.UpdateAllDocs();
 }
 void CMainFrame::OnShowCourseGrid()
-{	
+{
 	g_bShowCourseGrid = !g_bShowCourseGrid;
 	theApp.UpdateAllDocs();
 }
 
-void CMainFrame::OnUpdateShowFineGrid( CCmdUI* pCmdUI)
+void CMainFrame::OnUpdateShowFineGrid(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck( g_bShowFineGrid);
+	pCmdUI->SetCheck(g_bShowFineGrid);
 }
-void CMainFrame::OnUpdateShowCourseGrid( CCmdUI* pCmdUI)
+void CMainFrame::OnUpdateShowCourseGrid(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck( g_bShowCourseGrid);
+	pCmdUI->SetCheck(g_bShowCourseGrid);
 }
 
 void CMainFrame::OnShowSubMips()
 {
 	g_bShowSubMips = !g_bShowSubMips;
-	theApp.UpdateAllDocs( HINT_UPDATE_IMAGE_SIZE);
+	theApp.UpdateAllDocs(HINT_UPDATE_IMAGE_SIZE);
 }
 
-void CMainFrame::OnUpdateShowSubMips( CCmdUI* pCmdUI)
+void CMainFrame::OnUpdateShowSubMips(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck( g_bShowSubMips);
+	pCmdUI->SetCheck(g_bShowSubMips);
 }
 
 #if 0
 
-BOOL CMainFrame::OnEraseBkgnd(CDC* pDC) 
+BOOL CMainFrame::OnEraseBkgnd(CDC* pDC)
 {
 
 	//return CMDIFrameWnd::OnEraseBkgnd(pDC);
 
 	CRect rcItem;
-	GetClientRect( &rcItem);
+	GetClientRect(&rcItem);
 
 	int rcWidth = rcItem.Width();
-	int rcHeight = rcItem.Height();	
-	
+	int rcHeight = rcItem.Height();
+
 	CDC DC;
-	DC.CreateCompatibleDC( pDC);
+	DC.CreateCompatibleDC(pDC);
 	CBitmap Bmp;
-	Bmp.CreateCompatibleBitmap( pDC, rcWidth, rcHeight);
-	DC.SelectObject( Bmp);
-	
+	Bmp.CreateCompatibleBitmap(pDC, rcWidth, rcHeight);
+	DC.SelectObject(Bmp);
+
 	// clear background
-	HBRUSH hBrush    = CreateSolidBrush( RGB( 0xff, 0x80, 0x80 ));
-	HBRUSH hOldBrush = (HBRUSH )SelectObject( DC, hBrush);
-	::PatBlt( DC, 0, 0, rcWidth, rcHeight, PATCOPY);
-	SelectObject( DC, hOldBrush);
-	DeleteObject( hBrush);	
-	
-	pDC->BitBlt( 0, 0, rcWidth, rcHeight, &DC, 0, 0, SRCCOPY);
+	HBRUSH hBrush = CreateSolidBrush(RGB(0xff, 0x80, 0x80));
+	HBRUSH hOldBrush = (HBRUSH)SelectObject(DC, hBrush);
+	::PatBlt(DC, 0, 0, rcWidth, rcHeight, PATCOPY);
+	SelectObject(DC, hOldBrush);
+	DeleteObject(hBrush);
+
+	pDC->BitBlt(0, 0, rcWidth, rcHeight, &DC, 0, 0, SRCCOPY);
 	DC.DeleteDC();
 
 	return TRUE;

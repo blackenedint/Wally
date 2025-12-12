@@ -75,7 +75,7 @@ BOOL CHalfLifePaletteDlg::OnInitDialog()
 
 	// Go find the available palettes in the current directory
 	struct _finddata_t c_file;
-	long hfile;
+	intptr_t hfile;
 	CString strWildcard ("");
 	CString strFileName ("");
 	CString strFilePath ("");

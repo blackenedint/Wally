@@ -670,8 +670,8 @@ void CColorDecalDlg::GetBlendColor( BYTE &byRed, BYTE &byGreen, BYTE &byBlue )
 		dfW = sqrt( COLOR_DECAL_MAX_SIZE * dfRatio );
 		dfH = dfW / dfRatio;
 		
-		dtWidth = div( dfW, 16 );
-		dtHeight = div( dfH, 16 );		
+		dtWidth = div((int)dfW, 16 );
+		dtHeight = div((int)dfH, 16 );
 		
 		iNewWidth = dtWidth.quot * 16;
 		iNewHeight = dtHeight.quot * 16;
@@ -721,8 +721,8 @@ void CColorDecalDlg::GetBlendColor( BYTE &byRed, BYTE &byGreen, BYTE &byBlue )
 			dfW = sqrt( COLOR_DECAL_MAX_SIZE * dfRatio );
 			dfH = dfW / dfRatio;
 			
-			dtWidth = div( dfW, 16 );
-			dtHeight = div( dfH, 16 );		
+			dtWidth = div((int)dfW, 16 );
+			dtHeight = div((int)dfH, 16 );
 			
 			iNewWidth = dtWidth.quot * 16;
 			iNewHeight = dtHeight.quot * 16;
@@ -1157,9 +1157,9 @@ void CColorDecalDlg::GetBlendColor( BYTE &byRed, BYTE &byGreen, BYTE &byBlue )
 #define BLEND(i, r, g, b)	pIRGBData[i] = IRGB( 0, (r + GetRValue(pIRGBData[i])) / 2, (g + GetGValue(pIRGBData[i])) / 2, (b + GetBValue(pIRGBData[i])) / 2 )
 
 							// Now search for non-blue pixels and use them to fill in the blue ones
-							for( y = 0; y < iHeight; y++ )
+							for( y = 0; y < (int)iHeight; y++ )
 							{
-								for( x = 0; x < iWidth; x++ )
+								for( x = 0; x < (int)iWidth; x++ )
 								{
 									iOffset = y * iWidth + x;
 									r = pby24BitSourceData[(iOffset * 3) + 0];
@@ -1200,7 +1200,7 @@ void CColorDecalDlg::GetBlendColor( BYTE &byRed, BYTE &byGreen, BYTE &byBlue )
 
 										// Next one to the right
 										x1 = x + 1;
-										while( x1 < iWidth )
+										while( x1 < (int)iWidth )
 										{
 											i = y * iWidth + x1;
 											if( IS_BLUE( i ) )
@@ -1252,7 +1252,7 @@ void CColorDecalDlg::GetBlendColor( BYTE &byRed, BYTE &byGreen, BYTE &byBlue )
 
 										// Next one to the bottom
 										y1 = y + 1;
-										while( y1 < iHeight )
+										while( y1 < (int)iHeight )
 										{
 											i = y1 * iWidth + x;
 											if( IS_BLUE( i ) )
@@ -1438,18 +1438,18 @@ void CColorDecalDlg::GetBlendColor( BYTE &byRed, BYTE &byGreen, BYTE &byBlue )
 	// Did we enlarge canvas?  If so, set the edges to pure blue
 	if( iNewWidth > iWidth )
 	{
-		for( x = 0; x < xDestUL; x++ )
+		for( x = 0; x < (int)xDestUL; x++ )
 		{
-			for( y = 0; y < iNewHeight; y++ )
+			for( y = 0; y < (int)iNewHeight; y++ )
 			{
 				iOffset = (y * iNewWidth) + x;
 				lstBlueIndexes.push_back(iOffset);
 			}
 		}
 
-		for( x = iNewWidth - 1; x >= xDestUL + iWidth; x-- )
+		for( x = iNewWidth - 1; x >= (int)xDestUL + (int)iWidth; x-- )
 		{
-			for( y = 0; y < iNewHeight; y++ )
+			for( y = 0; y < (int)iNewHeight; y++ )
 			{
 				iOffset = (y * iNewWidth) + x;
 				lstBlueIndexes.push_back(iOffset);
@@ -1459,18 +1459,18 @@ void CColorDecalDlg::GetBlendColor( BYTE &byRed, BYTE &byGreen, BYTE &byBlue )
 
 	if( iNewHeight > iHeight )
 	{
-		for( y = 0; y < yDestUL; y++ )
+		for( y = 0; y < (int)yDestUL; y++ )
 		{
-			for( x = 0; x < iNewWidth; x++ )
+			for( x = 0; x < (int)iNewWidth; x++ )
 			{
 				iOffset = (y * iNewWidth) + x;
 				lstBlueIndexes.push_back(iOffset);
 			}
 		}
 
-		for( y = iNewHeight - 1; y >= yDestUL + iHeight; y-- )
+		for( y = (int)iNewHeight - 1; y >= (int)yDestUL + (int)iHeight; y-- )
 		{
-			for( x = 0; x < iNewWidth; x++ )
+			for( x = 0; x < (int)iNewWidth; x++ )
 			{
 				iOffset = (y * iNewWidth) + x;
 				lstBlueIndexes.push_back(iOffset);

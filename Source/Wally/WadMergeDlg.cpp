@@ -108,7 +108,7 @@ BOOL CWadMergeDlg::OnInitDialog()
 	{
 		pDoc = (CPackageDoc *)theApp.PackageDocTemplate->GetNextDoc( pos );
 		int iItemAdded = m_cbOpenWAD.AddString( pDoc->GetTitle() );
-		m_cbOpenWAD.SetItemData( iItemAdded, (DWORD)pDoc );	
+		m_cbOpenWAD.SetItemData( iItemAdded, (DWORD_PTR)pDoc );
 	}
 
 	if( m_bOpenPackage )
@@ -252,7 +252,7 @@ void CWadMergeDlg::OnButtonGo()
 			}
 
 			g_iMergeDestinationChoice = IDC_RADIO_NEW_WAD;
-			g_iMergeNewWADType = m_cbWADType.GetItemData( iCurSel );
+			g_iMergeNewWADType = (int)m_cbWADType.GetItemData( iCurSel );
 
 			pDoc = theApp.CreatePackageDoc();
 
@@ -409,9 +409,9 @@ UINT WINAPI CWadMergeDlg::GoThread( LPVOID lpParameter )
 	return 0;
 }
 
-int CWadMergeDlg::DoModal() 
+INT_PTR CWadMergeDlg::DoModal()
 {
-	int iReturn = CDialog::DoModal();
+	INT_PTR iReturn = CDialog::DoModal();
 
 	itMergeJob itJob = m_MergeJobs.begin();
 	
@@ -471,8 +471,8 @@ void CWadMergeDlg::UpdateList()
 		lvText.state = 0;
 		lvText.stateMask = 0;
 		lvText.pszText = szText;
-		lvText.cchTextMax = strlen( szText );
-		lvText.lParam = (ULONG)(*itJob);
+		lvText.cchTextMax = (int)strlen( szText );
+		lvText.lParam = (DWORD_PTR)(*itJob);
 		
 		iItem = m_lstWADs.InsertItem( &lvText );
 

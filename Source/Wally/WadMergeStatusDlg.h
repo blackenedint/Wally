@@ -58,7 +58,7 @@ protected:
 	// Generated message map functions
 	//{{AFX_MSG(CWadMergeStatusDlg)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg LRESULT OnWadMergeStatusDlgCustomMessage(WPARAM nType, LPARAM nFlags);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

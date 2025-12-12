@@ -13,6 +13,8 @@
 // Single Instance header
 #include "singleinstance.h"
 #include "MiscFunctions.h"
+#include <string>
+#include <atlconv.h>
 
 //------------------------------------------------------------------------------
 
@@ -75,7 +77,8 @@ CSingleInstanceData::CSingleInstanceData ( LPCTSTR aName )
 	mMutex = new CMutex ( FALSE, lMutexName ) ;	
 
 	// Create file mapping
-	mMap = CreateFileMapping((HANDLE)0xFFFFFFFF,
+	mMap = CreateFileMapping(
+		INVALID_HANDLE_VALUE,
 		NULL,
 		PAGE_READWRITE,
 		0,
@@ -138,7 +141,7 @@ void CSingleInstanceData::SetValue ( LPCTSTR aData )
 	if ( lLock . IsLocked () )
 	{
 		// Copy data
-		_tcscpy_s ( mData, sizeof(TCHAR) * MAX_DATA, aData ) ;
+		_tcscpy_s(mData, MAX_DATA, aData);
 	}
 }
 
@@ -243,6 +246,15 @@ CSingleInstanceImpl::~CSingleInstanceImpl ()
 
 
 //------------------------------------------------------------------------------
+static std::string NarrowFromCString(const CString& str)
+{
+	USES_CONVERSION;
+#ifdef UNICODE
+	return std::string(CT2A(str));
+#else
+	return std::string(str);
+#endif
+}
 
 UINT CSingleInstanceImpl::Sleeper ( LPVOID aObject )
 // Name:        Sleeper
@@ -264,20 +276,27 @@ UINT CSingleInstanceImpl::Sleeper ( LPVOID aObject )
 		class MutexRemove
 		{
 		public:
-			CString m_sName;
-			MutexRemove(CString sName)
+			std::string m_name;
+			MutexRemove(const CString& sName)
+				: m_name(NarrowFromCString(sName))
 			{
-				m_sName = sName;
 				boost::interprocess::permissions allow_all;
 				allow_all.set_unrestricted();
-				boost::interprocess::named_mutex::remove(m_sName.GetBuffer());
-				boost::interprocess::named_mutex mutex(::boost::interprocess::create_only, m_sName.GetBuffer(), allow_all);
+
+				// Remove any stale named mutex, then recreate it.
+				boost::interprocess::named_mutex::remove(m_name.c_str());
+				boost::interprocess::named_mutex mutex(
+					::boost::interprocess::create_only,
+					m_name.c_str(),
+					allow_all);
+				// mutex destroyed when ctor ends
 			}
 			~MutexRemove()
 			{
-				boost::interprocess::named_mutex::remove(m_sName.GetBuffer());
+				boost::interprocess::named_mutex::remove(m_name.c_str());
 			}
 		};
+
 
 		MutexRemove mRemove(lSingleInstanceImpl->m_sNamedMutex);
 
@@ -364,7 +383,11 @@ BOOL CSingleInstanceImpl::Create ( LPCTSTR aName )
 				// Open the named mutex
 				boost::interprocess::permissions allow_all;
 				allow_all.set_unrestricted();
-				boost::interprocess::named_mutex mutex(::boost::interprocess::open_or_create, m_sNamedMutex.GetBuffer(), allow_all);
+				std::string narrowName = NarrowFromCString(m_sNamedMutex);
+				boost::interprocess::named_mutex mutex(
+					::boost::interprocess::open_or_create,
+					narrowName.c_str(),
+					allow_all);
 				
 				while (1)
 				{

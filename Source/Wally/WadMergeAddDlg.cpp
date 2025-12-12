@@ -127,9 +127,9 @@ CWadMergeJob *CWadMergeAddDlg::GetMergeJob()
 	return m_pMergeJob;
 }
 
-int CWadMergeAddDlg::DoModal() 
+INT_PTR CWadMergeAddDlg::DoModal()
 {	
-	int iReturn = CDialog::DoModal();
+	INT_PTR iReturn = CDialog::DoModal();
 
 	if( iReturn == IDOK )
 	{

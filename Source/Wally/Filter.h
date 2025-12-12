@@ -309,7 +309,7 @@ public:
 	~CFilter();
 
 	int  PickFilter();
-	int  ShowSettingsDlg( CLayer* pLayer);
+	INT_PTR  ShowSettingsDlg( CLayer* pLayer);
 
 	BOOL WithinSelection( int iX, int iY);
 	BOOL PrepareSoloFilter( CLayer *pLayer, int iFilterType, LPCSTR lpszFilterName);

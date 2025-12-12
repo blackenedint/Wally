@@ -188,7 +188,7 @@ BOOL CWadMergeJob::MergeWAD( CWADList *pWADList, DWORD dwFlags, CWadMergeDlg::LP
 	lpStatus = new CWadMergeStatusDlg::MERGE_STATUS;
 	lpStatus->strImage = GetShortWadFile();
 	lpStatus->dwNumImages = dwNumImages;
-	::PostMessage( lpParam->pMergeStatus->m_hWnd, WM_WAD_MERGE_STATUS_CUSTOM, WAD_MERGE_STATUS_IMAGE_COUNT, (UINT)lpStatus );
+	::PostMessage( lpParam->pMergeStatus->m_hWnd, WM_WAD_MERGE_STATUS_CUSTOM, WAD_MERGE_STATUS_IMAGE_COUNT, (DWORD_PTR)lpStatus );
 
 	while( pItem )
 	{
@@ -322,7 +322,7 @@ BOOL CWadMergeJob::MergeWAD( CWADList *pWADList, DWORD dwFlags, CWadMergeDlg::LP
 			pDuplicate = NULL;
 		}
 
-		::PostMessage( lpParam->pMergeStatus->m_hWnd, WM_WAD_MERGE_STATUS_CUSTOM, WAD_MERGE_STATUS_STEP, (UINT)lpStatus );		
+		::PostMessage( lpParam->pMergeStatus->m_hWnd, WM_WAD_MERGE_STATUS_CUSTOM, WAD_MERGE_STATUS_STEP, (DWORD_PTR)lpStatus );
 		pItem = m_WADList.GetFirstImage();		
 	}
 

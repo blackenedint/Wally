@@ -71,7 +71,7 @@ public:
 	~CDirectoryList();
 	void PurgeList();
 	void AddDirectory (LPCTSTR szDirectory);
-	int FindFile (LPCTSTR szFile, CStringArray *pStringArray);
+	INT_PTR FindFile (LPCTSTR szFile, CStringArray *pStringArray);
 	void SetRoot (LPCTSTR szRoot)
 	{
 		m_strRoot = szRoot;

@@ -979,7 +979,7 @@ void CBrowseView::OnBvpopupPaste()
 			}
 
 			// Determine the data size
-			int iDataSize = GlobalSize(hgData);
+			int iDataSize = (int)GlobalSize(hgData);
 						
 			// Alloc memory
 			BYTE *pbyData = (BYTE *)GlobalAlloc(GMEM_FIXED, iDataSize); 
@@ -1463,9 +1463,9 @@ BOOL CBrowseView::OnDrop(COleDataObject* pDataObject, DROPEFFECT dropEffect, CPo
 	if (pDataObject->IsDataAvailable(g_iPackageFormat)) 
 	{
 		HGLOBAL hmem = pDataObject->GetGlobalData(g_iPackageFormat);
-		CMemFile sf((BYTE*) ::GlobalLock(hmem), ::GlobalSize(hmem));
+		CMemFile sf((BYTE*) ::GlobalLock(hmem), (int)::GlobalSize(hmem));
 
-		DWORD dwSize = ::GlobalSize(hmem);
+		SIZE_T dwSize = ::GlobalSize(hmem);
 		
 		BYTE *pbyDragData = new BYTE[dwSize];
 
@@ -1474,7 +1474,7 @@ BOOL CBrowseView::OnDrop(COleDataObject* pDataObject, DROPEFFECT dropEffect, CPo
 			return FALSE;
 		}
 		
-		sf.Read(pbyDragData, dwSize);
+		sf.Read(pbyDragData, (UINT)dwSize);
 
 		::GlobalUnlock(hmem);
 

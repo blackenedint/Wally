@@ -1,4 +1,4 @@
-	
+
 #ifndef _WADLIST_H_
 #define _WADLIST_H_
 
@@ -17,6 +17,7 @@ class CWadMergeJob;
 
 #define WAD2_TYPE_MIP	0x44
 #define WAD3_TYPE_MIP	0x43
+#define WAD2_TYPE_QPIC  0x42   // Quake 1 qpic (e.g. gfx.wad)
 
 // WAD3 (Half-Life) Header and mip structs
 
@@ -45,7 +46,7 @@ typedef struct
 	char		name[16];
 	unsigned	width, height;
 	unsigned	offsets[4];		// four mip maps stored
-} wad3_miptex_s, WAD3_MIP, *LPWAD3_MIP;
+} wad3_miptex_s, WAD3_MIP, * LPWAD3_MIP;
 
 // WAD2 (Quake1) Header and mip structs
 
@@ -73,60 +74,66 @@ typedef struct
 	char		name[16];
 	unsigned	width, height;
 	unsigned	offsets[4];		// four mip maps stored
-} wad2_miptex_s, WAD2_MIP, *LPWAD2_MIP;
+} wad2_miptex_s, WAD2_MIP, * LPWAD2_MIP;
+
+typedef struct qpic_s
+{
+	int width, height;
+	unsigned char data[4]; // variably sized
+} qpic_t;
 
 #include "PackageTreeControl.h"
 
 
 class CWADItem
 {
-// Members
+	// Members
 private:
-	unsigned char *m_pbyData;
-	unsigned char *m_pbyPalette;
+	unsigned char* m_pbyData;
+	unsigned char* m_pbyPalette;
 	LPWAD3_MIP m_wad3MipHeader;
 	LPWAD2_MIP m_wad2MipHeader;
-	CWADItem *m_pNext;
-	CWADItem *m_pPrevious;
-	unsigned short *m_pPaletteSize;
+	CWADItem* m_pNext;
+	CWADItem* m_pPrevious;
+	unsigned short* m_pPaletteSize;
 	int m_iTotalSize;
 	int m_iSizes[4];
 	char m_cType;
 	CString m_strName;
-	int m_iWadType;	
+	int m_iWadType;
 
 	BOOL m_bIsSelected;
 	int m_iListBoxIndex;
 
 	_PackageTreeEntryVector m_PackageTreeEntryVector;
-	CWallyDoc *m_pWallyDoc;		// This is used to keep track of the image
-								// once it's been opened.
+	CWallyDoc* m_pWallyDoc;		// This is used to keep track of the image
+	// once it's been opened.
 
 public:
-	CWADItem (unsigned char *pbyData, int iDataSize, char cType, LPCTSTR szName, int iWADType);
-	CWADItem ();
-	~CWADItem ();
+	CWADItem(unsigned char* pbyData, int iDataSize, char cType, LPCTSTR szName, int iWADType);
+	CWADItem();
+	~CWADItem();
 	void Init();
 
-	void CreateAsMip (unsigned char *pbyBits[], CWallyPalette *pPalette, LPCTSTR szName, int iWidth, int iHeight, int iWADType);
+	void CreateAsMip(unsigned char* pbyBits[], CWallyPalette* pPalette, LPCTSTR szName, int iWidth, int iHeight, int iWADType);
 
-	unsigned char *GetBits (int iMipNumber = 0);	
-	unsigned char *GetData ();
-	void UpdateData (unsigned char *pbyBits[], CWallyPalette *pPalette, int iWidth, int iHeight);
-	void ReplaceData (unsigned char *pbyBits[], CWallyPalette *pPalette, LPCTSTR szName, int iWidth, int iHeight);
-	void SetWidth (int iWidth);
-	int GetWidth ();
-	void SetHeight (int iHeight);
-	int GetHeight ();
-	void SetName (LPCTSTR szName);
-	CString GetName ();
-	void SetNext (CWADItem *pNext);
-	CWADItem *GetNext();
-	void SetPrevious (CWADItem *pPrevious);
-	CWADItem *GetPrevious();
-	unsigned char *GetPalette();	
-	
-	BOOL ConvertToType( int iWADType );
+	unsigned char* GetBits(int iMipNumber = 0);
+	unsigned char* GetData();
+	void UpdateData(unsigned char* pbyBits[], CWallyPalette* pPalette, int iWidth, int iHeight);
+	void ReplaceData(unsigned char* pbyBits[], CWallyPalette* pPalette, LPCTSTR szName, int iWidth, int iHeight);
+	void SetWidth(int iWidth);
+	int GetWidth();
+	void SetHeight(int iHeight);
+	int GetHeight();
+	void SetName(LPCTSTR szName);
+	CString GetName();
+	void SetNext(CWADItem* pNext);
+	CWADItem* GetNext();
+	void SetPrevious(CWADItem* pPrevious);
+	CWADItem* GetPrevious();
+	unsigned char* GetPalette();
+
+	BOOL ConvertToType(int iWADType);
 	void RebuildSubMips();
 
 	int GetSize();
@@ -138,7 +145,7 @@ public:
 	{
 		m_bIsSelected = bIsSelected;
 	}
-	void SetListBoxIndex (int iIndex)
+	void SetListBoxIndex(int iIndex)
 	{
 		m_iListBoxIndex = iIndex;
 	}
@@ -154,38 +161,41 @@ public:
 	{
 		return m_wad2MipHeader;
 	}*/
-	void SetType (char cType);
-	char GetType ();
-	void SetWADType (int iType);
-	int GetWADType ();
+	void SetType(char cType);
+	char GetType();
+	void SetWADType(int iType);
+	int GetWADType();
 
-	void AddPackageEntry( CPackageTreeEntryBase *pBase );
-	void GetPackageEntries( _PackageTreeEntryVector &PackageTreeEntryVector );
+	void AddPackageEntry(CPackageTreeEntryBase* pBase);
+	void GetPackageEntries(_PackageTreeEntryVector& PackageTreeEntryVector);
 
-	CWallyDoc *GetWallyDoc()
+	CWallyDoc* GetWallyDoc()
 	{
 		return m_pWallyDoc;
 	}
 
-	void SetWallyDoc (CWallyDoc *pDoc)
+	void SetWallyDoc(CWallyDoc* pDoc)
 	{
 		if (pDoc)
 		{
-			ASSERT (m_pWallyDoc == NULL);		// Better not be trying to open another!
+			ASSERT(m_pWallyDoc == NULL);		// Better not be trying to open another!
 		}
 		m_pWallyDoc = pDoc;
 	}
 
-	bool HasWallyDoc ()
+	bool HasWallyDoc()
 	{
 		return (m_pWallyDoc != NULL);
 	}
 
-	bool IsValidMip ()
+	bool IsValidMip()
 	{
 		switch (GetWADType())
 		{
 		case WAD2_TYPE:
+			// Treat qpics as "images" too
+			if (m_cType == WAD2_TYPE_QPIC)
+				return TRUE;
 			return ((m_cType == WAD2_TYPE_MIP) && (m_strName != "CONCHARS"));
 			break;
 
@@ -194,78 +204,79 @@ public:
 			break;
 
 		default:
-			ASSERT (false);
+			ASSERT(false);
 			break;
 		}
 
 		return false;
 	}
-
-
-
+	bool IsQPic() const
+	{
+		return (m_iWadType == WAD2_TYPE) && (m_cType == WAD2_TYPE_QPIC);
+	}
 };
 
 class CWADList
 {
-// Members
+	// Members
 private:
-	CWADItem *m_pFirst;
-	CWADItem *m_pRead;
-	CWADItem *m_pWrite;
+	CWADItem* m_pFirst;
+	CWADItem* m_pRead;
+	CWADItem* m_pWrite;
 	int m_iWadType;
 
-	wad3_headerinfo_s	*m_pwad3Header;
-	wad3_lumpinfo_s		*m_pwad3LumpInfo;
-	wad3_miptex_s		*m_pwad3Mip;
+	wad3_headerinfo_s* m_pwad3Header;
+	wad3_lumpinfo_s* m_pwad3LumpInfo;
+	wad3_miptex_s* m_pwad3Mip;
 
-	wad2_headerinfo_s	*m_pwad2Header;
-	wad2_lumpinfo_s		*m_pwad2LumpInfo;
-	wad2_miptex_s		*m_pwad2Mip;
+	wad2_headerinfo_s* m_pwad2Header;
+	wad2_lumpinfo_s* m_pwad2LumpInfo;
+	wad2_miptex_s* m_pwad2Mip;
 
 	int					m_iLumpPosition;
-	unsigned char		*m_pEncodedData;
+	unsigned char* m_pEncodedData;
 
-// Methods
+	// Methods
 public:
-	CWADList ();
-	~CWADList ();
+	CWADList();
+	~CWADList();
 
-	void SetFirst (CWADItem *pFirst);
-	CWADItem *GetFirst ();
-	void SetRead (CWADItem *pRead);
-	CWADItem *GetRead ();
-	void SetWrite (CWADItem *pWrite);
-	CWADItem *GetWrite ();
-	void SetAll (CWADItem *pItem);
+	void SetFirst(CWADItem* pFirst);
+	CWADItem* GetFirst();
+	void SetRead(CWADItem* pRead);
+	CWADItem* GetRead();
+	void SetWrite(CWADItem* pWrite);
+	CWADItem* GetWrite();
+	void SetAll(CWADItem* pItem);
 	void PurgeList();
 
-	/*int Serialize (CFile *pFile);	
+	/*int Serialize (CFile *pFile);
 	int Serialize (LPCTSTR szFileName, unsigned char *pbyData, bool bSave = false);*/
-	int Serialize( LPCTSTR szFileName, CFile *pFile, unsigned char *pbyData, bool bSave = false );
-	int Serialize( CWadMergeJob *pMergeJob );
-	
-	int GetNumImages ();
-	DWORD GetNumImages( CWadMergeJob *pMergeJob );
-	int GetNumLumps ();
-	CWADItem *GetFirstImage();
-	CWADItem *GetNextImage();
-	CWADItem *GetFirstLump();
-	CWADItem *GetNextLump();
-	CWADItem *GetLumpAtPosition(int iPosition);
-	CWADItem *AddItem( unsigned char *pbyData, int iDataSize, char cType, LPCTSTR szName );
-	CWADItem *AddMipItem( unsigned char *pbyBits[], CWallyPalette *pPalette, LPCTSTR szName, int iWidth, int iHeight);
-	void AddToList( CWADItem *pItem);	
-	void SetImageName (LPCTSTR szName, int iPosition);
-	void RemoveImage (CWADItem *pItem, BOOL bDelete = TRUE );
-	
+	int Serialize(LPCTSTR szFileName, CFile* pFile, unsigned char* pbyData, bool bSave = false);
+	int Serialize(CWadMergeJob* pMergeJob);
+
+	int GetNumImages();
+	DWORD GetNumImages(CWadMergeJob* pMergeJob);
+	int GetNumLumps();
+	CWADItem* GetFirstImage();
+	CWADItem* GetNextImage();
+	CWADItem* GetFirstLump();
+	CWADItem* GetNextLump();
+	CWADItem* GetLumpAtPosition(int iPosition);
+	CWADItem* AddItem(unsigned char* pbyData, int iDataSize, char cType, LPCTSTR szName);
+	CWADItem* AddMipItem(unsigned char* pbyBits[], CWallyPalette* pPalette, LPCTSTR szName, int iWidth, int iHeight);
+	void AddToList(CWADItem* pItem);
+	void SetImageName(LPCTSTR szName, int iPosition);
+	void RemoveImage(CWADItem* pItem, BOOL bDelete = TRUE);
+
 	int GetTotalItemsSize();
 	bool IsEmpty();
-	CWADItem *IsNameInList (LPCTSTR szName);
+	CWADItem* IsNameInList(LPCTSTR szName);
 
-	unsigned char *GetPaletteFromWAD3 (int iPosition = -1);	
-	void DiscoverWidthHeight( LPBYTE pbyData, int iDataSize, char cType, LPDWORD pdwWidth, LPDWORD pdwHeight );
-	void SetWADType (int iType);
-	int GetWADType ();	
+	unsigned char* GetPaletteFromWAD3(int iPosition = -1);
+	void DiscoverWidthHeight(LPBYTE pbyData, int iDataSize, char cType, LPDWORD pdwWidth, LPDWORD pdwHeight);
+	void SetWADType(int iType);
+	int GetWADType();
 };
 
 #endif		// _WADLIST_H_

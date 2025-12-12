@@ -226,7 +226,7 @@ CUndoState* CWallyUndo::SaveCurrentState( CWallyDoc* pDoc, LPCSTR lpszUndoString
 			// add a new element to undo list
 			if (pCurrentState == NULL)
 			{
-				int iNumItems = m_pUndoList->GetCount();
+				int iNumItems = (int)m_pUndoList->GetCount();
 
 				// too many active undo items?
 				if ((iNumItems >= m_iMaxItems) && (iNumItems > 0))
@@ -279,7 +279,7 @@ CUndoState* CWallyUndo::SaveCurrentState( CWallyDoc* pDoc, LPCSTR lpszUndoString
 
 			ar.Close();
 
-			DWORD dwOriginalSize = File.GetLength();
+			auto dwOriginalSize = File.GetLength();
 
 //			pCurrentState->m_hGlobal = GlobalHandle( File.Detach());
 			pCurrentState->m_hGlobal = File.Detach();

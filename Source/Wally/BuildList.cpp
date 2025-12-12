@@ -430,7 +430,7 @@ int CBuildList::Serialize (LPCTSTR szFileName, CFile *pFile, BYTE *pbyData, bool
 				return IH_ERROR_READING_FILE;
 			}
 			
-			int iLength = fp.GetLength();
+			int iLength = (int)fp.GetLength();
 			pbyFileData = new BYTE[iLength];
 			fp.Read (pbyFileData, iLength);
 			fp.Close();
@@ -441,7 +441,7 @@ int CBuildList::Serialize (LPCTSTR szFileName, CFile *pFile, BYTE *pbyData, bool
 			ASSERT (!pbyData);
 			ASSERT (!szFileName);
 
-			int iLength = pFile->GetLength();
+			int iLength = (int)pFile->GetLength();
 			pbyFileData = new BYTE[iLength];
 			pFile->Read (pbyFileData, iLength);			
 		}

@@ -250,7 +250,7 @@ void CMemBuffer::CopyBuffer( CMemBuffer *pmbCopy, DWORD dwBeginPosition /* = 0 *
 LPBYTE CMemBuffer::InitFromFile( CFile *fp, DWORD dwFlags /* = 0 */)
 {
 	assert( fp );
-	DWORD dwDataSize = fp->GetLength();
+	DWORD dwDataSize = (DWORD)fp->GetLength();
 	LPBYTE pbyBuffer = NULL;
 
 	if (dwDataSize > 0)
@@ -582,8 +582,8 @@ void CMemBuffer::ReplaceString( const char *szReplace, const char *szNewString, 
 	DWORD dwMask			= 0;
 	
 	UINT j					= 0;
-	UINT iStringLength		= strlen(szReplace);
-	UINT iNewStringLength	= strlen(szNewString);
+	UINT iStringLength		= (UINT)strlen(szReplace);
+	UINT iNewStringLength	= (UINT)strlen(szNewString);
 	std::string strCompare;	
 
 	strCompare				= szReplace;
@@ -688,7 +688,7 @@ void CMemBuffer::AppendString( const char *szString, DWORD dwFlags /* = 0 */ )
 	assert( szString );
 	
 	LPBYTE pbyBuffer = NULL;
-	DWORD dwLength = strlen( szString );
+	DWORD dwLength = (DWORD)strlen( szString );
 	DWORD dwPosition = GetDataSize();
 	IncreaseBufferSize( dwLength );	
 
@@ -736,8 +736,8 @@ void CMemBuffer::InsertString( const char *szMatch, const char *szNewString, DWO
 	DWORD dwMask			= 0;
 	
 	UINT j					= 0;
-	UINT iStringLength		= strlen(szMatch);
-	UINT iNewStringLength	= strlen(szNewString);
+	UINT iStringLength		= (UINT)strlen(szMatch);
+	UINT iNewStringLength	= (UINT)strlen(szNewString);
 	std::string	strCompare;
 		
 	strCompare = szMatch;
@@ -914,7 +914,7 @@ void CMemBuffer::RemoveBlock( const char *szMatch, DWORD dwFlags /* = 0 */)
 	DWORD dwMask			= 0;
 	
 	UINT j					= 0;
-	UINT iStringLengthMatch	= strlen(szMatch);
+	UINT iStringLengthMatch	= (UINT)strlen(szMatch);
 	std::string strCompareBegin;
 	
 	strCompareBegin = szMatch;
@@ -1018,8 +1018,8 @@ void CMemBuffer::GetStringBlock( const char *szBegin, const char *szEnd, CMemBuf
 	DWORD dwBufferSize		= GetDataSize();
 	
 	UINT j					= 0;
-	UINT iStringLengthBegin	= strlen(szBegin);
-	UINT iStringLengthEnd	= strlen(szEnd);
+	UINT iStringLengthBegin	= (UINT)strlen(szBegin);
+	UINT iStringLengthEnd	= (UINT)strlen(szEnd);
 	UINT iMaxStringLength	= max (iStringLengthBegin, iStringLengthEnd);
 	std::string strCompareBegin;	
 	std::string strCompareEnd;
@@ -1183,8 +1183,8 @@ void CMemBuffer::MoveStringBlock( const char *szBegin, const char *szEnd, CMemBu
 	DWORD dwBufferSize		= GetDataSize();
 	
 	UINT j					= 0;
-	UINT iStringLengthBegin	= strlen(szBegin);
-	UINT iStringLengthEnd	= strlen(szEnd);
+	UINT iStringLengthBegin	= (UINT)strlen(szBegin);
+	UINT iStringLengthEnd	= (UINT)strlen(szEnd);
 	UINT iMaxStringLength	= max (iStringLengthBegin, iStringLengthEnd);
 	std::string strCompareBegin;	
 	std::string strCompareEnd;
@@ -1476,7 +1476,7 @@ void CMemBuffer::GetPragmas( _PragmaVector &vcPragmas, DWORD dwFlags /* = 0 */ )
 
 				if( GetGUID( PragmaStruct.strGUID ) )
 				{
-					if( AdjustBufferAtPosition( dwBeginPosition, dwPosition - dwBeginPosition, PragmaStruct.strGUID.length() ) )
+					if( AdjustBufferAtPosition( dwBeginPosition, dwPosition - dwBeginPosition, (DWORD)PragmaStruct.strGUID.length() ) )
 					{
 						dwBufferSize = GetDataSize();
 						pbyBuffer = GetBuffer();
@@ -1486,7 +1486,7 @@ void CMemBuffer::GetPragmas( _PragmaVector &vcPragmas, DWORD dwFlags /* = 0 */ )
 						vcPragmas.push_back( PragmaStruct );
 
 						// Reset position and buffer size
-						dwPosition = dwBeginPosition + PragmaStruct.strGUID.length();						
+						dwPosition = dwBeginPosition + (DWORD)PragmaStruct.strGUID.length();						
 					}
 				}
 
@@ -1569,7 +1569,7 @@ std::string CMemBuffer::GetTagValue( const char *szTag, DWORD dwFlags /* = 0 */)
 	strTag = szTag;
 	
 	UINT j					= 0;
-	UINT iStringLength		= strTag.size();	
+	UINT iStringLength		= (UINT)strTag.size();	
 	
 	char *szCompare			= new char[iStringLength + 1];
 	
@@ -1660,7 +1660,7 @@ void CMemBuffer::GetAllElements( const char *szElement, _MBStringVector &vcEleme
 	strElement = szElement; 
 
 	UINT j					= 0;
-	int iStringLength		= strlen( szElement );
+	UINT iStringLength		= (UINT)strlen( szElement );
 
 	char *szCompare			= new char[iStringLength + 1];
 		
@@ -1744,7 +1744,7 @@ std::string CMemBuffer::GetAllTagValues( const char *szTag, LPEnumSequencesCallB
 	strTag = szTag;
 	
 	UINT j					= 0;
-	UINT iStringLength		= strTag.size();	
+	UINT iStringLength		= (UINT)strTag.size();
 	
 	char *szCompare			= new char[iStringLength + 1];
 	
@@ -2225,8 +2225,8 @@ void CMemBuffer::EnumerateAndMoveBlocks( const char *szBegin, const char *szEnd,
 	CMemBuffer mbBlockData;
 	
 	UINT j					= 0;
-	UINT iStringLengthBegin	= strlen(szBegin);
-	UINT iStringLengthEnd	= dwFlags & MEMBUFFER_FLAG_ENUM_MOVE_NO_END_TAG ? 0 : strlen(szEnd);
+	UINT iStringLengthBegin	= (UINT)strlen(szBegin);
+	UINT iStringLengthEnd	= (UINT)(dwFlags & MEMBUFFER_FLAG_ENUM_MOVE_NO_END_TAG ? 0 : strlen(szEnd));
 	UINT iMaxStringLength	= max (iStringLengthBegin, iStringLengthEnd);	
 
 	char *szCompare			= new char[iMaxStringLength + 1];
@@ -2422,7 +2422,7 @@ void CMemBuffer::EnumerateAndMoveBlocks( const char *szBegin, const char *szEnd,
 			{
 				if( dwTempFlags & MEMBUFFER_FLAG_ENUM_MOVE_REPLACE_TAGS )
 				{
-					dwInsertLength = strReplaceTag.length();
+					dwInsertLength = (DWORD)strReplaceTag.length();
 
 					// Remove the entire block, but insert some replacement text in its place.
 					// The text is the string passed by reference to the callback routine
@@ -2535,7 +2535,7 @@ void CMemBuffer::EnumerateReplaceFunctions( const char *szTag, LPEnumReplaceFunc
 	strTag = szTag;
 	
 	UINT j					= 0;
-	UINT iStringLength		= strTag.size();
+	UINT iStringLength		= (UINT)strTag.size();
 	
 	char *szCompare			= new char[iStringLength + 1];
 	
@@ -2608,7 +2608,7 @@ void CMemBuffer::EnumerateReplaceFunctions( const char *szTag, LPEnumReplaceFunc
 				{
 					// Remove the tag
 					dwRemoveDataLength = dwEndPosition - dwBeginPosition;
-					dwInsertDataLength = strReplaceTag.length();
+					dwInsertDataLength = (DWORD)strReplaceTag.length();
 					AdjustBufferAtPosition( dwBeginPosition, dwRemoveDataLength, dwInsertDataLength );
 
 					pbyBuffer = GetBuffer();
@@ -2653,7 +2653,7 @@ void CMemBuffer::EnumerateReplaceFunctions( const char *szTag, LPEnumReplaceFunc
 
 std::string& CMemBuffer::TrimLeft( std::string& str, const char c )
 {
-	int iPos = 0;	
+	size_t iPos = 0;
 
 	iPos = str.find_first_not_of( c );
 	if( iPos )
@@ -2666,7 +2666,7 @@ std::string& CMemBuffer::TrimLeft( std::string& str, const char c )
 
 std::string& CMemBuffer::TrimRight( std::string& str, const char c )
 {
-	int iPos = 0;
+	size_t iPos = 0;
 
 	if ( (iPos = str.find_last_not_of( c ) ) == std::string::npos )
 	{
@@ -2689,7 +2689,7 @@ std::string& CMemBuffer::Trim( std::string& str, const char c )
 
 std::wstring& CMemBuffer::TrimLeft(std::wstring& str, const wchar_t c)
 {
-	int iPos = 0;
+	size_t iPos = 0;
 
 	iPos = str.find_first_not_of(c);
 	if (iPos)
@@ -2702,7 +2702,7 @@ std::wstring& CMemBuffer::TrimLeft(std::wstring& str, const wchar_t c)
 
 std::wstring& CMemBuffer::TrimRight(std::wstring& str, const wchar_t c)
 {
-	int iPos = 0;
+	size_t iPos = 0;
 
 	if ((iPos = str.find_last_not_of(c)) == std::string::npos)
 	{
@@ -2779,7 +2779,7 @@ BYTE CMemBuffer::m_byHashCode[] = { 0x8c,0x08,0x72,0x73,0xb3,0xe3,0x66,0x52,0x64
 
 void CMemBuffer::BuildHashString( unsigned char **kQey, const unsigned char **kLoc, const char *sKey ) const
 {
-	int Len = strlen( sKey );
+	int Len = (int)strlen( sKey );
 	int LenNew = 0;
 	unsigned int Hash = CalcHash( sKey, 86969, 29 );
 	unsigned int Hash2 = CalcHash( sKey, 54059, 31 );
@@ -2818,7 +2818,7 @@ void CMemBuffer::Encrypt( const char *sKey )
 	const unsigned char *kLoc = NULL;
 	BYTE k;
 	int i;
-	int Len = strlen( sKey );
+	size_t Len = strlen( sKey );
 	LPBYTE pData = GetBuffer();
 	LPBYTE HashLoc = m_byHashCode;
 	
@@ -2846,7 +2846,7 @@ void CMemBuffer::Decrypt( const char *sKey )
 	const unsigned char *kLoc = NULL;
 	BYTE k;
 	int i;
-	int Len = strlen( sKey );
+	size_t Len = strlen( sKey );
 	LPBYTE pData = GetBuffer();
 	LPBYTE HashLoc = m_byHashCode;
 
@@ -2898,7 +2898,7 @@ LPBYTE CMemBuffer::InitFromResource( WORD ID )
 }
 
 #ifdef BOOST_JSON_HPP
-boost::json::value CMemBuffer::ParseJson(boost::json::error_code &ec)
+boost::json::value CMemBuffer::ParseJson(boost::system::error_code &ec)
 {
 	boost::json::stream_parser p;	
 	p.write((char *)GetBuffer(), GetDataSize(), ec);	

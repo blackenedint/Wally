@@ -69,7 +69,7 @@ void CDirectoryList::AddDirectory(LPCTSTR szDirectory)
 	pNewDirectory = NULL;
 }
 
-int CDirectoryList::FindFile (LPCTSTR szFile, CStringArray *pStringArray)
+INT_PTR CDirectoryList::FindFile (LPCTSTR szFile, CStringArray *pStringArray)
 {
 	CDirectoryEntry *pTemp = GetFirst();
 	CString strFileName("");
@@ -188,7 +188,7 @@ CDirectoryEntry::CDirectoryEntry(LPCTSTR szDirectory, CDirectoryList *pParent)
 	ASSERT (szDirectory);
 
 	struct _finddata_t c_file;
-	long hFile;
+	intptr_t hFile;
 
 	CString strSearch ("");
 	CString strDirectory ("");

@@ -4,20 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Wally", "Wally\Wally.vcxproj", "{C8CBBE7E-18D6-4257-81C8-AF3F05643CB3}"
-	ProjectSection(ProjectDependencies) = postProject
-		{019DBD2A-273D-4BA4-BF86-B5EFE2ED76B1} = {019DBD2A-273D-4BA4-BF86-B5EFE2ED76B1}
-		{745DEC58-EBB3-47A9-A9B8-4C6627C01BF8} = {745DEC58-EBB3-47A9-A9B8-4C6627C01BF8}
-		{D6973076-9317-4EF2-A0B8-B7A18AC0713E} = {D6973076-9317-4EF2-A0B8-B7A18AC0713E}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "jpeg", "jpeg-9e\jpeg.vcxproj", "{019DBD2A-273D-4BA4-BF86-B5EFE2ED76B1}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlibstat", "zlib-1.2.13\contrib\vstudio\vc14\zlibstat.vcxproj", "{745DEC58-EBB3-47A9-A9B8-4C6627C01BF8}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libpng", "lpng1639\projects\vstudio\libpng\libpng.vcxproj", "{D6973076-9317-4EF2-A0B8-B7A18AC0713E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{745DEC58-EBB3-47A9-A9B8-4C6627C01BF8} = {745DEC58-EBB3-47A9-A9B8-4C6627C01BF8}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,36 +13,13 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C8CBBE7E-18D6-4257-81C8-AF3F05643CB3}.Debug|x64.ActiveCfg = Debug|Win32
+		{C8CBBE7E-18D6-4257-81C8-AF3F05643CB3}.Debug|x64.ActiveCfg = Debug|x64
+		{C8CBBE7E-18D6-4257-81C8-AF3F05643CB3}.Debug|x64.Build.0 = Debug|x64
 		{C8CBBE7E-18D6-4257-81C8-AF3F05643CB3}.Debug|x86.ActiveCfg = Debug|Win32
 		{C8CBBE7E-18D6-4257-81C8-AF3F05643CB3}.Debug|x86.Build.0 = Debug|Win32
 		{C8CBBE7E-18D6-4257-81C8-AF3F05643CB3}.Release|x64.ActiveCfg = Release|Win32
 		{C8CBBE7E-18D6-4257-81C8-AF3F05643CB3}.Release|x86.ActiveCfg = Release|Win32
 		{C8CBBE7E-18D6-4257-81C8-AF3F05643CB3}.Release|x86.Build.0 = Release|Win32
-		{019DBD2A-273D-4BA4-BF86-B5EFE2ED76B1}.Debug|x64.ActiveCfg = Release|x64
-		{019DBD2A-273D-4BA4-BF86-B5EFE2ED76B1}.Debug|x64.Build.0 = Release|x64
-		{019DBD2A-273D-4BA4-BF86-B5EFE2ED76B1}.Debug|x86.ActiveCfg = Debug|Win32
-		{019DBD2A-273D-4BA4-BF86-B5EFE2ED76B1}.Debug|x86.Build.0 = Debug|Win32
-		{019DBD2A-273D-4BA4-BF86-B5EFE2ED76B1}.Release|x64.ActiveCfg = Release|x64
-		{019DBD2A-273D-4BA4-BF86-B5EFE2ED76B1}.Release|x64.Build.0 = Release|x64
-		{019DBD2A-273D-4BA4-BF86-B5EFE2ED76B1}.Release|x86.ActiveCfg = Release|Win32
-		{019DBD2A-273D-4BA4-BF86-B5EFE2ED76B1}.Release|x86.Build.0 = Release|Win32
-		{745DEC58-EBB3-47A9-A9B8-4C6627C01BF8}.Debug|x64.ActiveCfg = Debug|x64
-		{745DEC58-EBB3-47A9-A9B8-4C6627C01BF8}.Debug|x64.Build.0 = Debug|x64
-		{745DEC58-EBB3-47A9-A9B8-4C6627C01BF8}.Debug|x86.ActiveCfg = Debug|Win32
-		{745DEC58-EBB3-47A9-A9B8-4C6627C01BF8}.Debug|x86.Build.0 = Debug|Win32
-		{745DEC58-EBB3-47A9-A9B8-4C6627C01BF8}.Release|x64.ActiveCfg = Release|x64
-		{745DEC58-EBB3-47A9-A9B8-4C6627C01BF8}.Release|x64.Build.0 = Release|x64
-		{745DEC58-EBB3-47A9-A9B8-4C6627C01BF8}.Release|x86.ActiveCfg = Release|Win32
-		{745DEC58-EBB3-47A9-A9B8-4C6627C01BF8}.Release|x86.Build.0 = Release|Win32
-		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Debug|x64.ActiveCfg = Debug|Win32
-		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Debug|x64.Build.0 = Debug|Win32
-		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Debug|x86.ActiveCfg = Debug|Win32
-		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Debug|x86.Build.0 = Debug|Win32
-		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Release|x64.ActiveCfg = Release|Win32
-		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Release|x64.Build.0 = Release|Win32
-		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Release|x86.ActiveCfg = Release|Win32
-		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

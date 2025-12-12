@@ -313,7 +313,7 @@ std::wstring CRegistryItem::TrimSlashes(std::wstring &strTrim)
 #else
 std::string CRegistryItem::TrimSlashes( std::string &strTrim )
 {
-	int iPos = 0;
+	size_t iPos = 0;
 
 	if ((iPos = strTrim.find_last_not_of('\\')) == std::string::npos)
 	{
@@ -464,7 +464,7 @@ std::wstring CRegistryHelper::TrimSlashes(std::wstring &strTrim)
 #else
 std::string CRegistryHelper::TrimSlashes( std::string &strTrim )
 {
-	int iPos = 0;
+	size_t iPos = 0;
 
 	if ( (iPos = strTrim.find_last_not_of( '\\' ) ) == std::string::npos )
 	{
@@ -941,7 +941,7 @@ BOOL CRegistryHelper::WriteRegistry()
 					sprintf_s(szFormat, sizeof(szFormat), "%.13lf", dfItemValue);
 					
 					// Set the key
-					lResult = RegSetValueEx(hKey, szValueName, 0, REG_SZ, (LPBYTE)(szFormat), strlen(szFormat) + 1);
+					lResult = RegSetValueEx(hKey, szValueName, 0, REG_SZ, (LPBYTE)(szFormat), (DWORD)strlen(szFormat) + 1);
 #endif
 					
 					
@@ -970,7 +970,7 @@ BOOL CRegistryHelper::WriteRegistry()
 #else
 					std::string strItemValue;
 					pItem->GetItemValue(&strItemValue);
-					iStringLength = strItemValue.size();
+					iStringLength = (int)strItemValue.size();
 					dwSize = iStringLength * sizeof(char);
 #endif			
 					// Set the key
